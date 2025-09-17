@@ -2,7 +2,11 @@
   "name": "valentinos-magic-beans",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "prepare": "husky install",
+    "precommit": "git add . ",
+    "commit": "git cz && node .husky/push.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -11,6 +15,8 @@
     "@playwright/test": "^1.55.0",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^24.5.1",
-    "@types/winston": "^2.4.4"
+    "@types/winston": "^2.4.4",
+    "git-cz": "^4.9.0",
+    "husky": "^9.1.7"
   }
 }
