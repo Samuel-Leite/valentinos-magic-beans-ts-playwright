@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { LoginSelectors } from '../locators/LoginSelectors';
+import { LoginSelectors } from '../selectors/LoginSelectors';
 
 export class LoginPage {
     constructor(private page: Page) { }
