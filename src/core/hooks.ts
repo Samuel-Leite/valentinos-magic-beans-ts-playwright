@@ -6,13 +6,26 @@ import path from 'path';
 import dotenv from 'dotenv';
 dotenv.config();
 
+/**
+ * Class responsible for managing global test hooks,
+ * including report cleanup, initial navigation, and session teardown.
+ */
 class Hooks {
   allureResultsDir: string;
 
+  /**
+   * Initializes the default path for the Allure results directory.
+   */
   constructor() {
     this.allureResultsDir = path.join(__dirname, '..', '..', 'allure-results');
   }
 
+  /**
+   * Deletes previous test execution report directories:
+   * - allure-results
+   * - playwright-report
+   * - test-results
+   */
   async cleanReports(): Promise<void> {
     const reportDirs = [
       path.join(__dirname, '..', '..', 'allure-results'),
@@ -23,29 +36,43 @@ class Hooks {
     for (const dir of reportDirs) {
       try {
         await fs.rm(dir, { recursive: true, force: true });
-        Logger.info(`DIRETÓRIO: '${path.basename(dir)}' foi apagado com sucesso`);
+        Logger.info(`DIRECTORY: '${path.basename(dir)}' was successfully deleted`);
       } catch (err: any) {
-        Logger.error(`DIRETÓRIO: erro ao apagar '${path.basename(dir)}': ${err.message}`);
+        Logger.error(`DIRECTORY: failed to delete '${path.basename(dir)}': ${err.message}`);
       }
     }
 
     Logger.info('-----------------------------------------------------------------------');
   }
 
+  /**
+   * Runs before all tests.
+   * Logs environment variables and cleans up previous reports.
+   */
   async beforeAllTests(): Promise<void> {
-    Logger.info('----------------------Variáveis de ambiente---------------------------');
+    Logger.info('----------------------Environment Variables---------------------------');
     Logger.info(`ENV: ${process.env.ENV}`);
     await this.cleanReports();
     Logger.clearLogFile();
   }
 
+  /**
+   * Runs before each test.
+   * Reads the environment URL and navigates to it.
+   * @param page Playwright page instance
+   */
   async beforeEachTest(page: any): Promise<void> {
     Logger.info('--------------------------------Start---------------------------------');
     const baseUrl = YamlReader.readUrl(process.env.ENV || 'qa');
-    Logger.info(`URL carregada: ${baseUrl}`);
+    Logger.info(`Loaded URL: ${baseUrl}`);
     await page.goto(baseUrl);
   }
 
+  /**
+   * Runs after each test.
+   * Closes the Playwright page instance.
+   * @param page Playwright page instance
+   */
   async afterEachTest(page: any): Promise<void> {
     Logger.info('--------------------------------End----------------------------------');
     await page.close();
