@@ -1,5 +1,5 @@
 import { Page, expect } from '@playwright/test';
-import { HomeSelectors } from '../locators/HomeSelectors';
+import { HomeSelectors } from '../selectors/HomeSelectors';
 
 export class HomePage {
     constructor(private page: Page) { }

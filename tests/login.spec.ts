@@ -1,6 +1,7 @@
 import { test } from '@playwright/test';
 import { LoginPage } from '../src/pages/LoginPage';
 import { HomePage } from '../src/pages/HomePage';
+import '../src/core/hooks';
 
 test('Validar a efetuação do login com sucesso', async ({ page }) => {
 
