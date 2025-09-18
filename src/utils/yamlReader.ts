@@ -5,51 +5,53 @@ import { Logger } from './logger';
 import dotenv from 'dotenv';
 dotenv.config();
 
+/**
+ * Utility class for reading configuration and data from YAML files.
+ */
 export class YamlReader {
 
-    /**
-     * Lê a URL de um ambiente específico a partir de um arquivo YAML
-     * @param environment Nome do ambiente (ex: 'qa', 'prod')
-     * @returns URL como string
-     */
-    static readUrl(environment: string): string {
-        const filePath = path.resolve(__dirname, `../resources/config/url-${environment}.yml`);
+  /**
+   * Reads the base URL for a specific environment from a YAML configuration file.
+   * @param environment Name of the environment (e.g., 'qa', 'prod')
+   * @returns URL as a string
+   */
+  static readUrl(environment: string): string {
+    const filePath = path.resolve(__dirname, `../resources/config/url-${environment}.yml`);
 
-        try {
-            const fileContents = fs.readFileSync(filePath, 'utf8');
-            const parsed = yaml.load(fileContents) as { url: string };
-            Logger.info(`A URL do ambiente '${environment}' foi acessada com sucesso do arquivo YAML`);
-            return parsed.url;
-        } catch (error: any) {
-            Logger.error(`Erro ao obter a URL do ambiente '${environment}': ${error.message}`);
-            throw error;
-        }
+    try {
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      const parsed = yaml.load(fileContents) as { url: string };
+      Logger.info(`The URL for environment '${environment}' was successfully retrieved from the YAML file`);
+      return parsed.url;
+    } catch (error: any) {
+      Logger.error(`Failed to retrieve the URL for environment '${environment}': ${error.message}`);
+      throw error;
     }
+  }
 
-    /**
-     * Lê um atributo específico de um arquivo YAML de dados
-     * @param attribute Caminho do atributo (ex: 'admin.email')
-     * @returns Valor do atributo como string
-     */
-    static readYamlFile(attribute: string): string {
-        const env = process.env.ENV || 'qa';
-        const filePath = path.resolve(__dirname, `../resources/data/${env}/credencial.yml`);
+  /**
+   * Reads a complete data block from a YAML file and returns it as an object.
+   * @param key Root key name in the YAML file (e.g., 'valid_user')
+   * @returns Object containing the data for the specified key
+   */
+  static readYamlObject(key: string): Record<string, any> {
+    const env = process.env.ENV || 'qa';
+    const filePath = path.resolve(__dirname, `../resources/data/${env}/credencial.yml`);
 
-        try {
-            const fileContents = fs.readFileSync(filePath, 'utf8');
-            const data = yaml.load(fileContents) as Record<string, any>;
-            Logger.info(`As credenciais do usuário do ambiente '${env}' foram obtidas com sucesso`);
+    try {
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      const data = yaml.load(fileContents) as Record<string, any>;
+      Logger.info(`YAML block '${key}' was successfully loaded`);
 
-            // Suporte a atributos aninhados (ex: 'admin.email')
-            const value = attribute.split('.').reduce((obj, key) => obj?.[key], data);
-            if (value === undefined) {
-                throw new Error(`Atributo '${attribute}' não encontrado no arquivo YAML`);
-            }
+      const obj = data[key];
+      if (!obj || typeof obj !== 'object') {
+        throw new Error(`Block '${key}' not found or invalid`);
+      }
 
-            return String(value);
-        } catch (error: any) {
-            Logger.error(`Erro ao obter o atributo '${attribute}' do YAML: ${error.message}`);
-            throw error;
-        }
+      return obj;
+    } catch (error: any) {
+      Logger.error(`Failed to retrieve YAML block '${key}': ${error.message}`);
+      throw error;
     }
+  }
 }
