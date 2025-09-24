@@ -3,7 +3,7 @@ import path from 'path';
 import yaml from 'js-yaml';
 import { Logger } from './logger';
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ quiet: true });
 
 /**
  * Utility class for reading configuration and data from YAML files.

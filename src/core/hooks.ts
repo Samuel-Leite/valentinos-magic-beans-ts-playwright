@@ -4,7 +4,7 @@ import { Logger } from '../utils/logger';
 import fs from 'fs/promises';
 import path from 'path';
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ quiet: true });
 
 /**
  * Class responsible for managing global test hooks,
