@@ -1,16 +1,23 @@
 import { Page } from '@playwright/test';
-import { LoginSelectors } from '../selectors/LoginSelectors';
+import { getLoginLocators } from '../selectors/LoginSelectors';
+import { ElementActions } from '../utils/actions';
 
 /**
  * Represents the login page of the system.
  * Contains actions related to user authentication.
  */
 export class LoginPage {
+  private actions: ElementActions;
+  private locators: ReturnType<typeof getLoginLocators>;
+
   /**
-   * Initializes the Playwright page instance.
+   * Initializes the Playwright page instance and ElementActions.
    * @param page Current Playwright page instance
    */
-  constructor(private page: Page) {}
+  constructor(private page: Page) {
+    this.actions = new ElementActions(page);
+    this.locators = getLoginLocators(page);
+  }
 
   /**
    * Performs the login process by filling in the email and password fields,
@@ -19,9 +26,9 @@ export class LoginPage {
    * @param password User's password
    */
   async doLogin(email: string, password: string): Promise<void> {
-    await this.page.locator(LoginSelectors.btnDoLogin).click();
-    await this.page.locator(LoginSelectors.txtEmail).fill(email);
-    await this.page.locator(LoginSelectors.txtPassword).fill(password);
-    await this.page.locator(LoginSelectors.btnSubmit).click();
+    await this.actions.click(this.locators.btnDoLogin);
+    await this.actions.sendKey(this.locators.txtEmail, email);
+    await this.actions.sendKey(this.locators.txtPassword, password);
+    await this.actions.click(this.locators.btnSubmit);
   }
 }
