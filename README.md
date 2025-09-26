@@ -43,24 +43,13 @@ npx playwright test tests/e2e/brazilian-coffee-order.spec.ts
 ## 📂 Project Structure
 ```
 valentino-magic-beans/
-├── .env                      # Variáveis de ambiente
-├── .gitignore               # Arquivos ignorados pelo Git
-├── changelog.config.js      # Configuração de changelog
-├── package.json             # Dependências e scripts
-├── package-lock.json        # Lockfile do npm
-├── playwright.config.ts     # Configuração do Playwright
-├── winston.log              # Log gerado pelos testes
-├── README.md                # Documentação do projeto
-
 ├── .github/
 │   └── workflows/
 │       └── playwright.yml   # Pipeline de testes com GitHub Actions
-
 ├── .husky/                  # Hooks de Git
 │   ├── commit-message
 │   ├── push.js
 │   └── _/                   # Scripts internos do Husky
-
 ├── src/
 │   ├── core/                # Hooks e lógica compartilhada
 │   │   └── hooks.ts
@@ -85,9 +74,16 @@ valentino-magic-beans/
 │       ├── highlightElement.ts
 │       ├── logger.ts
 │       └── yamlReader.ts
-
 └── tests/
     └── login.spec.ts        # Teste de login
+├── .env                      # Variáveis de ambiente
+├── .gitignore               # Arquivos ignorados pelo Git
+├── changelog.config.js      # Configuração de changelog
+├── package.json             # Dependências e scripts
+├── package-lock.json        # Lockfile do npm
+├── playwright.config.ts     # Configuração do Playwright
+├── winston.log              # Log gerado pelos testes
+├── README.md                # Documentação do projeto    
 ```
 
 ## 🔗 Useful Links
