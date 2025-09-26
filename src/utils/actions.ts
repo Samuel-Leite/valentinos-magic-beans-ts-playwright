@@ -1,12 +1,13 @@
 import { Page, Locator } from '@playwright/test';
 import { Logger } from '../utils/logger';
+import { highlightElement } from '../utils/highlightElement';
 
 export class ElementActions {
   constructor(private page: Page) { }
 
   async click(locator: Locator): Promise<void> {
     try {
-      await this.highlightElement(locator);
+      await highlightElement(locator);
       await locator.click();
       const description = await this.describe(locator);
       Logger.debug(`Element ${description} was successfully clicked.`);
@@ -19,7 +20,7 @@ export class ElementActions {
 
   async sendKey(locator: Locator, value: string): Promise<void> {
     try {
-      await this.highlightElement(locator);
+      await highlightElement(locator);
       await locator.fill('');
       await locator.type(value);
       const description = await this.describe(locator);
@@ -28,20 +29,6 @@ export class ElementActions {
       const description = await this.describe(locator);
       Logger.error(`Failed to fill field ${description} with value "${value}": ${error.message}`);
       throw error;
-    }
-  }
-
-  private async highlightElement(locator: Locator): Promise<void> {
-    try {
-      await locator.evaluate((el) => {
-        el.style.boxShadow = 'inset 0 0 0 1000px rgba(255, 251, 2, 1)';
-        el.style.transition = 'box-shadow 0.3s ease-in-out';
-        setTimeout(() => {
-          el.style.boxShadow = '';
-        }, 1000);
-      });
-    } catch {
-      Logger.debug('Highlight failed: element could not be styled.');
     }
   }
 

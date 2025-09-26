@@ -1,5 +1,6 @@
 import { expect, Locator } from '@playwright/test';
 import { Logger } from '../utils/logger';
+import { highlightElement } from '../utils/highlightElement';
 
 export class CustomAsserts {
   /**
@@ -9,6 +10,7 @@ export class CustomAsserts {
    */
   static async assertText(locator: Locator, expected: string): Promise<void> {
     try {
+      await highlightElement(locator);
       await expect(locator).toHaveText(expected);
       const description = await this.describe(locator);
       Logger.debug(`Assertion passed: element ${description} contains expected text "${expected}".`);
@@ -25,6 +27,7 @@ export class CustomAsserts {
    */
   static async assertVisible(locator: Locator): Promise<void> {
     try {
+      await highlightElement(locator);
       await expect(locator).toBeVisible();
       const description = await this.describe(locator);
       Logger.debug(`Assertion passed: element ${description} is visible.`);
