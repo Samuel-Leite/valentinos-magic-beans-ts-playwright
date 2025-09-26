@@ -1,74 +1,96 @@
+<div align="center"><img src="https://playwright.dev/img/playwright-logo.svg" alt="Playwright Logo" width="120" /><h1>Valentino's Magic Beans - Playwright Automation</h1><p><strong>Project developed during the Playwright automation course</strong><br>Modern end-to-end testing for real-world web applications.</p><br></div>
+<div align="center"><img src="https://img.shields.io/badge/TypeScript-3178c6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" /><img src="https://img.shields.io/badge/Playwright-2ead33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright" /><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" /><img src="https://img.shields.io/badge/Husky-hooks-critical?style=for-the-badge&logo=git&logoColor=white" alt="Husky" /><img src="https://img.shields.io/badge/ESLint-code%20quality-blueviolet?style=for-the-badge&logo=eslint&logoColor=white" alt="ESLint" /><img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="MIT License" /><img src="https://img.shields.io/badge/CI-GitHub%20Actions-blue?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI" /><img src="https://img.shields.io/badge/Coverage-100%25-success?style=for-the-badge" alt="Coverage" /></div>
 
-<div align="center">
-  <img src="https://playwright.dev/img/playwright-logo.svg" alt="Playwright Logo" width="120" />
-  <h1>Valentino's Magic Beans - Playwright Automation</h1>
-  <p>
-    <strong>Projeto do curso de automação com Playwright</strong><br>
-    Testes end-to-end modernos para aplicações web.
-  </p>
-  <br>
-</div>
-<div align="center">
-  <img src="https://img.shields.io/badge/TypeScript-3178c6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/Playwright-2ead33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright" />
-  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
-  <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="MIT License" />
-  <img src="https://img.shields.io/badge/CI-GitHub%20Actions-blue?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI" />
-  <img src="https://img.shields.io/badge/Coverage-100%25-success?style=for-the-badge" alt="Coverage" />
-</div>
-## 📦 Requisitos
+## 📦 Requirements
+- Node.js
+- Playwright
+- TypeScript
+- Husky
+- Eslint e Prettier
+- Logger Winston
 
-- Node.js >= 18
-- npm >= 9
-- Playwright >= 1.40
+## 🚀 Purpose
+This project aims to validate critical functionalities of the Valentino's Magic Beans web application through robust, traceable, and scalable automated tests, with a strong focus on development best practices and code quality.
 
-## 🚀 Objetivo
-
-Este projeto tem como objetivo validar funcionalidades críticas da aplicação web Valentinos Magic Beans por meio de testes automatizados robustos, rastreáveis e escaláveis.
-
-## 📄 Licença
-
-Este projeto está sob licença MIT.
+## 📄 License
+This project is licensed under the MIT License.
 
 ---
 
-## 🚀 Sobre o Projeto
+## 🚀 About the Project
+This repository contains an end-to-end test automation suite built with <a href="https://playwright.dev/">Playwright</a>, developed as part of an automation course. The goal is to demonstrate how to create, organize, and execute automated tests for real-world web applications.
 
-Este repositório contém uma aplicação de automação de testes end-to-end utilizando <a href="https://playwright.dev/">Playwright</a>, desenvolvida durante o curso de automação. O objetivo é demonstrar como criar, organizar e executar testes automatizados em aplicações web reais.
+## 📚 Key Features
+- E2E testing with Playwright and TypeScript
+- Full purchase flow as a guest user
+- Validation of products, pricing, and order status
+- Modular and maintainable structure
+- Pre-commit hooks with Husky to ensure code quality
+- CI environment setup with GitHub Actions
 
-## 📚 Principais Recursos
-- Testes E2E com Playwright e TypeScript
-- Fluxo completo de compra como usuário convidado
-- Validação de produtos, preços, e status de pedidos
-- Estrutura modular e fácil de manter
-
-## 🛠️ Como Executar
-
-```bash
-# Instale as dependências
+## 🛠️ How to run
+```
+# Install dependencies
 npm install
 
-# Execute todos os testes
+# Run all tests
 npx playwright test
 
-# Execute um teste específico
+# Run a specific test
 npx playwright test tests/e2e/brazilian-coffee-order.spec.ts
 ```
 
-## 📂 Estrutura do Projeto
-
+## 📂 Project Structure
 ```
 valentino-magic-beans/
-├── tests/
-│   ├── e2e/
-├── playwright.config.ts
-├── package.json
-└── README.md
+├── .env                      # Variáveis de ambiente
+├── .gitignore               # Arquivos ignorados pelo Git
+├── changelog.config.js      # Configuração de changelog
+├── package.json             # Dependências e scripts
+├── package-lock.json        # Lockfile do npm
+├── playwright.config.ts     # Configuração do Playwright
+├── winston.log              # Log gerado pelos testes
+├── README.md                # Documentação do projeto
+
+├── .github/
+│   └── workflows/
+│       └── playwright.yml   # Pipeline de testes com GitHub Actions
+
+├── .husky/                  # Hooks de Git
+│   ├── commit-message
+│   ├── push.js
+│   └── _/                   # Scripts internos do Husky
+
+├── src/
+│   ├── core/                # Hooks e lógica compartilhada
+│   │   └── hooks.ts
+│   ├── pages/               # Page Objects
+│   │   ├── HomePage.ts
+│   │   └── LoginPage.ts
+│   ├── resources/
+│   │   ├── config/          # URLs por ambiente
+│   │   │   ├── url-prod.yml
+│   │   │   └── url-qa.yml
+│   │   └── data/            # Credenciais por ambiente
+│   │       ├── prod/
+│   │       │   └── credencial.yml
+│   │       └── qa/
+│   │           └── credencial.yml
+│   ├── selectors/           # Selectors centralizados
+│   │   ├── HomeSelectors.ts
+│   │   └── LoginSelectors.ts
+│   └── utils/               # Funções auxiliares
+│       ├── actions.ts
+│       ├── asserts.ts
+│       ├── highlightElement.ts
+│       ├── logger.ts
+│       └── yamlReader.ts
+
+└── tests/
+    └── login.spec.ts        # Teste de login
 ```
 
-
-## 🔗 Links Úteis
-
+## 🔗 Useful Links
 - [Documentação Playwright](https://playwright.dev/)
 - [Documentação TypeScript](https://www.typescriptlang.org/)
 - [Node.js](https://nodejs.org/)
