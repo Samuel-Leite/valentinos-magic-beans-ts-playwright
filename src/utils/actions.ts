@@ -2,14 +2,11 @@ import { Page, Locator } from '@playwright/test';
 import { Logger } from '../utils/logger';
 
 export class ElementActions {
-  constructor(private page: Page) {}
+  constructor(private page: Page) { }
 
-  /**
-   * Clicks on a given locator and logs the action using its selector or attributes.
-   * @param locator Playwright Locator
-   */
   async click(locator: Locator): Promise<void> {
     try {
+      await this.highlightElement(locator);
       await locator.click();
       const description = await this.describe(locator);
       Logger.debug(`Element ${description} was successfully clicked.`);
@@ -20,13 +17,9 @@ export class ElementActions {
     }
   }
 
-  /**
-   * Sends keys to a given locator and logs the action using its selector or attributes.
-   * @param locator Playwright Locator
-   * @param value Text to type
-   */
   async sendKey(locator: Locator, value: string): Promise<void> {
     try {
+      await this.highlightElement(locator);
       await locator.fill('');
       await locator.type(value);
       const description = await this.describe(locator);
@@ -38,9 +31,20 @@ export class ElementActions {
     }
   }
 
-  /**
-   * Attempts to describe the locator using its attributes.
-   */
+  private async highlightElement(locator: Locator): Promise<void> {
+    try {
+      await locator.evaluate((el) => {
+        el.style.boxShadow = 'inset 0 0 0 1000px rgba(255, 251, 2, 1)';
+        el.style.transition = 'box-shadow 0.3s ease-in-out';
+        setTimeout(() => {
+          el.style.boxShadow = '';
+        }, 1000);
+      });
+    } catch {
+      Logger.debug('Highlight failed: element could not be styled.');
+    }
+  }
+
   private async describe(locator: Locator): Promise<string> {
     try {
       const tag = await locator.evaluate(el => el.tagName.toLowerCase());
