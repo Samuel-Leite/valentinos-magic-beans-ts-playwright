@@ -1,37 +1,63 @@
 import { Page, Locator } from '@playwright/test';
 import { Logger } from '../utils/logger';
-import { highlightElement } from '../utils/highlightElement';
+import { CustomAsserts } from '../utils/asserts';
 
+/**
+ * Encapsulates high-level interactions with page elements,
+ * ensuring safe execution through built-in assertions and secure logging.
+ */
 export class ElementActions {
-  constructor(private page: Page) { }
+  constructor(private page: Page) {}
 
+  /**
+   * Safely clicks on the specified element.
+   * Verifies that the element is clickable before performing the action.
+   * Logs the interaction without exposing sensitive data.
+   * 
+   * @param locator - Locator pointing to the target element
+   */
   async click(locator: Locator): Promise<void> {
     try {
-      await highlightElement(locator);
+      await CustomAsserts.assertClickable(locator);
       await locator.click();
       const description = await this.describe(locator);
-      Logger.debug(`Element ${description} was successfully clicked.`);
+      Logger.secure(`Click action performed on ${description}`);
     } catch (error: any) {
       const description = await this.describe(locator);
-      Logger.error(`Failed to click element ${description}: ${error.message}`);
+      Logger.secure(`Click action failed on ${description}: ${error.message}`);
       throw error;
     }
   }
 
+  /**
+   * Safely fills a text field with the provided value.
+   * Verifies that the field is visible before interacting.
+   * Clears the field before typing and logs the action securely.
+   * 
+   * @param locator - Locator pointing to the input field
+   * @param value - Text value to be entered (not logged)
+   */
   async sendKey(locator: Locator, value: string): Promise<void> {
     try {
-      await highlightElement(locator);
+      await CustomAsserts.assertVisible(locator);
       await locator.fill('');
       await locator.type(value);
       const description = await this.describe(locator);
-      Logger.debug(`Field ${description} was successfully filled with value "${value}".`);
+      Logger.secure(`Text input completed on ${description}`);
     } catch (error: any) {
       const description = await this.describe(locator);
-      Logger.error(`Failed to fill field ${description} with value "${value}": ${error.message}`);
+      Logger.secure(`Text input failed on ${description}: ${error.message}`);
       throw error;
     }
   }
 
+  /**
+   * Generates a descriptive label for the target element,
+   * using tag name and relevant attributes for traceable logging.
+   * 
+   * @param locator - Locator pointing to the element
+   * @returns A formatted string describing the element
+   */
   private async describe(locator: Locator): Promise<string> {
     try {
       const tag = await locator.evaluate(el => el.tagName.toLowerCase());

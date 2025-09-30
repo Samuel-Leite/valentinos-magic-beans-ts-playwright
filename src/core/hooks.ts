@@ -7,74 +7,66 @@ import dotenv from 'dotenv';
 dotenv.config({ quiet: true });
 
 /**
- * Class responsible for managing global test hooks,
- * including report cleanup, initial navigation, and session teardown.
+ * Manages global test lifecycle hooks including environment setup,
+ * report cleanup, and per-test execution tracking.
  */
 class Hooks {
-  allureResultsDir: string;
-
   /**
-   * Initializes the default path for the Allure results directory.
-   */
-  constructor() {
-    this.allureResultsDir = path.join(__dirname, '..', '..', 'allure-results');
-  }
-
-  /**
-   * Deletes previous test execution report directories:
-   * - allure-results
-   * - playwright-report
-   * - test-results
+   * Deletes previous test report directories to ensure a clean run.
    */
   async cleanReports(): Promise<void> {
     const reportDirs = [
-      path.join(__dirname, '..', '..', 'allure-results'),
-      path.join(__dirname, '..', '..', 'playwright-report'),
-      path.join(__dirname, '..', '..', 'test-results'),
-    ];
+      'allure-results',
+      'playwright-report',
+      'test-results'
+    ].map(dir => path.join(__dirname, '..', '..', dir));
+
+    const deleted: string[] = [];
+    const failed: string[] = [];
 
     for (const dir of reportDirs) {
       try {
         await fs.rm(dir, { recursive: true, force: true });
-        Logger.info(`DIRECTORY: '${path.basename(dir)}' was successfully deleted`);
+        deleted.push(path.basename(dir));
       } catch (err: any) {
-        Logger.error(`DIRECTORY: failed to delete '${path.basename(dir)}': ${err.message}`);
+        failed.push(`${path.basename(dir)} (${err.message})`);
       }
     }
 
-    Logger.info('-----------------------------------------------------------------------');
+    if (deleted.length > 0) Logger.info(`Deleted directories: ${deleted.join(', ')}`);
+    if (failed.length > 0) Logger.warn(`Failed to delete: ${failed.join(', ')}`);
   }
 
   /**
-   * Runs before all tests.
-   * Logs environment variables and cleans up previous reports.
+   * Runs once before all tests.
+   * Logs environment and cleans up previous reports.
    */
   async beforeAllTests(): Promise<void> {
-    Logger.info('----------------------Environment Variables---------------------------');
-    Logger.info(`ENV: ${process.env.ENV}`);
+    Logger.info(`Environment: ${process.env.ENV}`);
     await this.cleanReports();
     Logger.clearLogFile();
   }
 
   /**
    * Runs before each test.
-   * Reads the environment URL and navigates to it.
+   * Sets execution ID and navigates to base URL.
    * @param page Playwright page instance
    */
   async beforeEachTest(page: any): Promise<void> {
-    Logger.info('--------------------------------Start---------------------------------');
+    Logger.setExecutionId(); // ✅ executionId only for test logs
+    Logger.info('Test started');
     const baseUrl = YamlReader.readUrl(process.env.ENV || 'qa');
-    Logger.info(`Loaded URL: ${baseUrl}`);
+    Logger.info(`URL loaded: ${baseUrl}`);
     await page.goto(baseUrl);
   }
 
   /**
    * Runs after each test.
-   * Closes the Playwright page instance.
+   * Closes the page and logs completion.
    * @param page Playwright page instance
    */
   async afterEachTest(page: any): Promise<void> {
-    Logger.info('--------------------------------End----------------------------------');
+    Logger.info('Test ended');
     await page.close();
   }
 }

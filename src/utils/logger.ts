@@ -1,15 +1,19 @@
 import fs from 'fs';
+import crypto from 'crypto';
 import { createLogger, format, transports, Logger as WinstonLogger } from 'winston';
 import dotenv from 'dotenv';
 dotenv.config({ quiet: true });
 
 /**
- * Utility class for centralized log management using Winston.
- * Allows logging messages to both console and file, and supports log file cleanup.
+ * Centralized logging utility using Winston.
+ * Supports secure logging, session tracking, and automatic sanitization of sensitive data.
  */
 export class Logger {
+  private static sessionId: string = crypto.randomUUID();
+  private static executionId: string = '';
+
   /**
-   * Internal Winston logger instance configured with timestamp and output to console and file.
+   * Internal Winston logger instance configured with timestamp and contextual identifiers.
    */
   private static logger: WinstonLogger = createLogger({
     level: 'debug',
@@ -17,9 +21,9 @@ export class Logger {
       format.timestamp(),
       format.printf(({ timestamp, level, message }) => {
         const env = process.env.ENV || 'unknown';
-        const uuid = crypto.randomUUID(); // Native UUID generator (Node.js 16+)
-        const safeMessage = typeof message === 'string' ? message : String(message);
-        return `[ ${env} | ${timestamp} | ${uuid} ] [${level.toUpperCase()}] ${safeMessage}`;
+        const id = Logger.executionId || Logger.sessionId;
+        const safeMessage = typeof message === 'string' ? Logger.sanitize(message) : String(message);
+        return `[ ${env} | ${timestamp} | ${id} ] [${level.toUpperCase()}] ${safeMessage}`;
       })
     ),
     transports: [
@@ -29,46 +33,60 @@ export class Logger {
   });
 
   /**
-   * Clears the contents of the `winston.log` file and logs the action.
+   * Sets a unique execution ID for the current test.
+   * Called before each test to isolate logs per test case.
+   * @param id Optional custom ID
+   */
+  static setExecutionId(id?: string): void {
+    Logger.executionId = id || crypto.randomUUID();
+  }
+
+  /**
+   * Clears the contents of the log file.
    */
   static clearLogFile(): void {
     try {
       fs.writeFileSync('winston.log', '', 'utf8');
-      Logger.logger.info('WINSTON: log file was successfully cleared and reset');
+      Logger.logger.info('Log file cleared and reset');
     } catch (error: any) {
-      Logger.logger.error(`WINSTON: failed to clear and reset log file: ${error.message}`);
+      Logger.logger.error(`Failed to clear log file: ${error.message}`);
     }
   }
 
-  /**
-   * Logs a `debug` level message.
-   * @param message The message to be logged
-   */
   static debug(message: string): void {
     Logger.logger.debug(message);
   }
 
-  /**
-   * Logs an `info` level message.
-   * @param message The message to be logged
-   */
   static info(message: string): void {
     Logger.logger.info(message);
   }
 
-  /**
-   * Logs a `warn` level message.
-   * @param message The message to be logged
-   */
   static warn(message: string): void {
     Logger.logger.warn(message);
   }
 
-  /**
-   * Logs an `error` level message.
-   * @param message The error message to be logged
-   */
   static error(message: string): void {
     Logger.logger.error(message);
+  }
+
+  /**
+   * Logs a sanitized debug message, removing sensitive content.
+   * @param message The message to be logged
+   */
+  static secure(message: string): void {
+    Logger.logger.debug(Logger.sanitize(message));
+  }
+
+  /**
+   * Sanitizes sensitive content from log messages using regex.
+   * @param message Raw log message
+   * @returns Sanitized message
+   */
+  private static sanitize(message: string): string {
+    return message
+      .replace(/([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, '***@***.com') // email
+      .replace(/\b\d{3}\.\d{3}\.\d{3}-\d{2}\b/g, '***.***.***-**') // CPF
+      .replace(/(["']?password["']?\s*[:=]\s*["']?).+?(["'])/gi, '$1******$2') // password
+      .replace(/\bBearer\s+[a-zA-Z0-9\-._~+/]+=*/gi, 'Bearer ******'); // token
   }
 }
