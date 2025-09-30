@@ -19,7 +19,7 @@ jobs:
       - name: 🧰 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # ou lts/* para sempre usar o LTS mais recente
+          node-version: '20'
 
       - name: 📦 Restore npm cache
         uses: actions/cache@v4
