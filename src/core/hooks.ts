@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, TestInfo } from '@playwright/test';
 import { YamlReader } from '../utils/yamlReader';
 import { Logger } from '../utils/logger';
 import fs from 'fs/promises';
@@ -50,11 +50,13 @@ class Hooks {
   /**
    * Runs before each test.
    * Sets execution ID and navigates to base URL.
+   * Logs the name of the test scenario.
    * @param page Playwright page instance
+   * @param testInfo Playwright test metadata
    */
-  async beforeEachTest(page: any): Promise<void> {
+  async beforeEachTest(page: any, testInfo: TestInfo): Promise<void> {
     Logger.setExecutionId(); // ✅ executionId only for test logs
-    Logger.info('Test started');
+    Logger.info(`Test started: ${testInfo.title}`);
     const baseUrl = YamlReader.readUrl(process.env.ENV || 'qa');
     Logger.info(`URL loaded: ${baseUrl}`);
     await page.goto(baseUrl);
@@ -62,11 +64,12 @@ class Hooks {
 
   /**
    * Runs after each test.
-   * Closes the page and logs completion.
+   * Closes the page and logs completion with test name.
    * @param page Playwright page instance
+   * @param testInfo Playwright test metadata
    */
-  async afterEachTest(page: any): Promise<void> {
-    Logger.info('Test ended');
+  async afterEachTest(page: any, testInfo: TestInfo): Promise<void> {
+    Logger.info(`Test ended: ${testInfo.title}`);
     await page.close();
   }
 }
@@ -77,12 +80,12 @@ test.beforeAll(async () => {
   await hooks.beforeAllTests();
 });
 
-test.beforeEach(async ({ page }) => {
-  await hooks.beforeEachTest(page);
+test.beforeEach(async ({ page }, testInfo) => {
+  await hooks.beforeEachTest(page, testInfo);
 });
 
-test.afterEach(async ({ page }) => {
-  await hooks.afterEachTest(page);
+test.afterEach(async ({ page }, testInfo) => {
+  await hooks.afterEachTest(page, testInfo);
 });
 
 export default Hooks;
