@@ -2,10 +2,14 @@ import { expect, Locator } from '@playwright/test';
 import { Logger } from '../utils/logger';
 import { highlightElement } from '../utils/highlightElement';
 
+/**
+ * Provides reusable assertion methods for Playwright locators,
+ * with secure logging and visual highlighting.
+ */
 export class CustomAsserts {
   /**
-   * Asserts that the element contains the expected text and logs the result.
-   * @param locator Playwright Locator
+   * Asserts that the element contains the expected text.
+   * @param locator Target element
    * @param expected Expected text value
    */
   static async assertText(locator: Locator, expected: string): Promise<void> {
@@ -13,33 +17,54 @@ export class CustomAsserts {
       await highlightElement(locator);
       await expect(locator).toHaveText(expected);
       const description = await this.describe(locator);
-      Logger.debug(`Assertion passed: element ${description} contains expected text "${expected}".`);
+      Logger.secure(`Assertion passed: ${description} contains expected text.`);
     } catch (error: any) {
       const description = await this.describe(locator);
-      Logger.error(`Assertion failed: expected text "${expected}" not found in element ${description}: ${error.message}`);
+      Logger.secure(`Assertion failed: ${description} does not contain expected text: ${error.message}`);
       throw error;
     }
   }
 
   /**
-   * Asserts that the element is visible and logs the result.
-   * @param locator Playwright Locator
+   * Asserts that the element is visible on the page.
+   * @param locator Target element
    */
   static async assertVisible(locator: Locator): Promise<void> {
     try {
       await highlightElement(locator);
       await expect(locator).toBeVisible();
       const description = await this.describe(locator);
-      Logger.debug(`Assertion passed: element ${description} is visible.`);
+      Logger.secure(`Assertion passed: ${description} is visible.`);
     } catch (error: any) {
       const description = await this.describe(locator);
-      Logger.error(`Assertion failed: element ${description} is not visible: ${error.message}`);
+      Logger.secure(`Assertion failed: ${description} is not visible: ${error.message}`);
       throw error;
     }
   }
 
   /**
-   * Attempts to describe the locator using its attributes.
+   * Asserts that the element is clickable (visible, enabled, and not obstructed).
+   * @param locator Target element
+   */
+  static async assertClickable(locator: Locator): Promise<void> {
+    try {
+      await highlightElement(locator);
+      await expect(locator).toBeVisible();
+      await expect(locator).toBeEnabled();
+      await locator.click({ trial: true });
+      const description = await this.describe(locator);
+      Logger.secure(`Assertion passed: ${description} is clickable.`);
+    } catch (error: any) {
+      const description = await this.describe(locator);
+      Logger.secure(`Assertion failed: ${description} is not clickable: ${error.message}`);
+      throw error;
+    }
+  }
+
+  /**
+   * Generates a readable description of the element for logging.
+   * @param locator Target element
+   * @returns Description string
    */
   private static async describe(locator: Locator): Promise<string> {
     try {
