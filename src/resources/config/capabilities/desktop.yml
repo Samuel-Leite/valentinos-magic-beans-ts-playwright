@@ -3,7 +3,6 @@ os: Windows
 osVersion: 11
 browserVersion: latest
 resolution: 1920x1080
-buildName: Playwright Desktop Build
 consoleLogs: info
 networkLogs: true
 video: true
@@ -13,5 +12,3 @@ smartWait: true
 debug: true
 interactiveDebugging: true
 local: false
-projectName: Valentino Beans
-sessionName: Checkout Flow - Desktop
