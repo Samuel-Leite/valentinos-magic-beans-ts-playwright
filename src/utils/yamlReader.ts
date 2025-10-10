@@ -21,10 +21,10 @@ export class YamlReader {
     try {
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const parsed = yaml.load(fileContents) as { url: string };
-      Logger.info(`The URL for environment '${environment}' was successfully retrieved from the YAML file`);
+      Logger.info(`Environment URL '${environment}' was successfully accessed from YAML file`);
       return parsed.url;
     } catch (error: any) {
-      Logger.error(`Failed to retrieve the URL for environment '${environment}': ${error.message}`);
+      Logger.error(`Failed to access environment URL '${environment}': ${error.message}`);
       throw error;
     }
   }
@@ -41,7 +41,7 @@ export class YamlReader {
     try {
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const data = yaml.load(fileContents) as Record<string, any>;
-      Logger.info(`YAML block '${key}' was successfully loaded`);
+      Logger.info(`YAML data '${key}' loaded successfully`);
 
       const obj = data[key];
       if (!obj || typeof obj !== 'object') {
@@ -50,7 +50,7 @@ export class YamlReader {
 
       return obj;
     } catch (error: any) {
-      Logger.error(`Failed to retrieve YAML block '${key}': ${error.message}`);
+      Logger.error(`Failed to retrieve YAML data '${key}': ${error.message}`);
       throw error;
     }
   }

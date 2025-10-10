@@ -43,7 +43,6 @@ class Hooks {
    * Logs environment and cleans up previous reports.
    */
   async beforeAllTests(): Promise<void> {
-    Logger.info(`Environment: ${process.env.RUN_ENV}`);
     await this.cleanReports();
     Logger.clearLogFile();
   }
@@ -59,7 +58,6 @@ class Hooks {
     Logger.setExecutionId(); // ✅ executionId only for test logs
     Logger.info(`Test started: ${testInfo.title}`);
     const baseUrl = YamlReader.readUrl(process.env.ENV || 'qa');
-    Logger.info(`URL loaded: ${baseUrl}`);
     await page.goto(baseUrl);
   }
 
