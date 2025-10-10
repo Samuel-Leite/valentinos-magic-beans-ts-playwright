@@ -34,8 +34,12 @@ class Hooks {
       }
     }
 
-    if (deleted.length > 0) Logger.info(`Deleted directories: ${deleted.join(', ')}`);
-    if (failed.length > 0) Logger.warn(`Failed to delete: ${failed.join(', ')}`);
+    if (deleted.length > 0) {
+      Logger.info(`[Hooks] Deleted report directories: ${deleted.join(', ')}`);
+    }
+    if (failed.length > 0) {
+      Logger.warn(`[Hooks] Failed to delete report directories: ${failed.join(', ')}`);
+    }
   }
 
   /**
@@ -45,6 +49,7 @@ class Hooks {
   async beforeAllTests(): Promise<void> {
     await this.cleanReports();
     Logger.clearLogFile();
+    Logger.info(`[Hooks] Log file cleared and test environment initialized.`);
   }
 
   /**
@@ -55,9 +60,10 @@ class Hooks {
    * @param testInfo Playwright test metadata
    */
   async beforeEachTest(page: any, testInfo: TestInfo): Promise<void> {
-    Logger.setExecutionId(); // ✅ executionId only for test logs
-    Logger.info(`Test started: ${testInfo.title}`);
+    Logger.setExecutionId(); // executionId only for test logs
+    Logger.info(`[Hooks] Test started: ${testInfo.title}`);
     const baseUrl = YamlReader.readUrl(process.env.ENV || 'qa');
+    Logger.info(`[YamlReader] Environment URL '${process.env.ENV || 'qa'}' successfully accessed from YAML file`);
     await page.goto(baseUrl);
   }
 
@@ -68,9 +74,11 @@ class Hooks {
    * @param testInfo Playwright test metadata
    */
   async afterEachTest(page: any, testInfo: TestInfo): Promise<void> {
-    Logger.info(`Test ended: ${testInfo.title}`);
+    Logger.info(`[Hooks] Test ended: ${testInfo.title}`);
     await BrowserStackStatus.updateFromTestInfo(page, testInfo);
+    Logger.info(`[BrowserStackStatus] Status updated for test: ${testInfo.title}`);
     await page.close();
+    Logger.info(`[Hooks] Page instance closed.`);
   }
 }
 

@@ -16,9 +16,9 @@ export class BrowserStackStatus {
       };
 
       await page.evaluate(() => {}, `browserstack_executor: ${JSON.stringify(payload)}`);
-      Logger.info(`[BrowserStack] status updated: ${status}`);
+      Logger.info(`[BrowserStackStatus] Session status updated: ${status}`);
     } catch (err: any) {
-      Logger.warn(`[BrowserStack] Failed to update BrowserStack status: ${err.message}`);
+      Logger.warn(`[BrowserStackStatus] Failed to update session status: ${err.message}`);
     }
   }
 
@@ -28,13 +28,14 @@ export class BrowserStackStatus {
    */
   static async updateFromTestInfo(page: Page, testInfo: TestInfo): Promise<void> {
     if (testInfo.status === 'skipped') {
-      Logger.info('[BrowserStack] Test was skipped — no status sent to BrowserStack');
+      Logger.info(`[BrowserStackStatus] Test was skipped — no status update sent`);
       return;
     }
 
     const status: 'passed' | 'failed' = testInfo.status === 'passed' ? 'passed' : 'failed';
     const reason = this.generateReason(testInfo);
 
+    Logger.info(`[BrowserStackStatus] Determined status: ${status} | Reason: ${reason}`);
     await this.update(page, status, reason);
   }
 

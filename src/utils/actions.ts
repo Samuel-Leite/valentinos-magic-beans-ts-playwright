@@ -20,9 +20,9 @@ export class ElementActions {
     try {
       await CustomAsserts.assertClickable(locator);
       await locator.click();
-      Logger.secure(`Click action performed on ${locator}`);
+      Logger.secure(`[ElementActions] Click action performed on ${locator}`);
     } catch (error: any) {
-      Logger.secure(`Click action failed on ${locator}: ${error.message}`);
+      Logger.secure(`[ElementActions] Click action failed on ${locator}: ${error.message}`);
       throw error;
     }
   }
@@ -40,9 +40,9 @@ export class ElementActions {
       await CustomAsserts.assertVisible(locator);
       await locator.fill('');
       await locator.type(value);
-      Logger.secure(`Text input completed on ${locator}`);
+      Logger.secure(`[ElementActions] Text input completed on ${locator}`);
     } catch (error: any) {
-      Logger.secure(`Text input failed on ${locator}: ${error.message}`);
+      Logger.secure(`[ElementActions] Text input failed on ${locator}: ${error.message}`);
       throw error;
     }
   }

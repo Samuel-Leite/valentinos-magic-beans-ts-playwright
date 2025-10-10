@@ -47,9 +47,9 @@ export class Logger {
   static clearLogFile(): void {
     try {
       fs.writeFileSync('winston.log', '', 'utf8');
-      Logger.logger.info('Log file cleared and reset');
+      Logger.logger.info(`[Logger] Log file cleared and reset`);
     } catch (error: any) {
-      Logger.logger.error(`Failed to clear log file: ${error.message}`);
+      Logger.logger.error(`[Logger] Failed to clear log file: ${error.message}`);
     }
   }
 

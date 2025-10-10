@@ -16,14 +16,14 @@ class RemoteRunner {
    * @param testInfo - Metadata about the current test
    */
   private async createRemoteContext(testInfo: TestInfo): Promise<BrowserContext> {
-    Logger.info(`Initializing remote browser context via BrowserStack...`);
+    Logger.info(`[RemoteRunner] Initializing remote browser context via BrowserStack...`);
     const builder = new EndpointBuilder();
     const wsEndpoint = builder.build(process.env.DEVICE || 'desktop', testInfo.title);
     const browser = await chromium.connect({ wsEndpoint });
     const context = await browser.newContext();
     // Store browser instance for cleanup
     (context as any)._browser = browser;
-    Logger.info(`Remote browser context successfully established.`);
+    Logger.info(`[RemoteRunner] Remote browser context successfully established.`);
     return context;
   }
 
@@ -31,12 +31,12 @@ class RemoteRunner {
    * Creates a local browser context using a locally launched Chromium instance.
    */
   private async createLocalContext(): Promise<BrowserContext> {
-    Logger.info(`Launching local Chromium instance...`);
+    Logger.info(`[RemoteRunner] Launching local Chromium instance...`);
     const browser = await chromium.launch({ headless: false });
     const context = await browser.newContext();
     // Store browser instance for cleanup
     (context as any)._browser = browser;
-    Logger.info(`Local browser context successfully established.`);
+    Logger.info(`[RemoteRunner] Local browser context successfully established.`);
     return context;
   }
 
@@ -50,10 +50,10 @@ class RemoteRunner {
     const isRemote = process.env.RUN_REMOTE === 'true';
 
     if (isRemote) {
-      Logger.info(`Test execution mode: Remote (BrowserStack).`);
+      Logger.info(`[RemoteRunner] Test execution mode: Remote (BrowserStack).`);
       return await this.createRemoteContext(testInfo);
     } else {
-      Logger.info(`Test execution mode: Local (Chromium).`);
+      Logger.info(`[RemoteRunner] Test execution mode: Local (Chromium).`);
       return await this.createLocalContext();
     }
   }
@@ -63,9 +63,9 @@ class RemoteRunner {
    * @param context - The browser context to use
    */
   public async createPage(context: BrowserContext): Promise<Page> {
-    Logger.info(`Opening new page within browser context...`);
+    Logger.info(`[RemoteRunner] Opening new page within browser context...`);
     const page = await context.newPage();
-    Logger.info(`Page successfully initialized.`);
+    Logger.info(`[RemoteRunner] Page successfully initialized.`);
     return page;
   }
 
@@ -74,11 +74,11 @@ class RemoteRunner {
    * @param context - The browser context to close
    */
   public async closeContext(context: BrowserContext): Promise<void> {
-    Logger.info(`Initiating browser context shutdown...`);
+    Logger.info(`[RemoteRunner] Initiating browser context shutdown...`);
     const browser = (context as any)._browser;
     await context.close();
     if (browser) await browser.close();
-    Logger.info(`Browser context and instance successfully terminated.`);
+    Logger.info(`[RemoteRunner] Browser context and instance successfully terminated.`);
   }
 
   /**
