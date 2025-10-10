@@ -17,6 +17,6 @@ export async function highlightElement(locator: Locator, color: string = 'rgba(2
       }, 1000);
     }, color);
   } catch {
-    Logger.error('Highlight failed: element could not be styled.');
+    Logger.error(`[HighlightElement] Highlight failed: element could not be styled.`);
   }
 }

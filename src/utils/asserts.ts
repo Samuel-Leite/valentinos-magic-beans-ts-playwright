@@ -16,9 +16,9 @@ export class CustomAsserts {
     try {
       await highlightElement(locator);
       await expect(locator).toHaveText(expected);
-      Logger.secure(`Assertion passed: ${locator} contains expected text.`);
+      Logger.secure(`[CustomAsserts] Assertion passed: ${locator} contains expected text.`);
     } catch (error: any) {
-      Logger.secure(`Assertion failed: ${locator} does not contain expected text: ${error.message}`);
+      Logger.secure(`[CustomAsserts] Assertion failed: ${locator} does not contain expected text: ${error.message}`);
       throw error;
     }
   }
@@ -31,9 +31,9 @@ export class CustomAsserts {
     try {
       await highlightElement(locator);
       await expect(locator).toBeVisible();
-      Logger.secure(`Assertion passed: ${locator} is visible.`);
+      Logger.secure(`[CustomAsserts] Assertion passed: ${locator} is visible.`);
     } catch (error: any) {
-      Logger.secure(`Assertion failed: ${locator} is not visible: ${error.message}`);
+      Logger.secure(`[CustomAsserts] Assertion failed: ${locator} is not visible: ${error.message}`);
       throw error;
     }
   }
@@ -47,9 +47,9 @@ export class CustomAsserts {
       await highlightElement(locator);
       await expect(locator).toBeEnabled();
       await locator.click({ trial: true });
-      Logger.secure(`Assertion passed: ${locator} is clickable.`);
+      Logger.secure(`[CustomAsserts] Assertion passed: ${locator} is clickable.`);
     } catch (error: any) {
-      Logger.secure(`Assertion failed: ${locator} is not clickable: ${error.message}`);
+      Logger.secure(`[CustomAsserts] Assertion failed: ${locator} is not clickable: ${error.message}`);
       throw error;
     }
   }

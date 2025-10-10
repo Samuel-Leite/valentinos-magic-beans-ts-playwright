@@ -28,9 +28,10 @@ export class EndpointBuilder {
       throw new Error(`[EndpointBuilder] Capabilities file for device '${deviceName}' not found.`);
     }
 
-    Logger.info(`[EndpointBuilder] Capabilities loaded for device: ${deviceName}`);
+    Logger.info(`[EndpointBuilder] Capabilities file successfully located for device: ${deviceName}`);
 
     const caps = YamlReader.readCapabilities(deviceName);
+    Logger.info(`[EndpointBuilder] Capabilities successfully parsed from YAML for device: ${deviceName}`);
 
     const finalCaps = {
       ...caps,
@@ -41,7 +42,10 @@ export class EndpointBuilder {
       'browserstack.accessKey': process.env.BROWSERSTACK_ACCESS_KEY,
     };
 
+    Logger.info(`[EndpointBuilder] Final capabilities assembled for test: ${testName}`);
     const encoded = encodeURIComponent(JSON.stringify(finalCaps));
+    Logger.info(`[EndpointBuilder] Capabilities successfully encoded for WebSocket transmission`);
+
     return `wss://cdp.browserstack.com/playwright?caps=${encoded}`;
   }
 }

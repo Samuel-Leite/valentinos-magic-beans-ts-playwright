@@ -9,7 +9,6 @@ dotenv.config({ quiet: true });
  * Utility class for reading configuration and data from YAML files.
  */
 export class YamlReader {
-
   /**
    * Reads the base URL for a specific environment from a YAML configuration file.
    * @param environment Name of the environment (e.g., 'qa', 'prod')
@@ -21,10 +20,10 @@ export class YamlReader {
     try {
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const parsed = yaml.load(fileContents) as { url: string };
-      Logger.info(`The URL for environment '${environment}' was successfully retrieved from the YAML file`);
+      Logger.info(`[YamlReader] Environment URL '${environment}' successfully retrieved from YAML`);
       return parsed.url;
     } catch (error: any) {
-      Logger.error(`Failed to retrieve the URL for environment '${environment}': ${error.message}`);
+      Logger.error(`[YamlReader] Failed to retrieve environment URL '${environment}': ${error.message}`);
       throw error;
     }
   }
@@ -41,7 +40,7 @@ export class YamlReader {
     try {
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const data = yaml.load(fileContents) as Record<string, any>;
-      Logger.info(`YAML block '${key}' was successfully loaded`);
+      Logger.info(`[YamlReader] YAML block '${key}' successfully loaded`);
 
       const obj = data[key];
       if (!obj || typeof obj !== 'object') {
@@ -50,26 +49,26 @@ export class YamlReader {
 
       return obj;
     } catch (error: any) {
-      Logger.error(`Failed to retrieve YAML block '${key}': ${error.message}`);
+      Logger.error(`[YamlReader] Failed to retrieve YAML block '${key}': ${error.message}`);
       throw error;
     }
   }
 
   /**
- * Reads BrowserStack capabilities from a YAML file based on the selected device.
- * @param device Device name (e.g., 'desktop', 'mobile', 'tablet')
- * @returns Object containing the capabilities
- */
+   * Reads BrowserStack capabilities from a YAML file based on the selected device.
+   * @param device Device name (e.g., 'desktop', 'mobile', 'tablet')
+   * @returns Object containing the capabilities
+   */
   static readCapabilities(device: string): Record<string, any> {
     const filePath = path.resolve(__dirname, `../resources/config/capabilities/${device}.yml`);
 
     try {
       const fileContents = fs.readFileSync(filePath, 'utf8');
       const capabilities = yaml.load(fileContents) as Record<string, any>;
-      Logger.info(`[BrowserStack] Capabilities for device '${device}' were successfully loaded`);
+      Logger.info(`[YamlReader] Capabilities for device '${device}' successfully loaded`);
       return capabilities;
     } catch (error: any) {
-      Logger.error(`[BrowserStack] Failed to load capabilities for device '${device}': ${error.message}`);
+      Logger.error(`[YamlReader] Failed to load capabilities for device '${device}': ${error.message}`);
       throw error;
     }
   }

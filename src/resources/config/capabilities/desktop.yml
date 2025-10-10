@@ -7,7 +7,7 @@ consoleLogs: info
 networkLogs: true
 video: true
 screenshot: true
-selfHealing: true
+selfHeal: true
 smartWait: true
 debug: true
 interactiveDebugging: true
