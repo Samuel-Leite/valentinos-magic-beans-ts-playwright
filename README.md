@@ -40,6 +40,18 @@ npm run test
 npm run tag -- '@tag_name'
 ```
 
+## 🛠️ Environment Variables (.env)
+
+```
+RUN_ENV=                 # Environment name (e.g., qa, prod)
+RUN_REMOTE=              # true to run tests on BrowserStack, false for local
+DEVICE=desktop           # Device profile name (e.g., desktop, mobile, tablet)
+BROWSERSTACK_USERNAME=   # Your BrowserStack username
+BROWSERSTACK_ACCESS_KEY= # Your BrowserStack access key
+BUILD_NAME=""            # Optional: name of the build shown in BrowserStack
+PROJECT_NAME=""          # Optional: name of the project shown in BrowserStack
+```
+
 ## 📂 Project Structure
 ```
 valentino-magic-beans/
