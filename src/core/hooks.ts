@@ -3,7 +3,7 @@ import { YamlReader } from '../utils/yamlReader';
 import { Logger } from '../utils/logger';
 import { BrowserStackStatus } from '../integrations/browserstack/browserstackStatus';
 import { runTestCaseStart, runTestCaseFinished } from '../integrations/azure/AzureTestCaseService';
-import { TestMetadataParser } from '../integrations/azure/TestMetadataParser';
+import { TestMetadataParser } from '../integrations/azure/TestMetadataParse';
 import fs from 'fs/promises';
 import path from 'path';
 import dotenv from 'dotenv';
