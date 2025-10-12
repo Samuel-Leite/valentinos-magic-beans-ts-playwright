@@ -32,6 +32,7 @@ This repository contains an end-to-end test automation suite built with <a href=
 ```
 # Install dependencies
 npm install
+npx playwright install
 
 # Run all tests
 npm run test
