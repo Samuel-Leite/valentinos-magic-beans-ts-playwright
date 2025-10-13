@@ -1,11 +1,29 @@
-<div align="center"><img src="https://playwright.dev/img/playwright-logo.svg" alt="Playwright Logo" width="120" /><h1>Valentino's Magic Beans - Playwright Automation</h1><p><strong>Project developed during the Playwright automation course</strong><br>Modern end-to-end testing for real-world web applications.</p><br></div>
-<div align="center"><img src="https://img.shields.io/badge/TypeScript-3178c6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" /><img src="https://img.shields.io/badge/Playwright-2ead33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright" /><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" /><img src="https://img.shields.io/badge/Husky-hooks-critical?style=for-the-badge&logo=git&logoColor=white" alt="Husky" /><img src="https://img.shields.io/badge/ESLint-code%20quality-blueviolet?style=for-the-badge&logo=eslint&logoColor=white" alt="ESLint" /><img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="MIT License" /><img src="https://img.shields.io/badge/CI-GitHub%20Actions-blue?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI" /><img src="https://img.shields.io/badge/Coverage-100%25-success?style=for-the-badge" alt="Coverage" /></div>
+<div align="center">
+  <img src="https://playwright.dev/img/playwright-logo.svg" alt="Playwright Logo" width="120" />
+  <h1>Valentino's Magic Beans - Playwright Automation</h1>
+  <p><strong>Project developed during the Playwright automation course</strong><br>Modern end-to-end testing for real-world web applications.</p><br>
+</div>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/TypeScript-3178c6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Playwright-2ead33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright" />
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Husky-hooks-critical?style=for-the-badge&logo=git&logoColor=white" alt="Husky" />
+  <img src="https://img.shields.io/badge/ESLint-code%20quality-blueviolet?style=for-the-badge&logo=eslint&logoColor=white" alt="ESLint" />
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="MIT License" />
+  <img src="https://img.shields.io/badge/CI-GitHub%20Actions-blue?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI" />
+  <img src="https://img.shields.io/badge/Coverage-100%25-success?style=for-the-badge" alt="Coverage" />
+  <img src="https://img.shields.io/badge/BrowserStack-integrated-orange?style=for-the-badge&logo=browserstack&logoColor=white" alt="BrowserStack" />
+  <img src="https://img.shields.io/badge/Azure%20DevOps-Test%20Plans-0078D7?style=for-the-badge&logo=azuredevops&logoColor=white" alt="Azure DevOps Test Plans" />
+</div>
 
 ## 📦 Requirements
 - Node.js
 - Playwright
 - TypeScript
 - Husky
+- BrowserStack
+- TestPlan - Azure DevOps
 - Eslint e Prettier
 - Logger Winston
 
@@ -27,28 +45,8 @@ This repository contains an end-to-end test automation suite built with <a href=
 - Modular and maintainable structure
 - Pre-commit hooks with Husky to ensure code quality
 - CI environment setup with GitHub Actions
-
-## 🔗 Azure DevOps Integration
-
-This project supports native integration with **Azure DevOps Test Plans**, allowing automated test results, attachments, and execution status to be published directly to Azure.
-
-### 🧩 How it works
-
-Each test must include metadata annotations in its title to link it to a specific test case in Azure DevOps:
-
-```
-test('@PLAN_ID=123 @SUITE_ID=456 @[789] Validate successful login', async ({ page }) => {
-  // Test logic here
-});
-```
-
-- @PLAN_ID=123 → ID of the Test Plan in Azure DevOps
-- @SUITE_ID=456 → ID of the Test Suite inside the plan
-- @[789] → ID of the Test Case to be updated
-
-These annotations are parsed automatically by the TestMetadataParser and used to:
-- Activate the test case before execution
-- Publish the result (Passed/Failed/Skipped)
+- Remote test execution via BrowserStack and local test execution
+- Native integration with Azure DevOps Test Plans
 
 ## 🛠️ How to run
 ```
@@ -85,6 +83,45 @@ AZURE_ORGANIZATION=        # Azure DevOps organization name
 AZURE_PROJECT=             # Azure DevOps project name
 AZURE_TOKEN=               # Personal Access Token (PAT) for Azure DevOps API
 
+```
+
+## 🔗 Azure DevOps Integration
+
+This project supports native integration with **Azure DevOps Test Plans**, allowing automated test results, attachments, and execution status to be published directly to Azure.
+
+### 🧩 How it works
+
+Each test must include metadata annotations in its title to link it to a specific test case in Azure DevOps:
+
+```
+test('@PLAN_ID=123 @SUITE_ID=456 @[789] Validate successful login', async ({ page }) => {
+  // Test logic here
+});
+```
+
+- @PLAN_ID=123 → ID of the Test Plan in Azure DevOps
+- @SUITE_ID=456 → ID of the Test Suite inside the plan
+- @[789] → ID of the Test Case to be updated
+
+These annotations are parsed automatically by the TestMetadataParser and used to:
+- Activate the test case before execution
+- Publish the result (Passed/Failed/Skipped)
+
+## 🌐 Running Tests on BrowserStack
+
+This project supports remote test execution via BrowserStack, allowing you to run your Playwright tests on real browsers and devices in the cloud.
+
+### ⚙️ How to enable BrowserStack execution
+
+To run your tests on BrowserStack, simply update the following variables in your .env file:
+
+```
+RUN_REMOTE=true                      # Enables remote execution
+DEVICE=desktop                       # Device profile to use (e.g., desktop, mobile)
+BROWSERSTACK_USERNAME=your_username # Your BrowserStack username
+BROWSERSTACK_ACCESS_KEY=your_key    # Your BrowserStack access key
+BUILD_NAME="Your Build Name"        # Optional: name shown in BrowserStack dashboard
+PROJECT_NAME="Your Project Name"    # Optional: name shown in BrowserStack dashboard
 ```
 
 ## 📂 Project Structure
