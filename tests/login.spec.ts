@@ -4,7 +4,7 @@ import { HomePage } from '../src/pages/HomePage';
 import { YamlReader } from '../src/utils/yamlReader';
 import '../src/core/hooks';
 
-test('@wip Validar a efetuação do login com sucesso', async ({ page }) => {
+test('@PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com sucesso', async ({ page }) => {
 
   const loginPage = new LoginPage(page);
   const homePage = new HomePage(page);
