@@ -28,6 +28,29 @@ This repository contains an end-to-end test automation suite built with <a href=
 - Pre-commit hooks with Husky to ensure code quality
 - CI environment setup with GitHub Actions
 
+## 🔗 Azure DevOps Integration
+
+This project supports native integration with **Azure DevOps Test Plans**, allowing automated test results, attachments, and execution status to be published directly to Azure.
+
+### 🧩 How it works
+
+Each test must include metadata annotations in its title to link it to a specific test case in Azure DevOps:
+
+```
+test('@PLAN_ID=123 @SUITE_ID=456 @[789] Validate successful login', async ({ page }) => {
+  // Test logic here
+});
+```
+
+- @PLAN_ID=123 → ID of the Test Plan in Azure DevOps
+- @SUITE_ID=456 → ID of the Test Suite inside the plan
+- @[789] → ID of the Test Case to be updated
+
+These annotations are parsed automatically by the TestMetadataParser and used to:
+- Activate the test case before execution
+- Publish the result (Passed/Failed/Skipped)
+```
+
 ## 🛠️ How to run
 ```
 # Install dependencies
@@ -44,65 +67,91 @@ npm run tag -- '@tag_name'
 ## 🛠️ Environment Variables (.env)
 
 ```
-RUN_ENV=                 # Environment name (e.g., qa, prod)
-RUN_REMOTE=              # true to run tests on BrowserStack, false for local
-DEVICE=desktop           # Device profile name (e.g., desktop, mobile, tablet)
-BROWSERSTACK_USERNAME=   # Your BrowserStack username
-BROWSERSTACK_ACCESS_KEY= # Your BrowserStack access key
-BUILD_NAME=""            # Optional: name of the build shown in BrowserStack
-PROJECT_NAME=""          # Optional: name of the project shown in BrowserStack
+#### 🌐 Execution Environment
+RUN_ENV=                   # Target environment for test execution (e.g., qa, prod, staging)
+
+#### 🧪 Execution Mode
+RUN_REMOTE=                # Set to true to run tests remotely via BrowserStack; false for local execution
+DEVICE=                    # Device profile to use (e.g., desktop, mobile, tablet)
+
+#### 🌍 BrowserStack Integration
+BROWSERSTACK_USERNAME=     # Your BrowserStack username
+BROWSERSTACK_ACCESS_KEY=   # Your BrowserStack access key
+BUILD_NAME=                # Optional: name of the build shown in BrowserStack dashboard
+PROJECT_NAME=              # Optional: name of the project shown in BrowserStack dashboard
+
+#### 🔗 Azure DevOps Integration
+AZURE_HOST=                # Azure DevOps host URL
+AZURE_ORGANIZATION=        # Azure DevOps organization name
+AZURE_PROJECT=             # Azure DevOps project name
+AZURE_TOKEN=               # Personal Access Token (PAT) for Azure DevOps API
+
 ```
 
 ## 📂 Project Structure
 ```
 valentino-magic-beans/
-├── .github/
-│   └── workflows/
-│       └── playwright.yml         # Test pipeline using GitHub Actions
-├── .husky/                        # Git hooks managed by Husky
-│   ├── commit-message
-│   ├── push.js
-│   └── _/                         # Internal Husky scripts and hook definitions
-├── src/                         # Test framework source code
-│   ├── core/                    # Execution logic and shared hooks
-│   │   ├── hooks.ts
-│   │   └── remote.ts
-│   ├── pages/                   # Page Object Models
-│   │   ├── HomePage.ts
-│   │   └── LoginPage.ts
-│   ├── providers/               # External service integrations
-│   │   └── browserstack.ts
-│   ├── resources/               # Static configuration and test data
-│   │   ├── config/              # Environment-specific URLs and capabilities
-│   │   │   ├── url-prod.yml
-│   │   │   ├── url-qa.yml
-│   │   │   └── capabilities/    # Device/browser configurations
+├── .github/                             # GitHub configuration
+│   └── workflows/                       # CI/CD workflows
+│       └── playwright.yml              # Playwright test pipeline using GitHub Actions
+├── .husky/                              # Git hooks managed by Husky
+│   ├── commit-message                  # Hook for commit message validation
+│   ├── push.js                         # Custom push hook script
+│   └── _/                              # Internal Husky scripts and hook definitions
+├── src/                                 # Source code
+│   ├── core/                            # Core test lifecycle and execution logic
+│   │   ├── hooks.ts                    # Global test hooks (beforeAll, beforeEach, etc.)
+│   │   └── remoteRunner.ts            # Handles local vs remote (BrowserStack) execution
+│   ├── integrations/                    # External service integrations
+│   │   ├── azure/                      # Azure DevOps integration layer
+│   │   │   ├── AzureAttachmentService.ts   # Publishes test evidence (logs, screenshots) to Azure DevOps
+│   │   │   ├── AzureAuthService.ts         # Generates base64 PAT token for Azure API authentication
+│   │   │   ├── AzureConfigService.ts       # Loads Azure config from environment variables
+│   │   │   ├── AzureTestCaseService.ts     # Manages test case lifecycle in Azure (activate, finish, update status)
+│   │   │   ├── TestIdExtractor.ts          # Extracts test case ID from test title using @[12345]
+│   │   │   ├── TestMetadataParser.ts       # Parses planId, suiteId, testCaseId from test title annotations
+│   │   │   └── models/                     # Data models for Azure DevOps API payloads
+│   │   │       ├── Attachment.ts           # Represents a base64-encoded file attachment
+│   │   │       ├── Results.ts              # Encapsulates test outcome code (passed, failed, etc.)
+│   │   │       ├── ResultTestCase.ts       # Payload for submitting test result updates
+│   │   │       └── TestCaseActive.ts       # Payload for activating a test point before execution
+│   │   └── browserstack/              # BrowserStack integration layer
+│   │       ├── browserstackStatus.ts       # Updates test status on BrowserStack
+│   │       └── endpointBuilder.ts          # Builds WebSocket endpoint for remote execution
+│   ├── pages/                           # Page Object Model (POM) definitions
+│   │   ├── HomePage.ts                  # Page object for the home page
+│   │   └── LoginPage.ts                 # Page object for the login page
+│   ├── resources/                       # Test data and configuration files
+│   │   ├── config/                     # Environment URLs and capabilities
+│   │   │   ├── url-prod.yml             # Base URL for production environment
+│   │   │   ├── url-qa.yml               # Base URL for QA environment
+│   │   │   └── capabilities/            # Browser/device capabilities for BrowserStack
 │   │   │       ├── desktop.yml
 │   │   │       └── mobile.yml
-│   │   └── data/                # Test credentials per environment
+│   │   └── data/                       # Test data per environment
 │   │       ├── prod/
-│   │       │   └── credencial.yml
+│   │       │   └── credencial.yml       # Credentials for production tests
 │   │       └── qa/
-│   │           └── credencial.yml
-│   ├── selectors/               # Centralized UI selectors
-│   │   ├── HomeSelectors.ts
-│   │   └── LoginSelectors.ts
-│   └── utils/                   # Shared utility functions
-│       ├── actions.ts
-│       ├── asserts.ts
-│       ├── highlightElement.ts
-│       ├── logger.ts
-│       └── yamlReader.ts
-├── tests/                       # Test scenarios
-│   └── login.spec.ts
-├── .env                         # Environment variable definitions
-├── .gitignore                   # Files and folders to exclude from Git
-├── changelog.config.js           # Changelog configuration
-├── package.json                  # Project dependencies and scripts
-├── package-lock.json             # npm lock file
-├── playwright.config.ts          # Playwright configuration
-├── winston.log                   # Log file generated by Winston
-├── README.md                     # Project documentation
+│   │           └── credencial.yml       # Credentials for QA tests
+│   ├── selectors/                       # Element selectors used in page objects
+│   │   ├── HomeSelectors.ts             # Selectors for home page elements
+│   │   └── LoginSelectors.ts            # Selectors for login page elements
+│   └── utils/                           # Utility functions and shared logic
+│       ├── actions.ts                  # High-level element actions (click, type, etc.)
+│       ├── asserts.ts                  # Custom assertion helpers
+│       ├── highlightElement.ts         # Visual highlight for debugging elements
+│       ├── logger.ts                   # Winston-based logging utility
+│       └── yamlReader.ts               # Reads YAML config and test data
+├── tests/                               # Test scenarios
+│   └── login.spec.ts                   # Login test case
+├── .env                                 # Environment variable definitions
+├── .gitignore                           # Files and folders to exclude from Git
+├── changelog.config.js                  # Changelog generation config (e.g., for commitlint)
+├── package.json                         # Project dependencies and scripts
+├── package-lock.json                    # npm lock file for reproducible installs
+├── playwright.config.ts                 # Playwright test runner configuration
+├── winston.log                          # Log file generated by Winston logger
+├── README.md                            # Project documentation
 ```
 
 ## 🔗 Useful Links
