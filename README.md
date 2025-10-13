@@ -49,7 +49,6 @@ test('@PLAN_ID=123 @SUITE_ID=456 @[789] Validate successful login', async ({ pag
 These annotations are parsed automatically by the TestMetadataParser and used to:
 - Activate the test case before execution
 - Publish the result (Passed/Failed/Skipped)
-```
 
 ## 🛠️ How to run
 ```
