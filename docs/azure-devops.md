@@ -339,13 +339,13 @@ Used by AzureTestCaseService.ts during the test activation phase.
 ---
 
 ## 📄 Source Files
-- [`AzureAttachmentService.ts`](./src/integrations/azure/AzureAttachmentService.ts)
-- [`AzureAuthService.ts`](./src/integrations/azure/AzureAuthService.ts)
-- [`AzureConfigService.ts`](./src/integrations/azure/AzureConfigService.ts)
-- [`AzureTestCaseService.ts`](./src/integrations/azure/AzureTestCaseService.ts)
-- [`TestIdExtractor.ts`](./src/integrations/azure/TestIdExtractor.ts)
-- [`TestMetadataParse.ts`](./src/integrations/azure/TestMetadataParse.ts)
-- [`Attachment.ts`](./src/integrations/azure/models/Attachment.ts)
-- [`Results.ts`](./src/integrations/azure/models/Results.ts)
-- [`ResultTestCase.ts`](./src/integrations/azure/models/ResultTestCase.ts)
-- [`TestCaseActive.ts`](./src/integrations/azure/models/TestCaseActive.ts)
+- [`AzureAttachmentService.ts`](../src/integrations/azure/AzureAttachmentService.ts)
+- [`AzureAuthService.ts`](../src/integrations/azure/AzureAuthService.ts)
+- [`AzureConfigService.ts`](../src/integrations/azure/AzureConfigService.ts)
+- [`AzureTestCaseService.ts`](../src/integrations/azure/AzureTestCaseService.ts)
+- [`TestIdExtractor.ts`](../src/integrations/azure/TestIdExtractor.ts)
+- [`TestMetadataParse.ts`](../src/integrations/azure/TestMetadataParse.ts)
+- [`Attachment.ts`](../src/integrations/azure/models/Attachment.ts)
+- [`Results.ts`](../src/integrations/azure/models/Results.ts)
+- [`ResultTestCase.ts`](../src/integrations/azure/models/ResultTestCase.ts)
+- [`TestCaseActive.ts`](../src/integrations/azure/models/TestCaseActive.ts)
