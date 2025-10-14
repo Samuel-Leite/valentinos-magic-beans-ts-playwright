@@ -2,6 +2,30 @@
 
 This project supports native integration with **Azure DevOps Test Plans**, enabling full traceability between automated tests and manual test management workflows.
 
+## 📘 Table of Contents
+
+- [🧩 Purpose](#-purpose)
+- [⚙️ How It Works](#-how-it-works)
+  - [🧪 Example Test](#-example-test)
+- [🔐 Required Environment Variables](#-required-environment-variables)
+- [📂 Project Structure](#-project-structure)
+- [🛠️ Key Components](#-key-components)
+  - [⚙️ Azure DevOps Services](#-azure-devops-services)
+    - [`AzureAttachmentService.ts`](#azureattachmentservicets)
+    - [`AzureAuthService.ts`](#azureauthservicets)
+    - [`AzureConfigService.ts`](#azureconfigservicets)
+    - [`AzureTestCaseService.ts`](#azuretestcaseservicets)
+    - [`TestIdExtractor.ts`](#testidextractorts)
+    - [`TestMetadataParser.ts`](#testmetadataparserts)
+    - [✅ Utility Functions](#-utility-functions)
+  - [🧱 Azure DevOps Models](#-azure-devops-models)
+    - [`Attachment.ts`](#attachmentts)
+    - [`Results.ts`](#resultsts)
+    - [`ResultTestCase.ts`](#resulttestcasets)
+    - [`TestCaseActive.ts`](#testcaseactivets)
+- [🧯 Troubleshooting](#-troubleshooting)
+- [📄 Source Files](#-source-files)
+
 ## 🧩 Purpose
 
 - Activates test cases before execution
@@ -300,3 +324,28 @@ new TestCaseActive(id: number, isActive: boolean)
 
 ##### Usage
 Used by AzureTestCaseService.ts during the test activation phase.
+
+--- 
+
+## 🧯 Troubleshooting
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| `AZURE_TOKEN is not defined` | Missing env variable | Add it to `.env` or `.env.local` |
+| Test case not updated | Incorrect metadata | Check `@PLAN_ID`, `@SUITE_ID`, and `@[ID]` in test title |
+| Attachments not published | No failure or missing call | Ensure `Attachment.setAttachment()` is called on error |
+| Result not visible in Azure | Wrong test point ID | Confirm test case is linked to correct suite and plan |
+
+---
+
+## 📄 Source Files
+- [`AzureAttachmentService.ts`](./src/integrations/azure/AzureAttachmentService.ts)
+- [`AzureAuthService.ts`](./src/integrations/azure/AzureAuthService.ts)
+- [`AzureConfigService.ts`](./src/integrations/azure/AzureConfigService.ts)
+- [`AzureTestCaseService.ts`](./src/integrations/azure/AzureTestCaseService.ts)
+- [`TestIdExtractor.ts`](./src/integrations/azure/TestIdExtractor.ts)
+- [`TestMetadataParse.ts`](./src/integrations/azure/TestMetadataParse.ts)
+- [`Attachment.ts`](./src/integrations/azure/models/Attachment.ts)
+- [`Results.ts`](./src/integrations/azure/models/Results.ts)
+- [`ResultTestCase.ts`](./src/integrations/azure/models/ResultTestCase.ts)
+- [`TestCaseActive.ts`](./src/integrations/azure/models/TestCaseActive.ts)
