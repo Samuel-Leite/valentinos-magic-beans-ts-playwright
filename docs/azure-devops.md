@@ -68,7 +68,7 @@ test('@PLAN_ID=101 @SUITE_ID=202 @[303] Validate login with valid credentials', 
 ```
 
 #### 🔐 Required Environment Variables
-```
+```env
 AZURE_HOST=dev.azure.com                     # Azure DevOps host
 AZURE_ORGANIZATION=your-org-name            # Azure organization name
 AZURE_PROJECT=your-project-name             # Azure project name
