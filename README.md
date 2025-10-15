@@ -49,7 +49,7 @@ This repository contains an end-to-end test automation suite built with <a href=
 - Native integration with Azure DevOps Test Plans
 
 ## 🛠️ How to run
-```env
+```
 # Install dependencies
 npm install
 npx playwright install
