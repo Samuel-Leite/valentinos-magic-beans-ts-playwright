@@ -53,7 +53,6 @@ class Hooks {
     Logger.info(`[Hooks] Test started: ${testInfo.title}`);
 
     const baseUrl = YamlReader.readUrl(process.env.ENV || 'qa');
-    Logger.info(`[YamlReader] Environment URL '${process.env.ENV || 'qa'}' successfully accessed from YAML file`);
     await page.goto(baseUrl);
 
     // Azure DevOps: Activate test case before execution
