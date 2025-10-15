@@ -14,6 +14,10 @@ jobs:
     env:
       AZURE_TOKEN: ${{ secrets.AZURE_TOKEN }}
 
+    concurrency:
+      group: playwright-${{ github.ref }}
+      cancel-in-progress: true
+
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
@@ -37,8 +41,8 @@ jobs:
       - name: 🧪 Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: 🚀 Run Playwright tests
-        run: npx playwright test --reporter=list,html,allure-playwright
+      - name: 🚀 Run Playwright tests (headless via xvfb)
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' npx playwright test --reporter=list,html,allure-playwright
 
       - name: 📊 Generate Allure HTML report
         run: |
