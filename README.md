@@ -49,7 +49,7 @@ This repository contains an end-to-end test automation suite built with <a href=
 - Native integration with Azure DevOps Test Plans
 
 ## 🛠️ How to run
-```
+```env
 # Install dependencies
 npm install
 npx playwright install
@@ -63,7 +63,7 @@ npm run tag -- '@tag_name'
 
 ## 🛠️ Environment Variables (.env)
 
-```
+```env
 #### 🌐 Execution Environment
 RUN_ENV=                   # Target environment for test execution (e.g., qa, prod, staging)
 
@@ -82,47 +82,21 @@ AZURE_HOST=                # Azure DevOps host URL
 AZURE_ORGANIZATION=        # Azure DevOps organization name
 AZURE_PROJECT=             # Azure DevOps project name
 AZURE_TOKEN=               # Personal Access Token (PAT) for Azure DevOps API
-
 ```
+
+---
 
 ## 🔗 Azure DevOps Integration
 
-This project supports native integration with **Azure DevOps Test Plans**, allowing automated test results, attachments, and execution status to be published directly to Azure.
+For full details on how to link tests to Azure DevOps Test Plans and publish results automatically, see the [Azure DevOps: Test Plan Guide](./docs/azure-devops.md).
 
-### 🧩 How it works
-
-Each test must include metadata annotations in its title to link it to a specific test case in Azure DevOps:
-
-```
-test('@PLAN_ID=123 @SUITE_ID=456 @[789] Validate successful login', async ({ page }) => {
-  // Test logic here
-});
-```
-
-- @PLAN_ID=123 → ID of the Test Plan in Azure DevOps
-- @SUITE_ID=456 → ID of the Test Suite inside the plan
-- @[789] → ID of the Test Case to be updated
-
-These annotations are parsed automatically by the TestMetadataParser and used to:
-- Activate the test case before execution
-- Publish the result (Passed/Failed/Skipped)
+---
 
 ## 🌐 Running Tests on BrowserStack
 
-This project supports remote test execution via BrowserStack, allowing you to run your Playwright tests on real browsers and devices in the cloud.
+To learn how to run Playwright tests on real browsers and devices using BrowserStack, refer to the [BrowserStack Execution Guide](./docs/browserstack.md).
 
-### ⚙️ How to enable BrowserStack execution
-
-To run your tests on BrowserStack, simply update the following variables in your .env file:
-
-```
-RUN_REMOTE=true                      # Enables remote execution
-DEVICE=desktop                       # Device profile to use (e.g., desktop, mobile)
-BROWSERSTACK_USERNAME=your_username # Your BrowserStack username
-BROWSERSTACK_ACCESS_KEY=your_key    # Your BrowserStack access key
-BUILD_NAME="Your Build Name"        # Optional: name shown in BrowserStack dashboard
-PROJECT_NAME="Your Project Name"    # Optional: name shown in BrowserStack dashboard
-```
+---
 
 ## 📂 Project Structure
 ```
