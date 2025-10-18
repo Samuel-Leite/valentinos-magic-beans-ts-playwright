@@ -53,25 +53,4 @@ export class CustomAsserts {
       throw error;
     }
   }
-
-  /**
-   * Generates a readable description of the element for logging.
-   * @param locator Target element
-   * @returns Description string
-   */
-  private static async describe(locator: Locator): Promise<string> {
-    try {
-      const tag = await locator.evaluate(el => el.tagName.toLowerCase());
-      const id = await locator.getAttribute('id');
-      const name = await locator.getAttribute('name');
-      const role = await locator.getAttribute('role');
-
-      if (id) return `"${tag}#${id}"`;
-      if (name) return `"${tag}[name='${name}']"`;
-      if (role) return `"${tag}[role='${role}']"`;
-      return `"${tag}"`;
-    } catch {
-      return `"unknown element"`;
-    }
-  }
 }

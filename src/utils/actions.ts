@@ -46,29 +46,4 @@ export class ElementActions {
       throw error;
     }
   }
-
-  /**
-   * Generates a descriptive label for the target element,
-   * using tag name and relevant attributes for traceable logging.
-   * 
-   * @param locator - Locator pointing to the element
-   * @returns A formatted string describing the element
-   */
-  private async describe(locator: Locator): Promise<string> {
-    try {
-      const tag = await locator.evaluate(el => el.tagName.toLowerCase());
-      const id = await locator.getAttribute('id');
-      const name = await locator.getAttribute('name');
-      const placeholder = await locator.getAttribute('placeholder');
-      const role = await locator.getAttribute('role');
-
-      if (id) return `"${tag}#${id}"`;
-      if (name) return `"${tag}[name='${name}']"`;
-      if (placeholder) return `"${tag}[placeholder='${placeholder}']"`;
-      if (role) return `"${tag}[role='${role}']"`;
-      return `"${tag}"`;
-    } catch {
-      return `"unknown element"`;
-    }
-  }
 }

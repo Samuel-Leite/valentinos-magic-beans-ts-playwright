@@ -1,17 +1,18 @@
 import { Page } from '@playwright/test';
 import { getLoginLocators } from '../selectors/LoginSelectors';
 import { ElementActions } from '../utils/actions';
+import { PercyService } from '../integrations/percy/percyService';
 
 /**
  * Represents the login page of the system.
- * Contains actions related to user authentication.
+ * Encapsulates user authentication actions and visual checkpoints.
  */
 export class LoginPage {
   private actions: ElementActions;
   private locators: ReturnType<typeof getLoginLocators>;
 
   /**
-   * Initializes the Playwright page instance and ElementActions.
+   * Initializes the Playwright page instance and supporting utilities.
    * @param page Current Playwright page instance
    */
   constructor(private page: Page) {
@@ -20,12 +21,19 @@ export class LoginPage {
   }
 
   /**
-   * Performs the login process by filling in the email and password fields,
-   * and submitting the login form.
+   * Executes the complete login flow:
+   * - Captures a Percy snapshot of the initial login state
+   * - Clicks the login button to open the form
+   * - Fills in the email and password fields
+   * - Submits the login form
+   *
+   * Snapshot is captured once at the beginning to avoid duplication across asserts and actions.
+   *
    * @param email User's email address
    * @param password User's password
    */
   async doLogin(email: string, password: string): Promise<void> {
+    await PercyService.capture(this.page, 'Login flow: initial state');
     await this.actions.click(this.locators.btnDoLogin);
     await this.actions.sendKey(this.locators.txtEmail, email);
     await this.actions.sendKey(this.locators.txtPassword, password);
