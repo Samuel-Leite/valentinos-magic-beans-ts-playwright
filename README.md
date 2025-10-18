@@ -88,13 +88,13 @@ AZURE_TOKEN=               # Personal Access Token (PAT) for Azure DevOps API
 
 ## 🔗 Azure DevOps Integration
 
-For full details on how to link tests to Azure DevOps Test Plans and publish results automatically, see the [Azure DevOps: Test Plan Guide](./docs/azure-devops.md).
+For full details on how to link tests to Azure DevOps Test Plans and publish results automatically, see the [Azure DevOps: Test Plan Guide](./docs/english/azure-devops.md).
 
 ---
 
 ## 🌐 Running Tests on BrowserStack
 
-To learn how to run Playwright tests on real browsers and devices using BrowserStack, refer to the [BrowserStack Execution Guide](./docs/browserstack.md).
+To learn how to run Playwright tests on real browsers and devices using BrowserStack, refer to the [BrowserStack Execution Guide](./docs/english/browserstack.md).
 
 ---
 

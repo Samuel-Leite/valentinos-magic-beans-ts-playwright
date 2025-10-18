@@ -1,84 +1,84 @@
-# 🔗 Azure DevOps Integration
+# 🔗 Integração com Azure DevOps
 
-This project supports native integration with **Azure DevOps Test Plans**, enabling full traceability between automated tests and manual test management workflows.
+Este projeto oferece integração nativa com o **Azure DevOps Test Plans**, permitindo rastreabilidade completa entre testes automatizados e fluxos de trabalho de gerenciamento de testes manuais.
 
-## 📘 Table of Contents
+## 📘 Índice
 
-- [🧩 Purpose](#-purpose)
-- [⚙️ How It Works](#-how-it-works)
-  - [🧪 Example Test](#-example-test)
-- [🔐 Required Environment Variables](#-required-environment-variables)
-- [📂 Project Structure](#-project-structure)
-- [🛠️ Key Components](#-key-components)
-  - [⚙️ Azure DevOps Services](#-azure-devops-services)
+- [🧩 Propósito](#-propósito)
+- [⚙️ Como Funciona](#-como-funciona)
+  - [🧪 Exemplo de Teste](#-exemplo-de-teste)
+- [🔐 Variáveis de Ambiente Necessárias](#-variáveis-de-ambiente-necessárias)
+- [📂 Estrutura do Projeto](#-estrutura-do-projeto)
+- [🛠️ Componentes Principais](#-componentes-principais)
+  - [⚙️ Serviços do Azure DevOps](#-serviços-do-azure-devops)
     - [`AzureAttachmentService.ts`](#azureattachmentservicets)
     - [`AzureAuthService.ts`](#azureauthservicets)
     - [`AzureConfigService.ts`](#azureconfigservicets)
     - [`AzureTestCaseService.ts`](#azuretestcaseservicets)
     - [`TestIdExtractor.ts`](#testidextractorts)
     - [`TestMetadataParser.ts`](#testmetadataparserts)
-    - [✅ Utility Functions](#-utility-functions)
-  - [🧱 Azure DevOps Models](#-azure-devops-models)
+    - [✅ Funções Utilitárias](#-funções-utilitárias)
+  - [🧱 Modelos do Azure DevOps](#-modelos-do-azure-devops)
     - [`Attachment.ts`](#attachmentts)
     - [`Results.ts`](#resultsts)
     - [`ResultTestCase.ts`](#resulttestcasets)
     - [`TestCaseActive.ts`](#testcaseactivets)
-- [🧯 Troubleshooting](#-troubleshooting)
-- [📄 Source Files](#-source-files)
+- [🧯 Solução de Problemas](#-solução-de-problemas)
+- [📄 Arquivos Fonte](#-arquivos-fonte)
 
-## 🧩 Purpose
+## 🧩 Propósito
 
-- Activates test cases before execution
-- Publishes test results (Passed, Failed, Skipped)
-- Attaches evidence (logs, screenshots) to test results
-- Updates automation status to "Automated" in Azure DevOps
+- Ativa casos de teste antes da execução  
+- Publica os resultados dos testes (Aprovado, Falhou, Ignorado)  
+- Anexa evidências (logs, capturas de tela) aos resultados dos testes  
+- Atualiza o status de automação para "Automatizado" no Azure DevOps  
 
-## ⚙️ How It Works
+## ⚙️ Como Funciona
 
-Each test must include metadata annotations in its title to link it to a specific Azure Test Case:
+Cada teste deve incluir anotações de metadados em seu título para vinculá-lo a um caso de teste específico no Azure DevOps:
 
 ```ts
-test('@PLAN_ID=123 @SUITE_ID=456 @[789] Validate login flow', async ({ page }) => {
-  // test logic
+test('@PLAN_ID=123 @SUITE_ID=456 @[789] Validar fluxo de login', async ({ page }) => {
+  // lógica do teste
 });
 ```
 
-- @PLAN_ID=123 → Azure Test Plan ID
-- @SUITE_ID=456 → Azure Test Suite ID
-- @[789] → Azure Test Case ID
+- @PLAN_ID=123 → ID do Plano de Teste no Azure
+- @SUITE_ID=456 → ID da Suíte de Teste no Azure
+- @[789] → ID do Caso de Teste no Azure
 
-During execution:
-- Metadata is parsed from the test title
-- The test case is activated via Azure DevOps API
-- The result is published after execution
-- Attachments are uploaded if the test fails
-- The test case is marked as "Automated"
+Durante a execução:
+- Os metadados são analisados a partir do título do teste
+- O caso de teste é ativado via API do Azure DevOps
+- O resultado é publicado após a execução
+- As evidências são enviadas se o teste falhar
+- O caso de teste é marcado como “Automatizado”
 
-#### 🧪 Example Test
+#### 🧪 Exemplo de Teste
 ```ts
-test('@PLAN_ID=101 @SUITE_ID=202 @[303] Validate login with valid credentials', async ({ page }) => {
+test('@PLAN_ID=101 @SUITE_ID=202 @[303] Validar login com credenciais válidas', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const homePage = new HomePage(page);
   const credentials = YamlReader.readYamlObject('valid_user');
 
   await loginPage.doLogin(credentials.email, credentials.password);
-  await homePage.assertLoginSuccess('Login Successful');
+  await homePage.assertLoginSuccess('Login bem-sucedido');
   await homePage.doLogOut();
 });
 ```
 
 #### 🔐 Required Environment Variables
 ```env
-AZURE_HOST=dev.azure.com                     # Azure DevOps host
-AZURE_ORGANIZATION=your-org-name            # Azure organization name
-AZURE_PROJECT=your-project-name             # Azure project name
-AZURE_TOKEN=your-personal-access-token      # PAT with Test Management and Work Item access
-AZURE_PLAN_ID=123                           # Default Test Plan ID (optional if using inline metadata)
-AZURE_SUITE_ID=456                          # Default Test Suite ID (optional if using inline metadata)
+AZURE_HOST=dev.azure.com                     # Host do Azure DevOps
+AZURE_ORGANIZATION=nome-da-sua-org           # Nome da organização no Azure
+AZURE_PROJECT=nome-do-seu-projeto            # Nome do projeto no Azure
+AZURE_TOKEN=seu-token-de-acesso-pessoal      # PAT com acesso a Test Management e Work Items
+AZURE_PLAN_ID=123                            # ID padrão do Plano de Teste (opcional se usar metadados inline)
+AZURE_SUITE_ID=456                           # ID padrão da Suíte de Teste (opcional se usar metadados inline)
 ```
-⚠️ Never commit your real AZURE_TOKEN. Use .env.example for safe sharing.
+⚠️ Nunca faça commit do seu AZURE_TOKEN real. Use .env.example para compartilhamento seguro.
 
-## 📂 Project Structure
+## 📂 Estrutura do Projeto
 ```
 azure/
 │ ├── AzureAttachmentService.ts
@@ -94,24 +94,24 @@ azure/
 │        └── TestCaseActive.ts
 ```
 
-## 🛠️ Key Components
+## 🛠️ Componentes Principais
 
-###  ⚙️ Azure DevOps Services
+###  ⚙️ Serviços do Azure DevOps
 
-This document describes the service classes responsible for managing the Azure DevOps Test Plans integration. These services handle test case activation, result publishing, evidence attachment, and configuration management.
+Este documento descreve as classes de serviço responsáveis por gerenciar a integração com o Azure DevOps Test Plans. Esses serviços lidam com a ativação de casos de teste, publicação de resultados, anexação de evidências e gerenciamento de configurações.
 
 ---
 
 #### `AzureAttachmentService.ts`
 
-Publishes test evidence (e.g., logs, screenshots) to Azure DevOps test results.
+Publica evidências de teste (por exemplo, logs, capturas de tela) nos resultados do Azure DevOps.
 
-##### Purpose
-- Retrieves all registered attachments
-- Sends each attachment to Azure DevOps via REST API
-- Associates attachments with a specific test result in a test run
+##### Propósito
+- Recupera todos os anexos registrados
+- Envia cada anexo para o Azure DevOps via REST API
+- Associa os anexos a um resultado de teste específico em uma execução
 
-##### Key Method
+##### Método Principal
 ```ts
 publishAttachments(runId: string, resultId: number): Promise<void>
 ```
@@ -120,9 +120,9 @@ publishAttachments(runId: string, resultId: number): Promise<void>
 
 #### `AzureAuthService.ts`
 
-Generates authentication tokens for Azure DevOps API requests using a Personal Access Token (PAT).
+Gera tokens de autenticação para requisições à API do Azure DevOps usando um Token de Acesso Pessoal (PAT).
 
-##### Purpose
+##### Propósito
 - Loads the PAT from environment variables
 - Encodes the token in base64 format for HTTP Basic Auth
 
@@ -137,7 +137,7 @@ generateToken(): string
 
 Loads and provides access to Azure DevOps configuration parameters from environment variables.
 
-##### Purpose
+##### Propósito
 - Constructs base API URLs
 - Provides access to project, organization, token, planId, and suiteId
 
@@ -155,7 +155,7 @@ getSuiteId(): string
 
 Manages the full lifecycle of a test case in Azure DevOps.
 
-##### Purpose
+##### Propósito
 - Activates the test case before execution
 - Publishes the result after execution
 - Updates the automation status to "Automated"
@@ -179,7 +179,7 @@ finishTestCase(planId, suiteId, testCaseId, status, error?): Promise<void>
 
 Extracts the test case ID from a test title using the @[12345] annotation.
 
-##### Purpose
+##### Propósito
 - Parses the test title to retrieve the Azure DevOps test case ID
 
 ##### Key Method
@@ -202,7 +202,7 @@ They internally use AzureTestCaseService to activate and finalize test cases.
 
 Parses structured metadata from test titles to link automated tests with Azure DevOps Test Plans.
 
-##### Purpose
+##### Propósito
 
 This service extracts the following metadata from a test title:
 
@@ -256,7 +256,7 @@ This document describes the core model classes used to interact with the Azure D
 
 Handles the creation and management of file attachments (e.g., logs, screenshots) to be published in Azure DevOps test results.
 
-##### Purpose
+##### Propósito
 - Encodes file content in base64
 - Generates a unique filename with timestamp and random suffix
 - Stores attachments in a static collection
@@ -279,7 +279,7 @@ Handles the creation and management of file attachments (e.g., logs, screenshots
 
 Represents the outcome of a test case execution in Azure DevOps.
 
-##### Purpose
+##### Propósito
 Encapsulates the result code expected by Azure DevOps:
 
 | Code | Meaning       |
@@ -299,7 +299,7 @@ Used by `ResultTestCase.ts` and `AzureTestCaseService.ts` to communicate test ou
 
 Defines the payload structure for updating the result of a specific test point in Azure DevOps.
 
-##### Purpose
+##### Propósito
 - Maps a test point ID to its corresponding `Results` object
 
 ##### Constructor
@@ -316,7 +316,7 @@ Used by AzureTestCaseService.ts when publishing test results.
 
 Defines the payload structure for activating a test point before execution.
 
-##### Purpose
+##### Propósito
 - Marks a test point as active using its ID and a boolean flag
 ```ts
 new TestCaseActive(id: number, isActive: boolean)
@@ -339,13 +339,13 @@ Used by AzureTestCaseService.ts during the test activation phase.
 ---
 
 ## 📄 Source Files
-- [`AzureAttachmentService.ts`](../src/integrations/azure/AzureAttachmentService.ts)
-- [`AzureAuthService.ts`](../src/integrations/azure/AzureAuthService.ts)
-- [`AzureConfigService.ts`](../src/integrations/azure/AzureConfigService.ts)
-- [`AzureTestCaseService.ts`](../src/integrations/azure/AzureTestCaseService.ts)
-- [`TestIdExtractor.ts`](../src/integrations/azure/TestIdExtractor.ts)
-- [`TestMetadataParse.ts`](../src/integrations/azure/TestMetadataParse.ts)
-- [`Attachment.ts`](../src/integrations/azure/models/Attachment.ts)
-- [`Results.ts`](../src/integrations/azure/models/Results.ts)
-- [`ResultTestCase.ts`](../src/integrations/azure/models/ResultTestCase.ts)
-- [`TestCaseActive.ts`](../src/integrations/azure/models/TestCaseActive.ts)
+- [`AzureAttachmentService.ts`](../../src/integrations/azure/AzureAttachmentService.ts)
+- [`AzureAuthService.ts`](../../src/integrations/azure/AzureAuthService.ts)
+- [`AzureConfigService.ts`](../../src/integrations/azure/AzureConfigService.ts)
+- [`AzureTestCaseService.ts`](../../src/integrations/azure/AzureTestCaseService.ts)
+- [`TestIdExtractor.ts`](../../src/integrations/azure/TestIdExtractor.ts)
+- [`TestMetadataParse.ts`](../../src/integrations/azure/TestMetadataParse.ts)
+- [`Attachment.ts`](../../src/integrations/azure/models/Attachment.ts)
+- [`Results.ts`](../../src/integrations/azure/models/Results.ts)
+- [`ResultTestCase.ts`](../../src/integrations/azure/models/ResultTestCase.ts)
+- [`TestCaseActive.ts`](../../src/integrations/azure/models/TestCaseActive.ts)
