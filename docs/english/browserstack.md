@@ -124,6 +124,6 @@ extend(): typeof test
 
 
 ## 📄 Source Files
-- [`remoteRunner.ts`](../src/core/remoteRunner.ts)
-- [`browserstackStatus.ts`](../src/integrations/browserstack/browserstackStatus.ts)
-- [`endpointBuilder.ts`](../src/integrations/browserstack/endpointBuilder.ts)
+- [`remoteRunner.ts`](../../src/core/remoteRunner.ts)
+- [`browserstackStatus.ts`](../../src/integrations/browserstack/browserstackStatus.ts)
+- [`endpointBuilder.ts`](../../src/integrations/browserstack/endpointBuilder.ts)
