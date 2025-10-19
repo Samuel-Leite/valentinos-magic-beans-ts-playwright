@@ -1,6 +1,10 @@
-# Changelog
+# 📦 Changelog
+## [1.2.0](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.1.4...v1.2.0) (2025-10-19)
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### Features
+
+* **all:** ✨ add lighthouse ([1954af6](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/1954af6f24740cb606bc5df7a0fe05a236eec5ed))
 
 ### [1.1.4](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.1.3...v1.1.4) (2025-10-19)
 
