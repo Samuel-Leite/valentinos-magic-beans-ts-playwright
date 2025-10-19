@@ -5,7 +5,8 @@
 </div>
 
 <p align="center">
-  📊 <a href="https://samuel-leite.github.io/valentinos-magic-beans-ts-playwright/64/">Visualizar relatório Allure</a>
+  🧭 <a href="architecture-pt.md">Visualizar Arquitetura da Automação</a><br>
+  📊 <a href="https://samuel-leite.github.io/valentinos-magic-beans-ts-playwright/64/">Visualizar relatório Allure</a><br>
 </p>
 
 <div align="center">
@@ -109,19 +110,19 @@ PERCY_TOKEN=               # Token de autenticação do projeto Percy
 
 ## 🔗 Integração com Azure DevOps
 
-Para detalhes completos sobre como vincular testes ao Azure DevOps Test Plans e publicar resultados automaticamente, consulte o [Guia de Integração com Azure DevOps](../portuguese/azure-devops.md).
+Para detalhes completos sobre como vincular testes ao Azure DevOps Test Plans e publicar resultados automaticamente, consulte o [Guia de Integração com Azure DevOps](../portuguese/azure-devops-pt.md).
 
 ---
 
 ## 🌐 Execução de Testes no BrowserStack
 
-Para aprender como executar testes Playwright em navegadores e dispositivos reais usando o BrowserStack, consulte o [Guia de Execução BrowserStack](../portuguese/browserstack.md).
+Para aprender como executar testes Playwright em navegadores e dispositivos reais usando o BrowserStack, consulte o [Guia de Execução BrowserStack](../portuguese/browserstack-pt.md).
 
 ---
 
 ## 📸 Integração e execução com o Percy
 
-Este projeto utiliza o [Percy](https://percy.io/) para testes visuais automatizados, permitindo identificar mudanças inesperadas na interface da aplicação durante a execução dos testes com Playwright. Para mais detalhes sobre a configuração e uso do Percy, consulte o [Guia de Execução Percy](../portuguese/percy.md).
+Este projeto utiliza o [Percy](https://percy.io/) para testes visuais automatizados, permitindo identificar mudanças inesperadas na interface da aplicação durante a execução dos testes com Playwright. Para mais detalhes sobre a configuração e uso do Percy, consulte o [Guia de Execução Percy](../portuguese/percy-pt.md).
 
 ---
 
