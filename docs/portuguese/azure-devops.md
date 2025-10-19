@@ -79,7 +79,8 @@ AZURE_SUITE_ID=456                           # ID padrão da Suíte de Teste (op
 ⚠️ Nunca faça commit do seu AZURE_TOKEN real. Use .env.example para compartilhamento seguro.
 
 ## 📂 Estrutura do Projeto
-```
+
+```bash
 azure/
 │ ├── AzureAttachmentService.ts
 │ ├── AzureAuthService.ts
@@ -135,13 +136,13 @@ generateToken(): string
 
 #### `AzureConfigService.ts`
 
-Loads and provides access to Azure DevOps configuration parameters from environment variables.
+Carrega e fornece acesso aos parâmetros de configuração do Azure DevOps a partir das variáveis de ambiente.
 
 ##### Propósito
-- Constructs base API URLs
-- Provides access to project, organization, token, planId, and suiteId
+- Constrói as URLs base da API
+- Fornece acesso ao projeto, organização, token, planId e suiteId
 
-##### Key Method
+##### Métodos Principais
 ```ts
 getBaseUrl(): string
 getToken(): string
@@ -153,79 +154,78 @@ getSuiteId(): string
 
 #### `AzureTestCaseService.ts`
 
-Manages the full lifecycle of a test case in Azure DevOps.
+Gerencia todo o ciclo de vida de um caso de teste no Azure DevOps.
 
 ##### Propósito
-- Activates the test case before execution
-- Publishes the result after execution
-- Updates the automation status to "Automated"
-- Attaches evidence if the test fails
+- Ativa o caso de teste antes da execução
+- Publica o resultado após a execução
+- Atualiza o status de automação para "Automatizado"
+- Anexa evidências se o teste falhar
 
-##### Key Method
+##### Métodos Principais
 ```ts
 startTestCase(planId, suiteId, testCaseId): Promise<void>
 finishTestCase(planId, suiteId, testCaseId, status, error?): Promise<void>
 ```
 
-##### Internal Helpers
-- getTestPointId(...): Retrieves the test point ID for a given test case
-- updateAutomationStatus(...): Marks the test case as "Automated"
-- getStatusCode(status: string): Maps Playwright status to Azure DevOps result codes
-
+##### Funções Internas
+- getTestPointId(...): Recupera o ID do ponto de teste para um caso específico
+- updateAutomationStatus(...): Marca o caso de teste como "Automatizado"
+- getStatusCode(status: string): Mapeia o status do Playwright para os códigos de resultado do Azure DevOps
 
 ---
 
 #### `TestIdExtractor.ts`
 
-Extracts the test case ID from a test title using the @[12345] annotation.
+Extrai o ID do caso de teste a partir do título usando a anotação @[12345].
 
 ##### Propósito
-- Parses the test title to retrieve the Azure DevOps test case ID
+- Analisa o título do teste para recuperar o ID do caso de teste no Azure DevOps
 
-##### Key Method
+##### Método Principal
 ```ts
 extract(title: string): string | undefined
 ```
 
-##### ✅ Utility Functions
+##### ✅ Funções Utilitárias
 
-These wrappers simplify usage in Playwright hooks or test runners:
+Esses wrappers simplificam o uso em hooks ou executores de teste do Playwright:
 ```ts
 runTestCaseStart(planId, suiteId, testCaseId): Promise<void>
 runTestCaseFinished(planId, suiteId, testCaseId, status, error?): Promise<void>
 ```
-They internally use AzureTestCaseService to activate and finalize test cases.
+Eles utilizam internamente o `AzureTestCaseService` para ativar e finalizar casos de teste.
 
 ---
 
 ####  `TestMetadataParser.ts`
 
-Parses structured metadata from test titles to link automated tests with Azure DevOps Test Plans.
+Analisa os metadados estruturados dos títulos dos testes para vinculá-los aos Planos de Teste do Azure DevOps.
 
 ##### Propósito
 
-This service extracts the following metadata from a test title:
+Este serviço extrai os seguintes metadados de um título de teste:
 
-- `@PLAN_ID=xxx` → Test Plan ID
-- `@SUITE_ID=xxx` → Test Suite ID
-- `@[xxx]` → Test Case ID
+- `@PLAN_ID=xxx` → ID do Plano de Teste
+- `@SUITE_ID=xxx` → ID da Suíte de Teste
+- `@[xxx]` → ID do Caso de Teste
 
-It ensures that each test is correctly mapped to its corresponding Azure DevOps test case.
+Garante que cada teste seja mapeado corretamente para seu respectivo caso no Azure DevOps.
 
-##### Expected Format
+##### Formato Esperado
 
 ```ts
-test('@PLAN_ID=123 @SUITE_ID=456 @[789] Validate login flow', async ({ page }) => {
-  // test logic
+test('@PLAN_ID=123 @SUITE_ID=456 @[789] Validar fluxo de login', async ({ page }) => {
+  // lógica do teste
 });
 ```
 
-##### Key Method
+##### Método Principal
 ```ts
 static extract(title: string): TestMetadata
 ```
 
-Returns a structured object:
+Retorna um objeto estruturado:
 ```ts
 {
   planId: '123',
@@ -234,111 +234,112 @@ Returns a structured object:
 }
 ```
 
-##### Error Handling
+##### Tratamento de Erros
 ```ts
 Error: Missing metadata in test title. Expected format: @PLAN_ID=xxx @SUITE_ID=xxx @[testCaseId]
 ```
 
-##### Usage
-Used by:
-- AzureTestCaseService.ts to activate and finalize test cases
-- Hooks or runners that need to extract metadata before execution
+##### Uso
+Usado por:
+- `AzureTestCaseService.ts` para ativar e finalizar casos de teste
+- Hooks ou runners que precisam extrair metadados antes da execução
 
 ---
 
-### 🧱 Azure DevOps Models
+### 🧱 Modelos do Azure DevOps
 
-This document describes the core model classes used to interact with the Azure DevOps Test Plans API. These classes define the structure of the payloads sent during test case activation, result publishing, and evidence attachment.
+Este documento descreve as classes de modelo principais usadas para interagir com a API do Azure DevOps Test Plans. Essas classes definem a estrutura dos payloads enviados durante a ativação de casos de teste, publicação de resultados e anexação de evidências.
 
 ---
 
 #### `Attachment.ts`
 
-Handles the creation and management of file attachments (e.g., logs, screenshots) to be published in Azure DevOps test results.
+Gerencia a criação e o gerenciamento de anexos de arquivos (por exemplo, logs, capturas de tela) a serem publicados nos resultados de teste do Azure DevOps.
 
 ##### Propósito
-- Encodes file content in base64
-- Generates a unique filename with timestamp and random suffix
-- Stores attachments in a static collection
-- Provides methods to add, retrieve, and clear attachments
+- Codifica o conteúdo do arquivo em base64
+- Gera um nome de arquivo exclusivo com timestamp e sufixo aleatório
+- Armazena anexos em uma coleção estática
+- Fornece métodos para adicionar, recuperar e limpar anexos
 
-##### Key Properties
-- `stream`: Base64-encoded content of the attachment
-- `fileName`: Auto-generated filename with timestamp and random suffix
-- `comment`: Description or context for the attachment
-- `attachmentType`: Type of attachment (default: `GeneralAttachment`)
+##### Propriedades Principais
+- `stream`: Conteúdo do anexo em base64
+- `fileName`: Nome de arquivo gerado automaticamente
+- `comment`: Descrição ou contexto do anexo
+- `attachmentType`: Tipo de anexo (padrão: `GeneralAttachment`)
 
-##### Static Methods
-- `setAttachment(attachment: Attachment)`: Adds an attachment to the global collection
-- `getAttachments()`: Retrieves all stored attachments
-- `clearAttachments()`: Clears the attachment list
+##### Métodos Estáticos
+- `setAttachment(attachment: Attachment)`: Adiciona um anexo à coleção global
+- `getAttachments()`: Retorna todos os anexos armazenados
+- `clearAttachments()`: Limpa a lista de anexos
 
 ---
 
 #### `Results.ts`
 
-Represents the outcome of a test case execution in Azure DevOps.
+Representa o resultado da execução de um caso de teste no Azure DevOps.
 
 ##### Propósito
-Encapsulates the result code expected by Azure DevOps:
+Encapsula o código de resultado esperado pelo Azure DevOps:
 
-| Code | Meaning       |
-|------|---------------|
-| 0    | Unspecified   |
-| 1    | Interrupted   |
-| 2    | Passed        |
-| 3    | Failed        |
-| 4    | Skipped/Timeout |
+| Código | Significado       |
+|--------|-------------------|
+| 0      | Não especificado  |
+| 1      | Interrompido      |
+| 2      | Aprovado          |
+| 3      | Falhou            |
+| 4      | Ignorado/Timeout  |
 
-##### Usage
-Used by `ResultTestCase.ts` and `AzureTestCaseService.ts` to communicate test outcomes.
+##### Uso
+Usado por `ResultTestCase.ts` e `AzureTestCaseService.ts` para comunicar os resultados dos testes.
 
 ---
 
 #### `ResultTestCase.ts`
 
-Defines the payload structure for updating the result of a specific test point in Azure DevOps.
+Define a estrutura do payload para atualizar o resultado de um ponto de teste específico no Azure DevOps.
 
 ##### Propósito
-- Maps a test point ID to its corresponding `Results` object
+- Mapeia o ID do ponto de teste para seu respectivo objeto `Results`
 
-##### Constructor
+##### Construtor
 ```ts
 new ResultTestCase(id: number, results: Results)
 ```
 
-##### Usage
-Used by AzureTestCaseService.ts when publishing test results.
+##### Uso
+Usado por `AzureTestCaseService.ts` ao publicar resultados de teste.
 
 ---
 
 #### `TestCaseActive.ts`
 
-Defines the payload structure for activating a test point before execution.
+Define a estrutura do payload para ativar um ponto de teste antes da execução.
 
 ##### Propósito
-- Marks a test point as active using its ID and a boolean flag
+- Marca um ponto de teste como ativo usando seu ID e um valor booleano
+
 ```ts
 new TestCaseActive(id: number, isActive: boolean)
 ```
 
-##### Usage
-Used by AzureTestCaseService.ts during the test activation phase.
+##### Uso
+Usado por `AzureTestCaseService.ts` durante a fase de ativação do teste.
 
 --- 
 
-## 🧯 Troubleshooting
+## 🧯 Solução de Problemas
 
-| Issue | Cause | Solution |
-|-------|-------|----------|
-| `AZURE_TOKEN is not defined` | Missing env variable | Add it to `.env` or `.env.local` |
-| Test case not updated | Incorrect metadata | Check `@PLAN_ID`, `@SUITE_ID`, and `@[ID]` in test title |
-| Attachments not published | No failure or missing call | Ensure `Attachment.setAttachment()` is called on error |
-| Result not visible in Azure | Wrong test point ID | Confirm test case is linked to correct suite and plan |
+|          Problema               |                 Causa                |                                Solução                                |
+|---------------------------------|--------------------------------------|-----------------------------------------------------------------------|
+| `AZURE_TOKEN is not defined`    | Variável de ambiente ausente         | Adicione-a em `.env` ou `.env.local`                                  |
+| Caso de teste não atualizado    | Metadados incorretos                 | Verifique `@PLAN_ID`, `@SUITE_ID`, e `@[ID]` no título do teste       |
+| Anexos não publicados           | Nenhuma falha ou ausência de chamada | Garanta que `Attachment.setAttachment()` seja chamado em caso de erro |
+| Resultado não visível no Azure  | ID de ponto de teste incorreto       | Confirme se o caso está vinculado ao plano e suíte corretos           |
 
 ---
 
-## 📄 Source Files
+## 📄 Arquivos Fonte
 - [`AzureAttachmentService.ts`](../../src/integrations/azure/AzureAttachmentService.ts)
 - [`AzureAuthService.ts`](../../src/integrations/azure/AzureAuthService.ts)
 - [`AzureConfigService.ts`](../../src/integrations/azure/AzureConfigService.ts)
