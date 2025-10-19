@@ -3,8 +3,18 @@ name: Playwright Tests
 on:
   push:
     branches: [main, develop]
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - '**/*.md'
+      - '.github/**.md'
   pull_request:
     branches: [main, develop]
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - '**/*.md'
+      - '.github/**.md'
 
 jobs:
   test:
@@ -46,7 +56,6 @@ jobs:
       - name: 🚀 Run Playwright tests with Percy (headless via xvfb)
         run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' npx percy exec -- npx playwright test --reporter=allure-playwright
 
-      # 🕘 Load previous Allure history from gh-pages
       - name: 🕘 Load test report history
         if: always()
         continue-on-error: true
@@ -55,7 +64,12 @@ jobs:
           ref: gh-pages
           path: gh-pages-history
 
-      # 🛠️ Build Allure report with history
+      - name: 🔄 Preserve previous history
+        if: always()
+        run: |
+          mkdir -p allure-results/history
+          cp -r gh-pages-history/history/* allure-results/history/ || true
+
       - name: 🛠️ Build test report
         if: always()
         uses: simple-elf/allure-report-action@v1.7
@@ -64,8 +78,7 @@ jobs:
           allure_results: allure-results
           allure_history: allure-history
 
-      # 🚀 Publish Allure report to GitHub Pages
-      - name: 🚀 Publish test report
+      - name: 🚀 Publish test report to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
