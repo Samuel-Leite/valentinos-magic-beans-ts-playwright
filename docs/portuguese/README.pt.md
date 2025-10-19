@@ -1,20 +1,27 @@
 <div align="center">
   <img src="https://playwright.dev/img/playwright-logo.svg" alt="Playwright Logo" width="120" />
   <h1>Valentino's Magic Beans - Automação com Playwright</h1>
-  <p><strong>Projeto desenvolvido durante o curso de automação com Playwright</strong><br>Testes modernos de ponta a ponta para aplicações web reais.</p><br>
+  <p><strong>Framework de automação de testes E2E com arquitetura escalável e integração contínua</strong><br>Projetado para validar funcionalidades críticas de aplicações web modernas, com foco em rastreabilidade, qualidade de código e integração com plataformas corporativas.</p><br>
 </div>
+
+<p align="center">
+  📊 <a href="https://samuel-leite.github.io/valentinos-magic-beans-ts-playwright/64/">Visualizar relatório Allure</a>
+</p>
 
 <div align="center">
   <img src="https://img.shields.io/badge/TypeScript-3178c6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Playwright-2ead33?style=for-the-badge&logo=playwright&logoColor=white" alt="Playwright" />
   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
   <img src="https://img.shields.io/badge/Husky-hooks-critical?style=for-the-badge&logo=git&logoColor=white" alt="Husky" />
-  <img src="https://img.shields.io/badge/ESLint-qualidade%20de%20código-blueviolet?style=for-the-badge&logo=eslint&logoColor=white" alt="ESLint" />
-  <img src="https://img.shields.io/badge/Licença-MIT-blue?style=for-the-badge" alt="MIT License" />
+  <img src="https://img.shields.io/badge/ESLint-code%20quality-blueviolet?style=for-the-badge&logo=eslint&logoColor=white" alt="ESLint" />
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" alt="MIT License" />
   <img src="https://img.shields.io/badge/CI-GitHub%20Actions-blue?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI" />
-  <img src="https://img.shields.io/badge/Cobertura-100%25-success?style=for-the-badge" alt="Coverage" />
-  <img src="https://img.shields.io/badge/BrowserStack-integrado-orange?style=for-the-badge&logo=browserstack&logoColor=white" alt="BrowserStack" />
+  <img src="https://img.shields.io/badge/Coverage-100%25-success?style=for-the-badge" alt="Coverage" />
+  <img src="https://img.shields.io/badge/BrowserStack-integrated-orange?style=for-the-badge&logo=browserstack&logoColor=white" alt="BrowserStack" />
   <img src="https://img.shields.io/badge/Azure%20DevOps-Test%20Plans-0078D7?style=for-the-badge&logo=azuredevops&logoColor=white" alt="Azure DevOps Test Plans" />
+  <a href="https://samuel-leite.github.io/valentinos-magic-beans-ts-playwright/64/">
+    <img src="https://img.shields.io/badge/Allure-Report-blue?style=for-the-badge&logo=allure&logoColor=white" alt="Allure Report" />
+  </a>
 </div>
 
 ## 📦 Requisitos
@@ -24,9 +31,9 @@
 - Husky  
 - BrowserStack  
 - Azure DevOps (TestPlan)
-- Percy
-- ESLint e Prettier  
-- Logger Winston  
+- Percy (visual testing)
+- Allure Report
+- Logger Winston
 
 ## 🚀 Propósito
 Este projeto tem como objetivo validar funcionalidades críticas da aplicação web **Valentino's Magic Beans** através de testes automatizados robustos, rastreáveis e escaláveis, com foco em boas práticas de desenvolvimento e qualidade de código.

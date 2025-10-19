@@ -1,9 +1,10 @@
 <div align="center">
   <img src="https://playwright.dev/img/playwright-logo.svg" alt="Playwright Logo" width="120" />
   <h1>Valentino's Magic Beans - Playwright Automation</h1>
-  <p><strong>Project developed during the Playwright automation course</strong><br>Modern end-to-end testing for real-world web applications.</p><br>
+  <p><strong>Enterprise-grade end-to-end test automation framework</strong><br>Designed to validate mission-critical features of modern web applications with scalability, traceability, and seamless integration into CI/CD pipelines.</p><br>
 
-  🌎 <a href="./docs/portuguese/README.pt.md">Versão em Português</a>
+  🌎 <a href="./docs/portuguese/README.pt.md">Versão em Português</a><br>
+  📊 <a href="https://samuel-leite.github.io/valentinos-magic-beans-ts-playwright/64/">View Allure Report</a>
 </div>
 
 <div align="center">
@@ -17,6 +18,9 @@
   <img src="https://img.shields.io/badge/Coverage-100%25-success?style=for-the-badge" alt="Coverage" />
   <img src="https://img.shields.io/badge/BrowserStack-integrated-orange?style=for-the-badge&logo=browserstack&logoColor=white" alt="BrowserStack" />
   <img src="https://img.shields.io/badge/Azure%20DevOps-Test%20Plans-0078D7?style=for-the-badge&logo=azuredevops&logoColor=white" alt="Azure DevOps Test Plans" />
+  <a href="https://samuel-leite.github.io/valentinos-magic-beans-ts-playwright/64/">
+    <img src="https://img.shields.io/badge/Allure-Report-blue?style=for-the-badge&logo=allure&logoColor=white" alt="Allure Report" />
+  </a>
 </div>
 
 ## 📦 Requirements
@@ -26,8 +30,8 @@
 - Husky
 - BrowserStack
 - Azure DevOps (TestPlan)
-- Percy
-- Eslint e Prettier
+- Percy (visual testing)
+- Allure Report
 - Logger Winston
 
 ## 🚀 Purpose
