@@ -1,6 +1,6 @@
 {
   "name": "valentinos-magic-beans",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
@@ -10,7 +10,8 @@
     "tag": "npx playwright test --grep",
     "test:allure": "npx playwright test --reporter=list,html,allure-playwright",
     "allure:report": "allure generate allure-results --clean -o allure-report",
-    "visual": "percy exec -- npx playwright test"
+    "visual": "percy exec -- npx playwright test",
+    "release": "standard-version"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +24,8 @@
     "@types/winston": "^2.4.4",
     "allure-playwright": "^3.4.1",
     "git-cz": "^4.9.0",
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "standard-version": "^9.5.0"
   },
   "dependencies": {
     "@percy/cli": "^1.31.3",
