@@ -40,6 +40,7 @@ export class EndpointBuilder {
       project: process.env.PROJECT_NAME,
       'browserstack.username': process.env.BROWSERSTACK_USERNAME,
       'browserstack.accessKey': process.env.BROWSERSTACK_ACCESS_KEY,
+      'browserstack.performance': 'assert',
     };
 
     Logger.info(`[EndpointBuilder] Final capabilities assembled for test: ${testName}`);

@@ -13,6 +13,3 @@ smartWait: true
 debug: true
 interactiveDebugging: true
 local: false
-projectName: Valentino Beans
-sessionName: Checkout Flow - Mobile
-buildIdentifier: v1.0.0
