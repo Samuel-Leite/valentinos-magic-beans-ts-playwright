@@ -44,18 +44,26 @@ Este projeto está licenciado sob a **Licença MIT**.
 ---
 
 ## 🚀 Sobre o Projeto
-Este repositório contém uma suíte de automação de testes ponta a ponta construída com o <a href="https://playwright.dev/">Playwright</a>, desenvolvida como parte de um curso de automação.  
-O objetivo é demonstrar como criar, organizar e executar testes automatizados para aplicações web reais.
+Este repositório contém uma suíte robusta de automação de testes ponta a ponta desenvolvida com o framework <a href="https://playwright.dev/">Playwright</a>. Seu propósito é validar funcionalidades críticas de aplicações web modernas por meio de testes confiáveis, organizados e escaláveis, integrados a pipelines de CI/CD e relatórios visuais com Allure.
 
 ## 📚 Principais Funcionalidades
-- Testes E2E com Playwright e TypeScript  
-- Fluxo completo de compra como usuário convidado  
+## Funcionalidades Principais
+
+- Testes ponta a ponta com Playwright e TypeScript  
+- Simulação completa do fluxo de compra como usuário convidado  
 - Validação de produtos, preços e status do pedido  
-- Estrutura modular e de fácil manutenção  
+- Arquitetura de testes modular e de fácil manutenção  
 - Hooks de pré-commit com Husky para garantir qualidade de código  
-- Ambiente CI configurado com GitHub Actions  
-- Execução remota de testes via BrowserStack e local  
-- Integração nativa com o **Azure DevOps Test Plans**  
+- Versionamento automatizado e geração de changelog com standard-version  
+- Fluxo de commits convencionais com Commitizen e validação de mensagens  
+- Automação de push e controle de Git via scripts Husky  
+- Criação de tags de release com versionamento semântico integrado ao Git  
+- Ambiente de integração contínua configurado com GitHub Actions  
+- Execução condicional da pipeline com base nas alterações (ignora commits apenas de documentação)  
+- Execução de testes local e remota via BrowserStack  
+- Integração nativa com Azure DevOps Test Plans  
+- Relatórios visuais de testes com Allure, incluindo preservação de histórico entre execuções  
+- Configuração estruturada via arquivos YAML para ambientes e credenciais
 
 ## 🛠️ Como Executar
 ```bash
@@ -111,74 +119,88 @@ Para aprender como executar testes Playwright em navegadores e dispositivos reai
 
 ---
 
+## 📸 Integração e execução com o Percy
+
+Este projeto utiliza o [Percy](https://percy.io/) para testes visuais automatizados, permitindo identificar mudanças inesperadas na interface da aplicação durante a execução dos testes com Playwright. Para mais detalhes sobre a configuração e uso do Percy, consulte o [Guia de Execução Percy](../portuguese/percy.md).
+
+---
+
 ## 📂 Estrutura do Projeto
 
 ```bash
 valentino-magic-beans/
-├── .github/                             # Configuração do GitHub
-│   └── workflows/                       # Workflows de CI/CD
-│       └── playwright.yml               # Pipeline de testes com Playwright via GitHub Actions
-├── .husky/                              # Hooks do Git gerenciados pelo Husky
-│   ├── commit-message                   # Validação de mensagens de commit
-│   ├── push.js                          # Script personalizado de push
-│   └── _/                               # Scripts internos e definições de hooks
-├── src/                                 # Código-fonte
-│   ├── core/                            # Lógica central do ciclo de vida dos testes
-│   │   ├── hooks.ts                     # Hooks globais (beforeAll, beforeEach, etc.)
-│   │   └── remoteRunner.ts              # Gerencia execução local ou remota (BrowserStack)
+├── .github/                             # Configurações do GitHub
+│   └── workflows/                       # Fluxos de trabalho de CI/CD
+│       └── playwright.yml              # Pipeline de testes Playwright usando GitHub Actions
+├── .husky/                              # Hooks de Git gerenciados pelo Husky
+│   ├── commit-message                  # Hook para validação de mensagens de commit
+│   ├── push.js                         # Script personalizado para o hook de push
+│   └── _/                              # Scripts internos e definições de hooks do Husky
+├── src/                                 # Código-fonte do projeto
+│   ├── core/                            # Lógica central de execução e ciclo de vida dos testes
+│   │   ├── hooks.ts                    # Hooks globais de teste (beforeAll, beforeEach, etc.)
+│   │   └── remoteRunner.ts            # Gerencia execução local vs remota (BrowserStack)
 │   ├── integrations/                    # Integrações com serviços externos
-│   │   ├── azure/                       # Camada de integração com Azure DevOps
-│   │   │   ├── AzureAttachmentService.ts   # Publica evidências (logs, screenshots) no Azure
-│   │   │   ├── AzureAuthService.ts         # Gera token base64 para autenticação na API
-│   │   │   ├── AzureConfigService.ts       # Carrega configurações do Azure das variáveis de ambiente
-│   │   │   ├── AzureTestCaseService.ts     # Gerencia o ciclo de vida dos casos de teste no Azure
-│   │   │   ├── TestIdExtractor.ts          # Extrai o ID do caso de teste do título via @[12345]
-│   │   │   ├── TestMetadataParser.ts       # Interpreta planId, suiteId, testCaseId das anotações
+│   │   ├── azure/                      # Camada de integração com Azure DevOps
+│   │   │   ├── AzureAttachmentService.ts   # Publica evidências de teste (logs, screenshots) no Azure
+│   │   │   ├── AzureAuthService.ts         # Gera token PAT em base64 para autenticação na API do Azure
+│   │   │   ├── AzureConfigService.ts       # Carrega configurações do Azure a partir de variáveis de ambiente
+│   │   │   ├── AzureTestCaseService.ts     # Gerencia ciclo de vida dos casos de teste no Azure
+│   │   │   ├── TestIdExtractor.ts          # Extrai ID do caso de teste a partir do título usando @[12345]
+│   │   │   ├── TestMetadataParser.ts       # Interpreta planId, suiteId e testCaseId a partir de anotações
 │   │   │   └── models/                     # Modelos de dados para payloads da API do Azure
-│   │   │       ├── Attachment.ts           # Representa um arquivo base64 anexado
-│   │   │       ├── Results.ts              # Define códigos de resultado do teste (passed, failed, etc.)
-│   │   │       ├── ResultTestCase.ts       # Payload para atualizar o resultado do teste
+│   │   │       ├── Attachment.ts           # Representa um arquivo codificado em base64
+│   │   │       ├── Results.ts              # Encapsula o código de resultado do teste (passed, failed, etc.)
+│   │   │       ├── ResultTestCase.ts       # Payload para envio de atualizações de resultado
 │   │   │       └── TestCaseActive.ts       # Payload para ativar um ponto de teste antes da execução
-│   │   └── browserstack/                   # Camada de integração com BrowserStack
-│   │       ├── browserstackStatus.ts       # Atualiza o status do teste no BrowserStack
-│   │       └── endpointBuilder.ts          # Constrói o endpoint WebSocket para execução remota
-│   ├── pages/                              # Definições do Page Object Model (POM)
-│   │   ├── HomePage.ts                     # Página inicial
-│   │   └── LoginPage.ts                    # Página de login
-│   ├── resources/                          # Dados de teste e arquivos de configuração
-│   │   ├── config/                         # URLs de ambiente e capacidades
-│   │   │   ├── url-prod.yml                # URL base de produção
-│   │   │   ├── url-qa.yml                  # URL base de QA
-│   │   │   └── capabilities/               # Configurações de browser/dispositivo para BrowserStack
+│   │   ├── browserstack/              # Camada de integração com BrowserStack
+│   │   │   ├── browserstackStatus.ts       # Atualiza status do teste no BrowserStack
+│   │   │   └── endpointBuilder.ts          # Gera endpoint WebSocket para execução remota
+│   │   └── percy/                     # Integração com Percy para testes visuais
+│   │       └── percyService.ts            # Captura snapshots visuais durante a execução dos testes
+│   ├── pages/                           # Definições do Page Object Model (POM)
+│   │   ├── HomePage.ts                  # Page object da tela inicial
+│   │   └── LoginPage.ts                 # Page object da tela de login
+│   ├── resources/                       # Dados de teste e arquivos de configuração
+│   │   ├── config/                     # URLs de ambiente e capacidades
+│   │   │   ├── url-prod.yml             # URL base para ambiente de produção
+│   │   │   ├── url-qa.yml               # URL base para ambiente de QA
+│   │   │   └── capabilities/            # Capacidades de navegador/dispositivo para BrowserStack
 │   │   │       ├── desktop.yml
 │   │   │       └── mobile.yml
-│   │   └── data/                           # Massa de teste por ambiente
+│   │   └── data/                       # Dados de teste por ambiente
 │   │       ├── prod/
-│   │       │   └── credencial.yml          # Credenciais de produção
+│   │       │   └── credencial.yml       # Credenciais para testes em produção
 │   │       └── qa/
-│   │           └── credencial.yml          # Credenciais de QA
-│   ├── selectors/                          # Seletores de elementos usados nos Page Objects
-│   │   ├── HomeSelectors.ts                # Seletores da página inicial
-│   │   └── LoginSelectors.ts               # Seletores da página de login
-│   └── utils/                              # Funções utilitárias e lógica compartilhada
-│       ├── actions.ts                      # Ações de alto nível (click, type, etc.)
-│       ├── asserts.ts                      # Helpers de asserções personalizadas
-│       ├── highlightElement.ts             # Destaque visual para debug
-│       ├── logger.ts                       # Logger baseado em Winston
-│       └── yamlReader.ts                   # Leitor de arquivos YAML
-├── tests/                                 # Cenários de teste
-│   └── login.spec.ts                      # Caso de teste de login
-├── .env                                   # Definição de variáveis de ambiente
-├── .gitignore                             # Arquivos e pastas ignoradas pelo Git
-├── changelog.config.js                    # Configuração do changelog (ex: commitlint)
-├── package.json                           # Dependências e scripts do projeto
-├── package-lock.json                      # Arquivo de lock do npm
-├── playwright.config.ts                   # Configuração do Playwright
-├── winston.log                            # Log gerado pelo logger Winston
-├── README.md                              # Documentação do projeto
+│   │           └── credencial.yml       # Credenciais para testes em QA
+│   ├── selectors/                       # Seletores de elementos usados nos page objects
+│   │   ├── HomeSelectors.ts             # Seletores da tela inicial
+│   │   └── LoginSelectors.ts            # Seletores da tela de login
+│   └── utils/                           # Funções utilitárias e lógica compartilhada
+│       ├── actions.ts                  # Ações de alto nível em elementos (click, type, etc.)
+│       ├── asserts.ts                  # Helpers de asserções personalizadas
+│       ├── highlightElement.ts         # Destaque visual para depuração de elementos
+│       ├── logger.ts                   # Utilitário de logging baseado em Winston
+│       └── yamlReader.ts               # Leitura de arquivos YAML de config e dados
+├── tests/                               # Cenários de teste
+│   └── login.spec.ts                   # Caso de teste de login
+├── .env                                 # Definições de variáveis de ambiente
+├── .gitignore                           # Arquivos e pastas ignorados pelo Git
+├── changelog.config.js                  # Configuração de geração de changelog (ex.: commitlint)
+├── package.json                         # Dependências e scripts do projeto
+├── package-lock.json                    # Arquivo de lock do npm para instalações reproduzíveis
+├── playwright.config.ts                 # Configuração do runner de testes Playwright
+├── winston.log                          # Arquivo de log gerado pelo Winston
+├── README.md                            # Documentação do projeto
 ```
 
 ## 🔗 Links Úteis
 - [Documentação Playwright](https://playwright.dev/)
 - [Documentação TypeScript](https://www.typescriptlang.org/)
 - [Node.js](https://nodejs.org/)
+- [Percy para Playwright](https://docs.percy.io/docs/playwright)
+- [Percy Dashboard](https://percy.io/)
+- [Allure Report para Playwright](https://github.com/allure-framework/allure-playwright)
+- [GitHub Actions](https://docs.github.com/actions)
+- [BrowserStack Automate](https://www.browserstack.com/docs/automate/playwright)
+- [Azure DevOps Test Plans](https://learn.microsoft.com/azure/devops/testplans/)

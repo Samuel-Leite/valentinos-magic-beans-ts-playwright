@@ -43,17 +43,24 @@ This project is licensed under the MIT License.
 ---
 
 ## 🚀 About the Project
-This repository contains an end-to-end test automation suite built with <a href="https://playwright.dev/">Playwright</a>, developed as part of an automation course. The goal is to demonstrate how to create, organize, and execute automated tests for real-world web applications.
+This repository contains a robust end-to-end test automation suite built with <a href="https://playwright.dev/">Playwright</a>. Its purpose is to validate critical features of modern web applications through reliable, scalable, and well-structured automated tests — fully integrated with CI/CD pipelines and enhanced by visual reporting via Allure.
 
 ## 📚 Key Features
-- E2E testing with Playwright and TypeScript
-- Full purchase flow as a guest user
-- Validation of products, pricing, and order status
-- Modular and maintainable structure
-- Pre-commit hooks with Husky to ensure code quality
-- CI environment setup with GitHub Actions
-- Remote test execution via BrowserStack and local test execution
-- Native integration with Azure DevOps Test Plans
+- End-to-end testing with Playwright and TypeScript  
+- Full guest checkout flow simulation  
+- Validation of products, pricing, and order status  
+- Modular and maintainable test architecture  
+- Pre-commit hooks powered by Husky to enforce code quality  
+- Automated versioning and changelog generation using standard-version  
+- Conventional commit flow with Commitizen and commit message linting  
+- Git hooks managed via Husky for commit and push automation  
+- Release tagging with semantic versioning and Git integration  
+- CI environment configured with GitHub Actions  
+- Conditional pipeline execution based on code changes (ignores documentation-only commits)  
+- Remote and local test execution via BrowserStack  
+- Native integration with Azure DevOps Test Plans  
+- Visual test reporting with Allure, including historical data preservation across runs  
+- Structured configuration using YAML for environments and credentials
 
 ## 🛠️ How to run
 ```
@@ -109,6 +116,13 @@ To learn how to run Playwright tests on real browsers and devices using BrowserS
 
 ---
 
+## Visual Testing with Percy
+
+This project uses [Percy](https://percy.io/) for automated visual testing, helping detect unexpected changes in the application's interface during Playwright test execution.  
+For detailed setup and usage instructions, see the [Percy Execution Guide](./docs/english/percy.md).
+
+---
+
 ## 📂 Project Structure
 
 ```bash
@@ -137,9 +151,11 @@ valentino-magic-beans/
 │   │   │       ├── Results.ts              # Encapsulates test outcome code (passed, failed, etc.)
 │   │   │       ├── ResultTestCase.ts       # Payload for submitting test result updates
 │   │   │       └── TestCaseActive.ts       # Payload for activating a test point before execution
-│   │   └── browserstack/              # BrowserStack integration layer
-│   │       ├── browserstackStatus.ts       # Updates test status on BrowserStack
-│   │       └── endpointBuilder.ts          # Builds WebSocket endpoint for remote execution
+│   │   ├── browserstack/              # BrowserStack integration layer
+│   │   │   ├── browserstackStatus.ts       # Updates test status on BrowserStack
+│   │   │   └── endpointBuilder.ts          # Builds WebSocket endpoint for remote execution
+│   │   └── percy/                     # Percy visual testing integration
+│   │       └── percyService.ts            # Captures visual snapshots during test execution
 │   ├── pages/                           # Page Object Model (POM) definitions
 │   │   ├── HomePage.ts                  # Page object for the home page
 │   │   └── LoginPage.ts                 # Page object for the login page
@@ -177,6 +193,12 @@ valentino-magic-beans/
 ```
 
 ## 🔗 Useful Links
-- [Documentação Playwright](https://playwright.dev/)
-- [Documentação TypeScript](https://www.typescriptlang.org/)
-- [Node.js](https://nodejs.org/)
+- [Playwright Documentation](https://playwright.dev/)
+- [TypeScript Documentation](https://www.typescriptlang.org/)
+- [Node.js Official Site](https://nodejs.org/)
+- [Percy Integration for Playwright](https://docs.percy.io/docs/playwright)
+- [Percy Dashboard](https://percy.io/)
+- [Allure Report for Playwright](https://github.com/allure-framework/allure-playwright)
+- [GitHub Actions Documentation](https://docs.github.com/actions)
+- [BrowserStack Automate for Playwright](https://www.browserstack.com/docs/automate/playwright)
+- [Azure DevOps Test Plans](https://learn.microsoft.com/azure/devops/testplans/)
