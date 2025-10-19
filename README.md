@@ -2,6 +2,8 @@
   <img src="https://playwright.dev/img/playwright-logo.svg" alt="Playwright Logo" width="120" />
   <h1>Valentino's Magic Beans - Playwright Automation</h1>
   <p><strong>Project developed during the Playwright automation course</strong><br>Modern end-to-end testing for real-world web applications.</p><br>
+
+  🌎 <a href="./docs/portuguese/README.pt.md">Versão em Português</a>
 </div>
 
 <div align="center">
@@ -23,7 +25,8 @@
 - TypeScript
 - Husky
 - BrowserStack
-- TestPlan - Azure DevOps
+- Azure DevOps (TestPlan)
+- Percy
 - Eslint e Prettier
 - Logger Winston
 
@@ -82,6 +85,10 @@ AZURE_HOST=                # Azure DevOps host URL
 AZURE_ORGANIZATION=        # Azure DevOps organization name
 AZURE_PROJECT=             # Azure DevOps project name
 AZURE_TOKEN=               # Personal Access Token (PAT) for Azure DevOps API
+
+#### 📸 Visual Integration with Percy
+ENABLE_PERCY=true          # Enables automatic visual comparison with Percy
+PERCY_TOKEN=               # Percy project authentication token
 ```
 
 ---
@@ -99,7 +106,8 @@ To learn how to run Playwright tests on real browsers and devices using BrowserS
 ---
 
 ## 📂 Project Structure
-```
+
+```bash
 valentino-magic-beans/
 ├── .github/                             # GitHub configuration
 │   └── workflows/                       # CI/CD workflows

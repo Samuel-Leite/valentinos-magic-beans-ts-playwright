@@ -1,56 +1,61 @@
-# 🌐 BrowserStack Integration
+# 🌐 Integração com BrowserStack
 
-This project supports remote test execution on **BrowserStack** using Playwright. It enables seamless switching between local and cloud-based testing environments with minimal configuration.
+Este projeto oferece suporte à execução remota de testes no **BrowserStack** usando o Playwright.  
+Ele permite alternar facilmente entre execuções locais e em nuvem com configuração mínima.
 
 ---
 
-## 📘 Table of Contents
+## 📘 Índice
 
-- [🎯 Purpose](#-purpose)
-- [⚙️ How It Works](#️-how-it-works)
-- [🔐 Required Environment Variables](#-required-environment-variables)
-- [📂 Project Structure](#-project-structure)
-- [🛠️ Key Components](#-key-components)
+- [🎯 Propósito](#-propósito)
+- [⚙️ Como Funciona](#️-como-funciona)
+- [🔐 Variáveis de Ambiente Necessárias](#-variáveis-de-ambiente-necessárias)
+- [📂 Estrutura do Projeto](#-estrutura-do-projeto)
+- [🛠️ Componentes Principais](#-componentes-principais)
   - [`BrowserStackStatus.ts`](#browserstackstatusts)
   - [`EndpointBuilder.ts`](#endpointbuilderts)
   - [`RemoteRunner.ts`](#remoterunnerts)
-- [🧯 Troubleshooting](#-troubleshooting)
-- [📄 Source Files](#-source-files)
+- [🧯 Solução de Problemas](#-solução-de-problemas)
+- [📄 Arquivos Fonte](#-arquivos-fonte)
 
 ---
 
-## 🎯 Purpose
+## 🎯 Propósito
 
-- Run Playwright tests on real browsers/devices via BrowserStack
-- Dynamically switch between local and remote execution
-- Automatically update test session status in BrowserStack
-- Generate WebSocket endpoints with custom capabilities
-
----
-
-## ⚙️ How It Works
-
-1. Set `RUN_REMOTE=true` in your `.env` file to enable remote execution.
-2. The `RemoteRunner` dynamically builds a WebSocket endpoint using `EndpointBuilder`.
-3. Playwright connects to BrowserStack using the generated endpoint.
-4. After test execution, `BrowserStackStatus` updates the session status (passed/failed) with a reason.
+- Executar testes Playwright em navegadores/dispositivos reais via BrowserStack  
+- Alternar dinamicamente entre execução local e remota  
+- Atualizar automaticamente o status das sessões no BrowserStack  
+- Gerar endpoints WebSocket com capacidades personalizadas  
 
 ---
 
-## 🔐 Required Environment Variables
+## ⚙️ Como Funciona
+
+1. Defina `RUN_REMOTE=true` no seu arquivo `.env` para habilitar a execução remota.  
+2. O `RemoteRunner` cria dinamicamente um endpoint WebSocket usando o `EndpointBuilder`.  
+3. O Playwright se conecta ao BrowserStack utilizando o endpoint gerado.  
+4. Após a execução do teste, o `BrowserStackStatus` atualiza o status da sessão (sucesso/falha) com a justificativa.  
+
+---
+
+## 🔐 Variáveis de Ambiente Necessárias
 
 ```env
 RUN_REMOTE=true
 DEVICE=desktop
-BROWSERSTACK_USERNAME=your_username
-BROWSERSTACK_ACCESS_KEY=your_access_key
-BUILD_NAME=My Build
-PROJECT_NAME=My Project
+BROWSERSTACK_USERNAME=seu_usuario
+BROWSERSTACK_ACCESS_KEY=sua_chave
+BUILD_NAME=Meu Build
+PROJECT_NAME=Meu Projeto
 ```
-⚠️ Never commit your real credentials. Use .env.example for safe sharing.
+⚠️ **Nunca** envie suas credenciais reais.  
+Use o arquivo `.env.example` para compartilhamento seguro.
 
-## 📂 Project Structure
-```
+---
+
+## 📂 Estrutura do Projeto
+
+```bash
 src/
 │├── core/
 │      ├── hooks.ts
@@ -61,18 +66,18 @@ src/
 │               └── endpointBuilder.ts
 ```
 
-## 🛠️ Key Components
+## 🛠️ Componentes Principais
 
-#### `BrowserStackStatus.ts`
+### `BrowserStackStatus.ts`
 
-Handles session status updates in the BrowserStack dashboard.
+Gerencia as atualizações de status das sessões no painel do BrowserStack.
 
-##### Purpose
-Sends passed or failed status to BrowserStack
-- Extracts meaningful failure reasons from testInfo
-- Matches known error patterns for better reporting
+#### 🎯 Propósito
+Envia o status de sucesso ou falha para o BrowserStack:
+- Extrai motivos de falha relevantes a partir de `testInfo`
+- Identifica padrões de erro conhecidos para relatórios mais detalhados
 
-##### Key Method
+#### 🔑 Métodos Principais
 ```ts
 update(page: Page, status: 'passed' | 'failed', reason: string): Promise<void>
 updateFromTestInfo(page: Page, testInfo: TestInfo): Promise<void>
@@ -82,14 +87,14 @@ updateFromTestInfo(page: Page, testInfo: TestInfo): Promise<void>
 
 #### `EndpointBuilder.ts`
 
-Generates the WebSocket endpoint URL for connecting to BrowserStack.
+Gera a URL de endpoint WebSocket para conexão com o BrowserStack.
 
-##### Purpose
-- Loads YAML capability files based on device name
-- Injects dynamic metadata (test name, build, project, credentials)
-- Encodes capabilities into a WebSocket-compatible format
+##### Propósito
+- Carrega arquivos YAML de capacidades com base no nome do dispositivo
+- Injeta metadados dinâmicos (nome do teste, build, projeto e credenciais)
+- Codifica as capacidades em um formato compatível com WebSocket
 
-##### Key Method
+##### Método Principal
 ```ts
 build(deviceName: string, testName: string): string
 ```
@@ -98,14 +103,14 @@ build(deviceName: string, testName: string): string
 
 #### `RemoteRunner.ts`
 
-Manages browser context creation and test lifecycle for local and remote execution.
+Gerencia a criação do contexto do navegador e o ciclo de vida dos testes, tanto local quanto remotamente.
 
-##### Purpose
-- Detects execution mode via RUN_REMOTE
-- Creates and tears down browser contexts accordingly
-- Extends Playwright’s test object with custom setup
+##### Propósito
+- Detecta o modo de execução através da variável RUN_REMOTE
+- Cria e finaliza contextos de navegador conforme o ambiente
+- Estende o objeto de teste do Playwright com uma configuração personalizada
 
-##### Key Method
+##### Métodos Principais
 ```ts
 createContext(testInfo: TestInfo): Promise<BrowserContext>
 createPage(context: BrowserContext): Promise<Page>
@@ -113,17 +118,17 @@ closeContext(context: BrowserContext): Promise<void>
 extend(): typeof test
 ```
 
-## 🧯 Troubleshooting
+## 🧯 Solução de Problemas
 
-| Issue                          | Cause                          | Solution                                                                 |
-|-------------------------------|--------------------------------|--------------------------------------------------------------------------|
-| `Capabilities file not found` | Missing YAML config            | Ensure `resources/config/capabilities/desktop.yml` exists                |
-| `Session status not updated`  | Missing credentials or skipped test | Check `BROWSERSTACK_USERNAME`, `BROWSERSTACK_ACCESS_KEY`, and test status |
-| `WebSocket connection fails`  | Invalid capabilities or credentials | Validate YAML file and `.env` values                                     |
-| `RUN_REMOTE` has no effect    | Variable not loaded            | Confirm `.env` is loaded and `RUN_REMOTE=true` is set correctly          |
+|         Problema              |               Causa                    |                                         Solução                                             |
+|-------------------------------|----------------------------------------|---------------------------------------------------------------------------------------------|
+| `Capabilities file not found` | Arquivo YAML ausente                   | Verifique se `resources/config/capabilities/desktop.yml` existe                             |
+| `Session status not updated`  | Credenciais ausentes ou teste ignorado | Confirme `BROWSERSTACK_USERNAME`, `BROWSERSTACK_ACCESS_KEY`, e o status do teste            |
+| `WebSocket connection fails`  | Capacidades ou credenciais inválidas   | Valide o arquivo YAML e os valores do `.env`                                                |
+| `RUN_REMOTE` sem efeito       | Variável não carregada                 | Confirme se o `.env` está sendo carregado e se `RUN_REMOTE=true` está definido corretamente |
 
 
-## 📄 Source Files
+## 📄 Arquivos Fonte
 - [`remoteRunner.ts`](../../src/core/remoteRunner.ts)
 - [`browserstackStatus.ts`](../../src/integrations/browserstack/browserstackStatus.ts)
 - [`endpointBuilder.ts`](../../src/integrations/browserstack/endpointBuilder.ts)
