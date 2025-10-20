@@ -155,6 +155,7 @@ valentino-magic-beans/
 │   │   ├── browserstack/              # BrowserStack integration layer
 │   │   │   ├── browserstackStatus.ts       # Updates test status on BrowserStack
 │   │   │   └── endpointBuilder.ts          # Builds WebSocket endpoint for remote execution
+│   │   │   └── lighthouseExecutor.ts          # Initializes and manages Lighthouse WebSocket server for remote audits
 │   │   └── percy/                     # Percy visual testing integration
 │   │       └── percyService.ts            # Captures visual snapshots during test execution
 │   ├── pages/                           # Page Object Model (POM) definitions

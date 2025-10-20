@@ -1,4 +1,16 @@
-# 📦 Changelog
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.2.3](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.2.2...v1.2.3) (2025-10-20)
+
+### [1.2.2](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.2.1...v1.2.2) (2025-10-20)
+
+
+### Bug Fixes
+
+* **all:** 🐛 release commit ([a919fbc](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/a919fbc3570737fd7c1d3511d5bdddea8c3a8d0b))
+
 ### [1.2.1](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.2.0...v1.2.1) (2025-10-20)
 
 ## [1.2.0](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.1.4...v1.2.0) (2025-10-19)
