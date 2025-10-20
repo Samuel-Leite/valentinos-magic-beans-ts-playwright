@@ -6,7 +6,7 @@
     "prepare": "husky install",
     "precommit": "git add . ",
     "commit": "git cz && node .husky/push.js",
-    "release": "standard-version && ts-node scripts/format-release-commit.ts",
+    "release": "standard-version",
     "test": "npx playwright test",
     "functional": "npx playwright test tests/e2e",
     "visual": "percy exec -- npx playwright test",
@@ -17,21 +17,6 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "config": {
-    "commitizen": {
-      "path": "./cz-config.js"
-    }
-  },
-  "standard-version": {
-    "changelogHeader": "# 📦 Changelog",
-    "scripts": {
-      "postchangelog": "git add CHANGELOG.md"
-    },
-    "changelog": {
-      "preset": "conventionalcommits",
-      "config": "./changelog.config.js"
-    }
-  },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
     "@types/js-yaml": "^4.0.9",
