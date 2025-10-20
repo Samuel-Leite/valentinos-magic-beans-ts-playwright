@@ -1,12 +1,12 @@
 {
   "name": "valentinos-magic-beans",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
     "precommit": "git add . ",
     "commit": "git cz && node .husky/push.js",
-    "release": "standard-version && node scripts/format-release-commit.js",
+    "release": "standard-version && ts-node scripts/format-release-commit.ts",
     "test": "npx playwright test",
     "functional": "npx playwright test tests/e2e",
     "visual": "percy exec -- npx playwright test",
@@ -19,7 +19,7 @@
   "description": "",
   "config": {
     "commitizen": {
-      "path": "./changelog.config.js"
+      "path": "./cz-config.js"
     }
   },
   "standard-version": {
