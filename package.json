@@ -6,7 +6,7 @@
     "prepare": "husky install",
     "precommit": "git add . ",
     "commit": "git cz && node .husky/push.js",
-    "release": "standard-version",
+    "release": "standard-version && node scripts/format-release-commit.js",
     "test": "npx playwright test",
     "functional": "npx playwright test tests/e2e",
     "visual": "percy exec -- npx playwright test",
