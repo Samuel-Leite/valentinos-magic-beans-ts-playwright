@@ -1,6 +1,6 @@
 {
   "name": "valentinos-magic-beans",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
@@ -17,21 +17,6 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "config": {
-    "commitizen": {
-      "path": "./changelog.config.js"
-    }
-  },
-  "standard-version": {
-    "changelogHeader": "# 📦 Changelog",
-    "scripts": {
-      "postchangelog": "git add CHANGELOG.md"
-    },
-    "changelog": {
-      "preset": "conventionalcommits",
-      "config": "./changelog.config.js"
-    }
-  },
   "devDependencies": {
     "@playwright/test": "^1.55.0",
     "@types/js-yaml": "^4.0.9",

@@ -1,4 +1,6 @@
 # 📦 Changelog
+### [1.2.1](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.2.0...v1.2.1) (2025-10-20)
+
 ## [1.2.0](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.1.4...v1.2.0) (2025-10-19)
 
 
