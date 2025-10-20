@@ -1,0 +1,40 @@
+[ unknown | 2025-10-20T00:30:17.274Z | 183e8448-59c2-4467-af88-571bdf59ff35 ] [INFO] [Hooks] Deleted report directory: allure-results
+[ unknown | 2025-10-20T00:30:17.276Z | 183e8448-59c2-4467-af88-571bdf59ff35 ] [INFO] [Hooks] Deleted report directory: playwright-report
+[ unknown | 2025-10-20T00:30:17.277Z | 183e8448-59c2-4467-af88-571bdf59ff35 ] [INFO] [Hooks] Deleted report directory: test-results
+[ unknown | 2025-10-20T00:30:17.277Z | 183e8448-59c2-4467-af88-571bdf59ff35 ] [INFO] [Logger] Log file cleared and reset
+[ unknown | 2025-10-20T00:30:17.278Z | 183e8448-59c2-4467-af88-571bdf59ff35 ] [INFO] [Hooks] Log file cleared and test environment initialized.
+[ unknown | 2025-10-20T00:30:17.298Z | 183e8448-59c2-4467-af88-571bdf59ff35 ] [INFO] [RemoteRunner] Test execution mode: Local (Chromium).
+[ unknown | 2025-10-20T00:30:17.298Z | 183e8448-59c2-4467-af88-571bdf59ff35 ] [INFO] [RemoteRunner] Launching local Chromium instance...
+[ unknown | 2025-10-20T00:30:17.532Z | 183e8448-59c2-4467-af88-571bdf59ff35 ] [INFO] [RemoteRunner] Local browser context successfully established.
+[ unknown | 2025-10-20T00:30:17.534Z | 183e8448-59c2-4467-af88-571bdf59ff35 ] [INFO] [RemoteRunner] Opening new page within browser context...
+[ unknown | 2025-10-20T00:30:17.636Z | 183e8448-59c2-4467-af88-571bdf59ff35 ] [INFO] [RemoteRunner] Page successfully initialized.
+[ unknown | 2025-10-20T00:30:17.639Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [INFO] [Hooks] Test started: @PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com Lighthouse
+[ unknown | 2025-10-20T00:30:17.642Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [INFO] [YamlReader] Environment URL 'qa' successfully retrieved from YAML
+[ unknown | 2025-10-20T00:30:18.034Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [WARN] [Azure] Failed to activate test case: Missing metadata in test title. Expected format: @PLAN_ID=xxx @SUITE_ID=xxx @[testCaseId]
+[ unknown | 2025-10-20T00:30:18.037Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [INFO] [YamlReader] YAML block 'valid_user' successfully loaded
+[ unknown | 2025-10-20T00:30:18.716Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [Percy] Snapshot captured Login flow: initial state
+[ unknown | 2025-10-20T00:30:18.843Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [CustomAsserts] Assertion passed: locator('[data-test-id="header-login-button-desktop"]') is clickable.
+[ unknown | 2025-10-20T00:30:18.920Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [ElementActions] Click action performed on locator('[data-test-id="header-login-button-desktop"]')
+[ unknown | 2025-10-20T00:30:18.969Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [CustomAsserts] Assertion passed: locator('[data-test-id="login-email-input"]') is visible.
+[ unknown | 2025-10-20T00:30:19.075Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [ElementActions] Text input completed on locator('[data-test-id="login-email-input"]')
+[ unknown | 2025-10-20T00:30:19.104Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [CustomAsserts] Assertion passed: locator('[data-test-id="login-password-input"]') is visible.
+[ unknown | 2025-10-20T00:30:19.178Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [ElementActions] Text input completed on locator('[data-test-id="login-password-input"]')
+[ unknown | 2025-10-20T00:30:19.249Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [CustomAsserts] Assertion passed: locator('[data-test-id="login-submit-button"]') is clickable.
+[ unknown | 2025-10-20T00:30:19.436Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [ElementActions] Click action performed on locator('[data-test-id="login-submit-button"]')
+[ unknown | 2025-10-20T00:30:20.855Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [CustomAsserts] Assertion passed: locator('li[role="status"] .font-semibold') contains expected text.
+[ unknown | 2025-10-20T00:30:21.432Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [Percy] Snapshot captured Login flow: home after success
+[ unknown | 2025-10-20T00:30:21.432Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [INFO] [LighthouseExecutor] Starting basic Lighthouse audit for: https://valentinos-magic-beans.click/
+[ unknown | 2025-10-20T00:30:21.442Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [INFO] [LighthouseExecutor] Lighthouse audit completed successfully.
+[ unknown | 2025-10-20T00:30:21.503Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [CustomAsserts] Assertion passed: locator('button:has(svg.lucide-user)') is clickable.
+[ unknown | 2025-10-20T00:30:21.589Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [ElementActions] Click action performed on locator('button:has(svg.lucide-user)')
+[ unknown | 2025-10-20T00:30:21.779Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [CustomAsserts] Assertion passed: locator('text=Log out') is clickable.
+[ unknown | 2025-10-20T00:30:21.857Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [ElementActions] Click action performed on locator('text=Log out')
+[ unknown | 2025-10-20T00:30:22.395Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [DEBUG] [Percy] Snapshot captured Logout flow: post logout state
+[ unknown | 2025-10-20T00:30:22.396Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [INFO] [Hooks] Test ended: @PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com Lighthouse
+[ unknown | 2025-10-20T00:30:22.397Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [WARN] [Azure] Failed to publish test result: Missing metadata in test title. Expected format: @PLAN_ID=xxx @SUITE_ID=xxx @[testCaseId]
+[ unknown | 2025-10-20T00:30:22.397Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [INFO] [BrowserStackStatus] Determined status: passed | Reason: Test passed
+[ unknown | 2025-10-20T00:30:22.408Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [INFO] [BrowserStackStatus] Session status updated: passed
+[ unknown | 2025-10-20T00:30:22.409Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [INFO] [BrowserStackStatus] Status updated for test: @PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com Lighthouse
+[ unknown | 2025-10-20T00:30:22.420Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [INFO] [Hooks] Page instance closed.
+[ unknown | 2025-10-20T00:30:22.430Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [INFO] [RemoteRunner] Initiating browser context shutdown...
+[ unknown | 2025-10-20T00:30:22.975Z | cd88a0f1-b8aa-43db-ade0-f960939b8155 ] [INFO] [RemoteRunner] Browser context and instance successfully terminated.
