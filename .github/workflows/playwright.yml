@@ -18,13 +18,11 @@ on:
 
 jobs:
   test:
-    name: Run Playwright Tests with Percy and Allure
+    name: Run Playwright Tests with Allure
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
       AZURE_TOKEN: ${{ secrets.AZURE_TOKEN }}
-      PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-      ENABLE_PERCY: true
 
     concurrency:
       group: playwright-${{ github.ref }}
@@ -53,8 +51,8 @@ jobs:
       - name: 🧪 Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: 🚀 Run Playwright tests with Percy (headless via xvfb)
-        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' npx percy exec -- npx playwright test --reporter=allure-playwright
+      - name: 🚀 Run Playwright tests (headless via xvfb)
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' npx playwright test --reporter=allure-playwright
 
       - name: 🕘 Load test report history
         if: always()
