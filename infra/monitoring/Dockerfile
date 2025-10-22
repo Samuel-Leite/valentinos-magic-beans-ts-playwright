@@ -24,4 +24,4 @@ RUN npm install
 EXPOSE 9464
 
 # Executa o script que inicia os testes e o servidor de métricas
-CMD ["npx", "ts-node", "infra/monitoring/start-metrics.ts"]
+CMD ["npx", "ts-node", "infra/monitoring/startMetrics.ts"]

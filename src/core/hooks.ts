@@ -4,7 +4,7 @@ import { Logger } from '../utils/logger';
 import { BrowserStackStatus } from '../integrations/browserstack/browserstackStatus';
 import { runTestCaseStart, runTestCaseFinished } from '../integrations/azure/AzureTestCaseService';
 import { TestMetadataParser } from '../integrations/azure/TestMetadataParse';
-import { metrics } from '../../infra/monitoring/metrics-instance';
+import { metrics } from '../../infra/monitoring/metricsInstance';
 import fs from 'fs/promises';
 import path from 'path';
 import dotenv from 'dotenv';
