@@ -26,7 +26,7 @@ jobs:
 
       - name: Run Playwright tests with metrics
         run: |
-          npx ts-node infra/monitoring/start-metrics.ts &
+          npx ts-node infra/monitoring/startMetrics.ts &
           sleep 10
           curl http://localhost:9464/metrics
 
