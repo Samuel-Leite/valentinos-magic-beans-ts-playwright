@@ -31,7 +31,7 @@ jobs:
           curl http://localhost:9464/metrics
 
       - name: Upload metrics (optional)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: playwright-metrics
           path: metrics.json
