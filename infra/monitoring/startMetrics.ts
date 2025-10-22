@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
-import { Gauge, register } from 'prom-client';
-import { exec } from 'child_process';
-import { Logger } from '../../src/utils/logger';
+const express = require('express');
+const promClient = require('prom-client');
+const { exec } = require('child_process');
+const Logger = require('../../src/utils/logger');
 
 /**
  * StartMetrics handles Playwright test execution and exposes Prometheus metrics via HTTP.
@@ -9,10 +9,10 @@ import { Logger } from '../../src/utils/logger';
 class StartMetrics {
   private app = express();
   private port = 9464;
-  private testDurationGauge: Gauge;
+  private testDurationGauge: InstanceType<typeof promClient.Gauge>;
 
   constructor() {
-    this.testDurationGauge = new Gauge({
+    this.testDurationGauge = new promClient.Gauge({
       name: 'playwright_test_duration_seconds',
       help: 'Duration of Playwright tests in seconds',
       labelNames: ['test'],
@@ -25,10 +25,10 @@ class StartMetrics {
    * Defines the /metrics endpoint for Prometheus to scrape.
    */
   private setupRoutes(): void {
-    this.app.get('/metrics', async (_req: Request, res: Response) => {
+    this.app.get('/metrics', async (_req: any, res: any) => {
       Logger.info('[StartMetrics] /metrics endpoint accessed');
-      res.set('Content-Type', register.contentType);
-      res.end(await register.metrics());
+      res.setHeader('Content-Type', promClient.register.contentType);
+      res.end(await promClient.register.metrics());
     });
   }
 
@@ -42,7 +42,7 @@ class StartMetrics {
     });
 
     // Keeps the process alive after test execution
-    setInterval(() => { }, 1000);
+    setInterval(() => {}, 1000);
   }
 
   /**
