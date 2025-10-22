@@ -26,11 +26,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Playwright browsers
+        run: npx playwright install
+
       - name: Run Playwright tests with metrics
         run: |
-          npx ts-node infra/monitoring/startMetrics.ts &
-          sleep 10
-          curl http://localhost:9464/metrics
+          npx playwright test tests/e2e &
+              sleep 10
+              curl http://localhost:9464/metrics
 
       - name: Upload metrics (optional)
         uses: actions/upload-artifact@v4
