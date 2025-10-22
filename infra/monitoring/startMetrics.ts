@@ -1,7 +1,7 @@
 const express = require('express');
 const promClient = require('prom-client');
 const { exec } = require('child_process');
-const Logger = require('../../src/utils/logger');
+const { Logger } = require('../../src/utils/logger');
 
 /**
  * StartMetrics handles Playwright test execution and exposes Prometheus metrics via HTTP.
