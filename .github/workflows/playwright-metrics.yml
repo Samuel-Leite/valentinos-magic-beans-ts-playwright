@@ -24,9 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Playwright tests with metrics
+      - name: Run Playwright metrics
         run: |
-          npx ts-node infra/monitoring/startMetrics.ts &
+          npx ts-node --loader ts-node/esm infra/monitoring/startMetrics.ts &
           sleep 10
           curl http://localhost:9464/metrics
 
