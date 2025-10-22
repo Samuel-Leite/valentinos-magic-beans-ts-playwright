@@ -1,0 +1,40 @@
+name: Playwright Metrics
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  run-playwright-tests:
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.base_ref == 'main' && github.head_ref == 'develop')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Playwright tests with metrics
+        run: |
+          npm install ts-node typescript prom-client express
+          npx ts-node infra/monitoring/start-metrics.ts &
+          sleep 10
+          curl http://localhost:9464/metrics
+
+      - name: Upload metrics (optional)
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-metrics
+          path: metrics.json
