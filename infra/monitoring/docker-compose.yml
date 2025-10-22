@@ -19,7 +19,7 @@ services:
 
   tests:
     build:
-      context: ../..                          # volta da pasta monitoring para a raiz
+      context: ../..
       dockerfile: infra/monitoring/Dockerfile
     ports:
       - "9464:9464"
