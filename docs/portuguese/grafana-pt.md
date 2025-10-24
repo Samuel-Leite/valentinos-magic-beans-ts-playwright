@@ -45,13 +45,13 @@ Ele expõe métricas personalizadas das execuções de testes e as visualiza em 
 
 ```bash
 infra/
-│├── monitoring/
-││     ├── Dockerfile
-││     ├── startMetrics.ts
-││     ├── metricsServer.ts
-││     ├── metricsInstance.ts
-││     └── prometheus.yml
-││     └── docker-compose.yml
+├── monitoring/
+│   ├── Dockerfile
+│   ├── startMetrics.ts
+│   ├── metricsServer.ts
+│   ├── metricsInstance.ts
+│   ├── prometheus.yml
+│   └── docker-compose.yml
 ```
 
 ---
