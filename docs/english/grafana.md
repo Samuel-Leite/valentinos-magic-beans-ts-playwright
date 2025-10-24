@@ -44,14 +44,15 @@ It exposes custom metrics from test executions and visualizes them via Grafana d
 ## 📂 Project Structure
 
 ```bash
-infra/
-│├── monitoring/
-││     ├── Dockerfile
-││     ├── startMetrics.ts
-││     ├── metricsServer.ts
-││     ├── metricsInstance.ts
-││     └── prometheus.yml
-││     └── docker-compose.yml
+├── dashboards/
+│   └── grafana-playwright.json
+├── monitoring/
+│   ├── Dockerfile
+│   ├── startMetrics.ts
+│   ├── metricsServer.ts
+│   ├── metricsInstance.ts
+│   ├── prometheus.yml
+│   └── docker-compose.yml
 ```
 
 ---
@@ -200,3 +201,4 @@ docker-compose down --volumes --rmi all
 - [`metricsServer.ts`](../../infra/monitoring/metricsServer.ts)
 - [`prometheus.yml`](../../infra/monitoring/prometheus.yml)
 - [`startMetrics.ts`](../../infra/monitoring/startMetrics.ts)
+- [`grafana-playwright.json`](../../infra/dashboards/grafana-playwright.json)

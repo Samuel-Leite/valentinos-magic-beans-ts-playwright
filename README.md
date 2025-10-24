@@ -153,6 +153,8 @@ valentino-magic-beans/
 │   ├── english/                         # English-language documentation and guides
 │   └── portuguese/                      # Portuguese-language documentation and guides
 ├── infra/
+│   └── dashboards/                      # Monitoring setup for Playwright test metrics
+│       └── grafana-playwright.json      # Defines services: Prometheus, Grafana, and Playwright test runner
 │   └── monitoring/                      # Monitoring setup for Playwright test metrics
 │       ├── Dockerfile                  # Builds the container that runs tests and exposes metrics
 │       ├── startMetrics.ts             # Executes tests and records metrics for Prometheus

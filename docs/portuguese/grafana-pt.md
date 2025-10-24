@@ -45,6 +45,8 @@ Ele expõe métricas personalizadas das execuções de testes e as visualiza em 
 
 ```bash
 infra/
+├── dashboards/
+│   └── grafana-playwright.json
 ├── monitoring/
 │   ├── Dockerfile
 │   ├── startMetrics.ts
@@ -53,6 +55,10 @@ infra/
 │   ├── prometheus.yml
 │   └── docker-compose.yml
 ```
+
+├── infra/
+│   
+
 
 ---
 
@@ -158,6 +164,7 @@ scrape_configs:
 
 ```bash
 docker-compose build tests
+docker-compose build
 ```
 
 ### ▶️ Iniciar containers
@@ -200,3 +207,4 @@ docker-compose down --volumes --rmi all
 - [`metricsServer.ts`](../../infra/monitoring/metricsServer.ts)
 - [`prometheus.yml`](../../infra/monitoring/prometheus.yml)
 - [`startMetrics.ts`](../../infra/monitoring/startMetrics.ts)
+- [`grafana-playwright.json`](../../infra/dashboards/grafana-playwright.json)
