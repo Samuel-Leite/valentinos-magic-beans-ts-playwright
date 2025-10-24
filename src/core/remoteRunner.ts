@@ -32,7 +32,7 @@ class RemoteRunner {
    */
   private async createLocalContext(): Promise<BrowserContext> {
     Logger.info(`[RemoteRunner] Launching local Chromium instance...`);
-    const browser = await chromium.launch({ headless: false });
+    const browser = await chromium.launch({ headless: true });
     const context = await browser.newContext();
     // Store browser instance for cleanup
     (context as any)._browser = browser;

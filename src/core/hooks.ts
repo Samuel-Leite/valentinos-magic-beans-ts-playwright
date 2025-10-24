@@ -4,15 +4,17 @@ import { Logger } from '../utils/logger';
 import { BrowserStackStatus } from '../integrations/browserstack/browserstackStatus';
 import { runTestCaseStart, runTestCaseFinished } from '../integrations/azure/AzureTestCaseService';
 import { TestMetadataParser } from '../integrations/azure/TestMetadataParse';
+import { metrics } from '../../infra/monitoring/metricsInstance';
 import fs from 'fs/promises';
 import path from 'path';
 import dotenv from 'dotenv';
 dotenv.config({ quiet: true });
 
 /**
-* Manages global test lifecycle hooks including environment setup,
-* report cleanup, Azure DevOps integration, and per-test execution tracking.
-*/
+ * Manages global test lifecycle hooks including environment setup,
+ * report cleanup, Azure DevOps integration, metrics collection,
+ * and per-test execution tracking.
+ */
 class Hooks {
   /**
    * Deletes previous test report directories to ensure a clean run.
@@ -34,12 +36,15 @@ class Hooks {
 
   /**
    * Runs once before all tests.
-   * Cleans up previous reports and initializes logging.
+   * Cleans up previous reports, initializes logging, and starts metrics server.
    */
   async beforeAllTests(): Promise<void> {
     await this.cleanReports();
     Logger.clearLogFile();
     Logger.info(`[Hooks] Log file cleared and test environment initialized.`);
+
+    metrics.start(); // Inicia o servidor de métricas
+    Logger.info(`[Metrics] Metrics server started.`);
   }
 
   /**
@@ -57,7 +62,7 @@ class Hooks {
 
     // Azure DevOps: Activate test case before execution
     try {
-      const { planId, suiteId, testCaseId } = TestMetadataParser.extract(testInfo.title); // ✅ Corrigido aqui
+      const { planId, suiteId, testCaseId } = TestMetadataParser.extract(testInfo.title);
       await runTestCaseStart(planId, suiteId, testCaseId);
       Logger.info(`[Azure] Test case ${testCaseId} activated in Azure DevOps`);
     } catch (err: any) {
@@ -67,7 +72,8 @@ class Hooks {
 
   /**
    * Runs after each test.
-   * Publishes test result to Azure DevOps, updates BrowserStack status, and closes the page.
+   * Publishes test result to Azure DevOps, updates BrowserStack status,
+   * records metrics, and closes the page.
    * @param page Playwright page instance
    * @param testInfo Playwright test metadata
    */
@@ -76,9 +82,8 @@ class Hooks {
 
     // Azure DevOps: Publish test result after execution
     try {
-      const { planId, suiteId, testCaseId } = TestMetadataParser.extract(testInfo.title); // ✅ Corrigido aqui
+      const { planId, suiteId, testCaseId } = TestMetadataParser.extract(testInfo.title);
 
-      // Ensure status is valid and mapped correctly
       const status = ['passed', 'failed', 'skipped', 'timedOut', 'interrupted'].includes(testInfo.status ?? '')
         ? testInfo.status!
         : 'failed';
@@ -93,6 +98,17 @@ class Hooks {
     // BrowserStack: Update test status
     await BrowserStackStatus.updateFromTestInfo(page, testInfo);
     Logger.info(`[BrowserStackStatus] Status updated for test: ${testInfo.title}`);
+
+    // Metrics: Record duration and failure count
+    const duration = testInfo.duration / 1000;
+    Logger.info(`[Metrics] Test duration recorded: ${testInfo.duration}ms`);
+    metrics.testDuration.set(duration);
+    Logger.info(`[Metrics] Gauge updated with duration: ${duration}s`);
+
+    if (testInfo.status !== 'passed') {
+      metrics.testFailures.inc();
+      Logger.info(`[Metrics] Failure counter incremented`);
+    }
 
     // Cleanup: Close browser page
     await page.close();
