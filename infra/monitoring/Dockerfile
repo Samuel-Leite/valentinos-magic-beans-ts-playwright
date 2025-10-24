@@ -9,6 +9,7 @@ COPY ../../package.json ./
 COPY ../../package-lock.json ./
 COPY ../../playwright.config.ts ./
 COPY ../../.env ./
+COPY ../../tsconfig.json ./tsconfig.json
 
 # Copia código-fonte e testes
 COPY ../../src ./src
@@ -17,6 +18,10 @@ COPY ../../tests ./tests
 # Copia pasta infra para manter os imports
 COPY ../../infra ./infra
 
+# Garante que o arquivo logger.ts esteja presente
+# (opcional se já incluído via COPY ../../src)
+COPY ../../src/utils/logger.ts ./src/utils/logger.ts
+
 # Instala dependências
 RUN npm install
 
@@ -24,4 +29,4 @@ RUN npm install
 EXPOSE 9464
 
 # Executa o script que inicia os testes e o servidor de métricas
-CMD ["npx", "ts-node", "infra/monitoring/startMetrics.ts"]
+CMD ["npx", "ts-node", "--project", "tsconfig.json", "infra/monitoring/startMetrics.ts"]

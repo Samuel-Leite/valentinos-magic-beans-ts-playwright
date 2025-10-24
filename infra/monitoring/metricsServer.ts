@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Counter, Gauge, Registry, collectDefaultMetrics } from 'prom-client';
-import { Logger } from '../../src/utils/logger.ts'; 
+import { Logger } from '../../src/utils/logger'; 
 
 /**
  * MetricsServer handles Prometheus metric exposure for monitoring automated test executions.
