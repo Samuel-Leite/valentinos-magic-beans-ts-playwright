@@ -1,2 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Wed Oct 22 01:55:41 GMT 2025","Wed Oct 22 01:55:44 GMT 2025","3352","Local","performance/login-lighthouse.spec.ts","","","","@PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com lighthouse",""
