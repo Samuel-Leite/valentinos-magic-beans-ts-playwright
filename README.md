@@ -5,7 +5,6 @@
 
   🌎 <a href="./docs/portuguese/README-pt.md">Versão em Português</a><br>
     🧭 <a href="./docs/english/architecture.md">View Automation Architecture</a><br>
-  📊 <a href="https://samuel-leite.github.io/valentinos-magic-beans-ts-playwright/64/">View Allure Report</a><br>
 </div>
 
 <div align="center">
@@ -28,12 +27,13 @@
 - Node.js
 - Playwright
 - TypeScript
-- Husky
+- Docker
 - BrowserStack
 - Azure DevOps (TestPlan)
 - Percy (visual testing)
 - Allure Report
-- Logger Winston
+- Prometheus
+- Grafana
 
 ## 🚀 Purpose
 This project aims to validate critical functionalities of the Valentino's Magic Beans web application through robust, traceable, and scalable automated tests, with a strong focus on development best practices and code quality.
@@ -47,20 +47,26 @@ This project is licensed under the MIT License.
 This repository contains a robust end-to-end test automation suite built with <a href="https://playwright.dev/">Playwright</a>. Its purpose is to validate critical features of modern web applications through reliable, scalable, and well-structured automated tests — fully integrated with CI/CD pipelines and enhanced by visual reporting via Allure.
 
 ## 📚 Key Features
-- End-to-end testing with Playwright and TypeScript  
-- Full guest checkout flow simulation  
-- Validation of products, pricing, and order status  
-- Modular and maintainable test architecture  
-- Pre-commit hooks powered by Husky to enforce code quality  
-- Automated versioning and changelog generation using standard-version  
-- Conventional commit flow with Commitizen and commit message linting  
-- Git hooks managed via Husky for commit and push automation  
-- Release tagging with semantic versioning and Git integration  
-- CI environment configured with GitHub Actions  
-- Conditional pipeline execution based on code changes (ignores documentation-only commits)  
-- Remote and local test execution via BrowserStack  
-- Native integration with Azure DevOps Test Plans  
-- Visual test reporting with Allure, including historical data preservation across runs  
+- End-to-end testing with Playwright and TypeScript
+- Full guest checkout flow simulation
+- Validation of products, pricing, and order status
+- Modular and scalable test architecture
+- Screenshots captured on every test execution
+- Trace files generated on first retry after failure
+- Performance audits using Lighthouse
+- Prometheus metrics for test duration, failures, retries, and environment
+- Grafana dashboards for real-time test observability
+- Dockerized setup for Prometheus, Grafana, and test runner
+- Visual regression testing with Percy
+- Native integration with Azure DevOps Test Plans
+- Local and remote test execution via BrowserStack
+- Pre-commit hooks with Husky to enforce code quality
+- Conventional commits with Commitizen and message linting
+- Automated versioning and changelog generation with standard-version
+- Semantic release tagging with Git integration
+- CI pipeline configured with GitHub Actions
+- Conditional pipeline execution based on code changes
+- Visual test reporting with Allure, including historical data retention
 - Structured configuration using YAML for environments and credentials
 
 ## 🛠️ How to run
@@ -117,10 +123,18 @@ To learn how to run Playwright tests on real browsers and devices using BrowserS
 
 ---
 
-## Visual Testing with Percy
+## 📸 Visual Testing with Percy
 
 This project uses [Percy](https://percy.io/) for automated visual testing, helping detect unexpected changes in the application's interface during Playwright test execution.  
 For detailed setup and usage instructions, see the [Percy Execution Guide](./docs/english/percy.md).
+
+---
+
+## 📦 Docker + Prometheus Integration
+
+This project uses [Docker](https://www.docker.com/) to orchestrate a monitoring stack that includes [Prometheus](https://prometheus.io/) for collecting test metrics and [Grafana](https://grafana.com/) for visualizing them in real time.  
+Playwright test executions expose metrics such as duration, retries, and failure rates, which are scraped by Prometheus and displayed in Grafana dashboards.  
+For detailed setup and usage instructions, see the [Grafana Guide](./docs/english/grafana.md).
 
 ---
 
@@ -135,6 +149,19 @@ valentino-magic-beans/
 │   ├── commit-message                  # Hook for commit message validation
 │   ├── push.js                         # Custom push hook script
 │   └── _/                              # Internal Husky scripts and hook definitions
+├── docs/                                # Project documentation
+│   ├── english/                         # English-language documentation and guides
+│   └── portuguese/                      # Portuguese-language documentation and guides
+├── infra/
+│   └── dashboards/                      # Monitoring setup for Playwright test metrics
+│       └── grafana-playwright.json      # Defines services: Prometheus, Grafana, and Playwright test runner
+│   └── monitoring/                      # Monitoring setup for Playwright test metrics
+│       ├── Dockerfile                  # Builds the container that runs tests and exposes metrics
+│       ├── startMetrics.ts             # Executes tests and records metrics for Prometheus
+│       ├── metricsServer.ts            # Express server that defines and exposes Prometheus metrics
+│       ├── metricsInstance.ts          # Instantiates and starts the metrics server
+│       ├── prometheus.yml              # Prometheus scrape configuration for collecting metrics
+│       └── docker-compose.yml          # Defines services: Prometheus, Grafana, and Playwright test runner
 ├── src/                                 # Source code
 │   ├── core/                            # Core test lifecycle and execution logic
 │   │   ├── hooks.ts                    # Global test hooks (beforeAll, beforeEach, etc.)
@@ -182,16 +209,19 @@ valentino-magic-beans/
 │       ├── highlightElement.ts         # Visual highlight for debugging elements
 │       ├── logger.ts                   # Winston-based logging utility
 │       └── yamlReader.ts               # Reads YAML config and test data
-├── tests/                               # Test scenarios
-│   └── login.spec.ts                   # Login test case
+├── tests/                               # Automated test scenarios
+│   ├── e2e/                             # Functional end-to-end tests using Playwright and Percy for visual snapshots
+│   └── performance/                     # Performance audits powered by Lighthouse                 
 ├── .env                                 # Environment variable definitions
 ├── .gitignore                           # Files and folders to exclude from Git
 ├── changelog.config.js                  # Changelog generation config (e.g., for commitlint)
-├── package.json                         # Project dependencies and scripts
+├── CHANGELOG.md                         # Version history and notable changes across releases
 ├── package-lock.json                    # npm lock file for reproducible installs
+├── package.json                         # Project dependencies and scripts
 ├── playwright.config.ts                 # Playwright test runner configuration
-├── winston.log                          # Log file generated by Winston logger
 ├── README.md                            # Project documentation
+├── tsconfig.json                        # TypeScript compiler configuration
+├── winston.log                          # Log file generated by Winston logger
 ```
 
 ## 🔗 Useful Links
@@ -204,3 +234,6 @@ valentino-magic-beans/
 - [GitHub Actions Documentation](https://docs.github.com/actions)
 - [BrowserStack Automate for Playwright](https://www.browserstack.com/docs/automate/playwright)
 - [Azure DevOps Test Plans](https://learn.microsoft.com/azure/devops/testplans/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Hub Docker](https://hub.docker.com/)
+- [Winston Logger](https://amirmustafaofficial.medium.com/winston-production-level-logger-in-javascript-b77548044764)

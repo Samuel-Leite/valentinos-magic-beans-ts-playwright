@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.3.0...v1.3.1) (2025-10-24)
+
+## [1.3.0](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.2.3...v1.3.0) (2025-10-24)
+
+
+### Features
+
+* **all:** ✨ add metrics grafana ([3ff3c6b](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/3ff3c6b329deb893306f26a21baa55a60d5e7be5))
+* **all:** ✨ add metrics on pipe ([db4975c](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/db4975c58972e1016407764ee92ccf93a4d47437))
+
+
+### Bug Fixes
+
+* **all:** 🐛 add variable azure on pipe of metrics ([004eac3](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/004eac32a2411cb812961b392a046ef8487e38f6))
+* **all:** 🐛 command to execute functional test ([c77649e](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/c77649ef9e148e3b98b15898201b480e8dffa0cf))
+* **all:** 🐛 commands install ([c5619d8](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/c5619d87861212387970475c85d574aa7129d759))
+* **all:** 🐛 import of logger ([79346a6](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/79346a6c581d17db449f8e9076c8bc11f49c606d))
+* **all:** 🐛 insatall dependencies and runner ([3ad9f62](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/3ad9f62a8f9cb090931f09cf93eac12dcdaa646b))
+* **all:** 🐛 integration grafana pipe ([0edad59](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/0edad59277329c1dacae799794b326aa7095374b))
+* **all:** 🐛 logic code metriscs pipe ([6588638](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/658863873b470cc263c9f9b5229c22664a0bb60c))
+* **all:** 🐛 logic code startmetrics ([1a1ac17](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/1a1ac176df0dfcdbc2f3405a518e6c7742fc2e4b))
+* **all:** 🐛 metrics pipe ([483561b](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/483561b9e32ff56942f53514555d5d1aad54fb30))
+* **all:** 🐛 name of file metrics ([751f5b5](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/751f5b534540f8f25a2498e2e524b393cca7a61e))
+* **all:** 🐛 pipe and metrics ([6f82509](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/6f82509c669fa46caabb08c76a808c0468f76a27))
+* **all:** 🐛 runner of test ([82fb7bb](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/82fb7bb1b37da2d369e8154c0646bc12f0979946))
+* **all:** 🐛 version metrics on pipe ([663515b](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/663515b999237edf1f61aca5986d170d355030db))
+
 ### [1.2.3](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.2.2...v1.2.3) (2025-10-20)
 
 ### [1.2.2](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.2.1...v1.2.2) (2025-10-20)

@@ -14,6 +14,8 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
     depends_on:
       - prometheus
 
@@ -27,3 +29,6 @@ services:
       - ENV=qa
     depends_on:
       - prometheus
+
+volumes:
+  grafana-storage:
