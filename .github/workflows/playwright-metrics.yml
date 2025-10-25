@@ -3,27 +3,17 @@ name: Playwright Metrics
 on:
   push:
     branches: [develop, main]
-    paths:
-      - '**.ts'
-      - '**.tsx'
-      - '**.js'
-      - '**.jsx'
-      - 'package.json'
-      - 'playwright.config.ts'
-      - 'infra/monitoring/**'
-      - 'tests/**'
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'infra/dashboards/**'
   pull_request:
     branches: [main]
     types: [opened, synchronize]
-    paths:
-      - '**.ts'
-      - '**.tsx'
-      - '**.js'
-      - '**.jsx'
-      - 'package.json'
-      - 'playwright.config.ts'
-      - 'infra/monitoring/**'
-      - 'tests/**'
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'infra/dashboards/**'
 
 jobs:
   run-playwright-tests:
