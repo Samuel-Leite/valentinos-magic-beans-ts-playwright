@@ -4,7 +4,7 @@
   <p><strong>Enterprise-grade end-to-end test automation framework</strong><br>Designed to validate mission-critical features of modern web applications with scalability, traceability, and seamless integration into CI/CD pipelines.</p><br>
 
   🌎 <a href="./docs/portuguese/README-pt.md">Versão em Português</a><br>
-    🧭 <a href="./docs/english/architecture.md">View Automation Architecture</a><br>
+    🧭 <a href="./docs/english//architecture.png">View Automation Architecture</a><br>
 </div>
 
 <div align="center">
