@@ -156,9 +156,9 @@ Para instruções detalhadas de configuração e uso, consulte o [Guia do Grafan
 ```bash
 valentino-magic-beans/
 ├── .github/                             # Configuração do GitHub
-│   └── workflows/                       # Workflows de CI/CD
-│       └── playwright.yml              # Pipeline de testes Playwright com GitHub Actions
-├── .husky/                              # Hooks de Git gerenciados pelo Husky
+│   └── workflows/                       # Workflows de CI/CD com GitHub Actions
+│       ├── playwright-metrics.yml       # Pipeline de métricas com Playwright e Grafana
+│       └── playwright.yml               # Pipeline de testes automatizados com Playwright
 │   ├── commit-message                  # Hook para validação de mensagens de commit
 │   ├── push.js                         # Script personalizado para push
 │   └── _/                              # Scripts internos e definições de hooks do Husky
