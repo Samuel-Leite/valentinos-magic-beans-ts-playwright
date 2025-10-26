@@ -50,7 +50,7 @@
 - Grafana
 
 ## 🚀 Propósito
-Este projeto tem como objetivo validar funcionalidades críticas da aplicação web **Valentino's Magic Beans** através de testes automatizados robustos, rastreáveis e escaláveis, com foco em boas práticas de desenvolvimento e qualidade de código.
+Este projeto tem como objetivo validar funcionalidades críticas da aplicação web [**Valentino's Magic Beans**](https://valentinos-magic-beans.click) através de testes automatizados robustos, rastreáveis e escaláveis, com foco em boas práticas de desenvolvimento e qualidade de código.
 
 ## 📄 Licença
 Este projeto está licenciado sob a **Licença MIT**.
@@ -58,26 +58,20 @@ Este projeto está licenciado sob a **Licença MIT**.
 ---
 
 ## 🚀 Sobre o Projeto
-Este repositório contém uma suíte robusta de automação de testes ponta a ponta desenvolvida com o framework <a href="https://playwright.dev/">Playwright</a>. Seu propósito é validar funcionalidades críticas de aplicações web modernas por meio de testes confiáveis, organizados e escaláveis, integrados a pipelines de CI/CD e relatórios visuais com Allure.
+Este repositório contém uma suíte robusta de automação de testes ponta a ponta desenvolvida com o framework <a href="https://playwright.dev/">Playwright</a>. Seu propósito é validar funcionalidades críticas de aplicações web modernas por meio de testes confiáveis, organizados e escaláveis, integrados a pipelines de CI/CD e Grafana com Prometheus, e relatórios visuais com Allure.
 
 ## 📚 Principais Funcionalidades
 - End-to-end testing com Playwright e TypeScript
-- Simulação completa do fluxo de checkout como convidado
-- Validação de produtos, preços e status de pedidos
 - Arquitetura de testes modular e escalável
 - Geração de screenshots em todos os testes
 - Geração de trace na primeira reexecução após falha
 - Auditoria de performance com Lighthouse
-- Exposição de métricas via Prometheus
-- Visualização de métricas em dashboards Grafana
-- Ambiente Docker com Prometheus, Grafana e executor de testes
+- Exposição de métricas via Prometheus com visualização de métricas no dashboards Grafana
 - Testes visuais com Percy integrados ao fluxo funcional
-- Integração nativa com Azure DevOps Test Plans
+- Integração com Azure DevOps, Test Plans
 - Execução local e remota via BrowserStack
-- Hooks de pré-commit com Husky para garantir qualidade de código
-- Commits convencionais com Commitizen e validação de mensagens
+- Hooks de pré-commit com Husky
 - Versionamento automático e geração de changelog com standard-version
-- Tagging de releases com versionamento semântico
 - Pipeline CI com GitHub Actions
 - Execução condicional de pipeline com base em alterações de código
 - Relatórios visuais com Allure e histórico preservado entre execuções
@@ -91,6 +85,15 @@ npx playwright install
 
 # Executar todos os testes
 npm run test
+
+# Executar os testes funcionais
+npm run functional
+
+# Executar os testes visuais (percy)
+npm run visual
+
+# Executar os testes com auditorias de desempenho em páginas (Lighthouse )
+npm run lighthouse
 
 # Executar teste por tag
 npm run tag -- '@nome_da_tag'
@@ -137,13 +140,19 @@ Para aprender como executar testes Playwright em navegadores e dispositivos reai
 
 ---
 
+## 🚦 Auditoria de Performance com Lighthouse
+
+Para aprender como executar auditorias de performance em páginas web usando o Lighthouse integrado ao Playwright, consulte o [Guia de Auditoria Lighthouse](../portuguese/lighthouse-pt.md).
+
+---
+
 ## 📸 Integração e execução com o Percy
 
 Este projeto utiliza o [Percy](https://percy.io/) para testes visuais automatizados, permitindo identificar mudanças inesperadas na interface da aplicação durante a execução dos testes com Playwright. Para mais detalhes sobre a configuração e uso do Percy, consulte o [Guia de Execução Percy](../portuguese/percy-pt.md).
 
 ---
 
-## 📦 Integração Docker + Prometheus
+## 📦 Integração Grafana + Prometheus
 
 Este projeto utiliza o [Docker](https://www.docker.com/) para orquestrar uma stack de monitoramento que inclui o [Prometheus](https://prometheus.io/) para coleta de métricas dos testes e o [Grafana](https://grafana.com/) para visualização em tempo real.  
 As execuções dos testes com Playwright expõem métricas como duração, número de tentativas e falhas, que são coletadas pelo Prometheus e exibidas em painéis do Grafana.  
@@ -156,9 +165,9 @@ Para instruções detalhadas de configuração e uso, consulte o [Guia do Grafan
 ```bash
 valentino-magic-beans/
 ├── .github/                             # Configuração do GitHub
-│   └── workflows/                       # Workflows de CI/CD
-│       └── playwright.yml              # Pipeline de testes Playwright com GitHub Actions
-├── .husky/                              # Hooks de Git gerenciados pelo Husky
+│   └── workflows/                       # Workflows de CI/CD com GitHub Actions
+│       ├── playwright-metrics.yml       # Pipeline de métricas com Playwright e Grafana
+│       └── playwright.yml               # Pipeline de testes automatizados com Playwright
 │   ├── commit-message                  # Hook para validação de mensagens de commit
 │   ├── push.js                         # Script personalizado para push
 │   └── _/                              # Scripts internos e definições de hooks do Husky
