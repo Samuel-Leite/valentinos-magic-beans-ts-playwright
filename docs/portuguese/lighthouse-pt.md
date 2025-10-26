@@ -112,3 +112,4 @@ await LighthouseExecutor.runAudit(page, page.url());
 ## 📄 Arquivos Fonte
 - [`lighthouseExecutor.ts`](../../src/integrations/browserstack/lighthouseExecutor.ts)
 - [`login-lighthouse.spec.ts`](../../tests/performance/login-lighthouse.spec.ts)
+- [Evidência no BrowserStack](https://automate.browserstack.com/builds/95dfc675c8ac83f638727f1e389e1b1ddf38bb57/sessions/3b51375c3ee6bace2e4a91c806f76a530f113927?auth_token=041395920ffcd820ba74e76d1d423c2ee55d7ffbb4170905e78c19f0bb040755)
