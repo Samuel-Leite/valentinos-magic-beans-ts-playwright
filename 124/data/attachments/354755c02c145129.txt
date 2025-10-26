@@ -1,0 +1,40 @@
+[ unknown | 2025-10-26T20:32:50.816Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [MetricsServer] Server running at http://localhost:9464/metrics
+[ unknown | 2025-10-26T20:32:50.843Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [Hooks] Deleted report directory: allure-results
+[ unknown | 2025-10-26T20:32:50.843Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [Hooks] Deleted report directory: playwright-report
+[ unknown | 2025-10-26T20:32:50.845Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [Hooks] Deleted report directory: test-results
+[ unknown | 2025-10-26T20:32:50.845Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [Logger] Log file cleared and reset
+[ unknown | 2025-10-26T20:32:50.845Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [Hooks] Log file cleared and test environment initialized.
+[ unknown | 2025-10-26T20:32:50.846Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [Metrics] Metrics server started.
+[ unknown | 2025-10-26T20:32:50.865Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [RemoteRunner] Test execution mode: Local (Chromium).
+[ unknown | 2025-10-26T20:32:50.865Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [RemoteRunner] Launching local Chromium instance...
+[ unknown | 2025-10-26T20:32:50.870Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [MetricsServer] Server running at http://localhost:9464/metrics
+[ unknown | 2025-10-26T20:32:52.189Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [RemoteRunner] Local browser context successfully established.
+[ unknown | 2025-10-26T20:32:52.191Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [RemoteRunner] Opening new page within browser context...
+[ unknown | 2025-10-26T20:32:52.218Z | 31779828-e43e-43a0-b85f-6710a811408b ] [INFO] [RemoteRunner] Page successfully initialized.
+[ unknown | 2025-10-26T20:32:52.219Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [INFO] [Hooks] Test started: @PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com sucesso
+[ unknown | 2025-10-26T20:32:52.221Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [INFO] [YamlReader] Environment URL 'qa' successfully retrieved from YAML
+[ unknown | 2025-10-26T20:32:52.434Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [WARN] [Azure] Failed to activate test case: Missing metadata in test title. Expected format: @PLAN_ID=xxx @SUITE_ID=xxx @[testCaseId]
+[ unknown | 2025-10-26T20:32:52.436Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [INFO] [YamlReader] YAML block 'valid_user' successfully loaded
+[ unknown | 2025-10-26T20:32:52.705Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [CustomAsserts] Assertion passed: locator('[data-test-id="header-login-button-desktop"]') is clickable.
+[ unknown | 2025-10-26T20:32:52.767Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [ElementActions] Click action performed on locator('[data-test-id="header-login-button-desktop"]')
+[ unknown | 2025-10-26T20:32:52.779Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [CustomAsserts] Assertion passed: locator('[data-test-id="login-email-input"]') is visible.
+[ unknown | 2025-10-26T20:32:53.127Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [ElementActions] Text input completed on locator('[data-test-id="login-email-input"]')
+[ unknown | 2025-10-26T20:32:53.140Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [CustomAsserts] Assertion passed: locator('[data-test-id="login-password-input"]') is visible.
+[ unknown | 2025-10-26T20:32:53.167Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [ElementActions] Text input completed on locator('[data-test-id="login-password-input"]')
+[ unknown | 2025-10-26T20:32:53.202Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [CustomAsserts] Assertion passed: locator('[data-test-id="login-submit-button"]') is clickable.
+[ unknown | 2025-10-26T20:32:53.338Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [ElementActions] Click action performed on locator('[data-test-id="login-submit-button"]')
+[ unknown | 2025-10-26T20:32:54.131Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [CustomAsserts] Assertion passed: 'Login Successful' was found in locator('li[role="status"] .font-semibold')
+[ unknown | 2025-10-26T20:32:54.185Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [CustomAsserts] Assertion passed: locator('button:has(svg.lucide-user)') is clickable.
+[ unknown | 2025-10-26T20:32:54.242Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [ElementActions] Click action performed on locator('button:has(svg.lucide-user)')
+[ unknown | 2025-10-26T20:32:54.520Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [CustomAsserts] Assertion passed: locator('text=Log out') is clickable.
+[ unknown | 2025-10-26T20:32:54.556Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [DEBUG] [ElementActions] Click action performed on locator('text=Log out')
+[ unknown | 2025-10-26T20:32:54.829Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [INFO] [Hooks] Test ended: @PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com sucesso
+[ unknown | 2025-10-26T20:32:54.829Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [WARN] [Azure] Failed to publish test result: Missing metadata in test title. Expected format: @PLAN_ID=xxx @SUITE_ID=xxx @[testCaseId]
+[ unknown | 2025-10-26T20:32:54.829Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [INFO] [BrowserStackStatus] Determined status: passed | Reason: Test passed
+[ unknown | 2025-10-26T20:32:54.832Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [INFO] [BrowserStackStatus] Session status updated: passed
+[ unknown | 2025-10-26T20:32:54.832Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [INFO] [BrowserStackStatus] Status updated for test: @PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com sucesso
+[ unknown | 2025-10-26T20:32:54.832Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [INFO] [Metrics] Test duration recorded: 3692ms
+[ unknown | 2025-10-26T20:32:54.833Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [INFO] [Metrics] Gauge updated with duration: 3.692s
+[ unknown | 2025-10-26T20:32:54.836Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [INFO] [Hooks] Page instance closed.
+[ unknown | 2025-10-26T20:32:54.839Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [INFO] [RemoteRunner] Initiating browser context shutdown...
+[ unknown | 2025-10-26T20:32:54.878Z | eabaadf4-6efe-4e31-950c-612cbd6c6aad ] [INFO] [RemoteRunner] Browser context and instance successfully terminated.
