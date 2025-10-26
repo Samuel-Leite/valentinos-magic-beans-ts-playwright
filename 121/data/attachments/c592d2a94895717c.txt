@@ -1,0 +1,43 @@
+[ unknown | 2025-10-26T18:54:35.831Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [MetricsServer] Server running at http://localhost:9464/metrics
+[ unknown | 2025-10-26T18:54:35.860Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [Hooks] Deleted report directory: allure-results
+[ unknown | 2025-10-26T18:54:35.860Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [Hooks] Deleted report directory: playwright-report
+[ unknown | 2025-10-26T18:54:35.861Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [Hooks] Deleted report directory: test-results
+[ unknown | 2025-10-26T18:54:35.862Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [Logger] Log file cleared and reset
+[ unknown | 2025-10-26T18:54:35.862Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [Hooks] Log file cleared and test environment initialized.
+[ unknown | 2025-10-26T18:54:35.862Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [Metrics] Metrics server started.
+[ unknown | 2025-10-26T18:54:35.882Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [RemoteRunner] Test execution mode: Local (Chromium).
+[ unknown | 2025-10-26T18:54:35.882Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [RemoteRunner] Launching local Chromium instance...
+[ unknown | 2025-10-26T18:54:35.888Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [MetricsServer] Server running at http://localhost:9464/metrics
+[ unknown | 2025-10-26T18:54:37.440Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [RemoteRunner] Local browser context successfully established.
+[ unknown | 2025-10-26T18:54:37.442Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [RemoteRunner] Opening new page within browser context...
+[ unknown | 2025-10-26T18:54:37.471Z | f918f18f-f520-409e-b725-37902c58cbe2 ] [INFO] [RemoteRunner] Page successfully initialized.
+[ unknown | 2025-10-26T18:54:37.471Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [INFO] [Hooks] Test started: @PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com sucesso
+[ unknown | 2025-10-26T18:54:37.474Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [INFO] [YamlReader] Environment URL 'qa' successfully retrieved from YAML
+[ unknown | 2025-10-26T18:54:37.947Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [WARN] [Azure] Failed to activate test case: Missing metadata in test title. Expected format: @PLAN_ID=xxx @SUITE_ID=xxx @[testCaseId]
+[ unknown | 2025-10-26T18:54:37.949Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [INFO] [YamlReader] YAML block 'valid_user' successfully loaded
+[ unknown | 2025-10-26T18:54:37.949Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [Percy] Snapshot skipped Login flow: initial state (ENABLE_PERCY is not true)
+[ unknown | 2025-10-26T18:54:38.125Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [CustomAsserts] Assertion passed: locator('[data-test-id="header-login-button-desktop"]') is clickable.
+[ unknown | 2025-10-26T18:54:38.211Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [ElementActions] Click action performed on locator('[data-test-id="header-login-button-desktop"]')
+[ unknown | 2025-10-26T18:54:38.229Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [CustomAsserts] Assertion passed: locator('[data-test-id="login-email-input"]') is visible.
+[ unknown | 2025-10-26T18:54:38.277Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [ElementActions] Text input completed on locator('[data-test-id="login-email-input"]')
+[ unknown | 2025-10-26T18:54:38.294Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [CustomAsserts] Assertion passed: locator('[data-test-id="login-password-input"]') is visible.
+[ unknown | 2025-10-26T18:54:38.325Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [ElementActions] Text input completed on locator('[data-test-id="login-password-input"]')
+[ unknown | 2025-10-26T18:54:38.372Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [CustomAsserts] Assertion passed: locator('[data-test-id="login-submit-button"]') is clickable.
+[ unknown | 2025-10-26T18:54:38.510Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [ElementActions] Click action performed on locator('[data-test-id="login-submit-button"]')
+[ unknown | 2025-10-26T18:54:39.808Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [CustomAsserts] Assertion passed: locator('li[role="status"] .font-semibold') contains expected text.
+[ unknown | 2025-10-26T18:54:39.809Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [Percy] Snapshot skipped Login flow: home after success (ENABLE_PERCY is not true)
+[ unknown | 2025-10-26T18:54:39.854Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [CustomAsserts] Assertion passed: locator('button:has(svg.lucide-user)') is clickable.
+[ unknown | 2025-10-26T18:54:39.910Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [ElementActions] Click action performed on locator('button:has(svg.lucide-user)')
+[ unknown | 2025-10-26T18:54:40.189Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [CustomAsserts] Assertion passed: locator('text=Log out') is clickable.
+[ unknown | 2025-10-26T18:54:40.225Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [ElementActions] Click action performed on locator('text=Log out')
+[ unknown | 2025-10-26T18:54:40.225Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [DEBUG] [Percy] Snapshot skipped Logout flow: post logout state (ENABLE_PERCY is not true)
+[ unknown | 2025-10-26T18:54:40.502Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [INFO] [Hooks] Test ended: @PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com sucesso
+[ unknown | 2025-10-26T18:54:40.502Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [WARN] [Azure] Failed to publish test result: Missing metadata in test title. Expected format: @PLAN_ID=xxx @SUITE_ID=xxx @[testCaseId]
+[ unknown | 2025-10-26T18:54:40.503Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [INFO] [BrowserStackStatus] Determined status: passed | Reason: Test passed
+[ unknown | 2025-10-26T18:54:40.506Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [INFO] [BrowserStackStatus] Session status updated: passed
+[ unknown | 2025-10-26T18:54:40.506Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [INFO] [BrowserStackStatus] Status updated for test: @PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com sucesso
+[ unknown | 2025-10-26T18:54:40.506Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [INFO] [Metrics] Test duration recorded: 4343ms
+[ unknown | 2025-10-26T18:54:40.506Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [INFO] [Metrics] Gauge updated with duration: 4.343s
+[ unknown | 2025-10-26T18:54:40.509Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [INFO] [Hooks] Page instance closed.
+[ unknown | 2025-10-26T18:54:40.512Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [INFO] [RemoteRunner] Initiating browser context shutdown...
+[ unknown | 2025-10-26T18:54:40.550Z | 46db8952-1c79-41a6-be3a-d90f0a470c08 ] [INFO] [RemoteRunner] Browser context and instance successfully terminated.
