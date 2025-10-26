@@ -11,8 +11,9 @@ dotenv.config({ quiet: true });
 export class YamlReader {
   /**
    * Reads the base URL for a specific environment from a YAML configuration file.
-   * @param environment Name of the environment (e.g., 'qa', 'prod')
-   * @returns URL as a string
+   * @param environment - Name of the environment (e.g., 'qa', 'prod')
+   * @returns URL string defined in the YAML file
+   * @throws If the file cannot be read or parsed
    */
   static readUrl(environment: string): string {
     const filePath = path.resolve(__dirname, `../resources/config/url-${environment}.yml`);
@@ -29,35 +30,49 @@ export class YamlReader {
   }
 
   /**
-   * Reads a complete data block from a YAML file and returns it as an object.
-   * @param key Root key name in the YAML file (e.g., 'valid_user')
+   * Reads a specific data block from a YAML file based on the current environment.
+   * @param key - Root key name in the YAML file (e.g., 'valid_user')
    * @returns Object containing the data for the specified key
+   * @throws If the block is missing or invalid
    */
   static readYamlObject(key: string): Record<string, any> {
     const env = process.env.RUN_ENV || 'qa';
     const filePath = path.resolve(__dirname, `../resources/data/${env}/credencial.yml`);
 
+    const data = this.loadYaml(filePath);
+    const obj = data[key];
+
+    if (!obj || typeof obj !== 'object') {
+      const message = `Block '${key}' not found or invalid`;
+      Logger.error(`[YamlReader] ${message}`);
+      throw new Error(message);
+    }
+
+    Logger.info(`[YamlReader] YAML block '${key}' successfully loaded`);
+    return obj;
+  }
+
+  /**
+   * Loads and parses a YAML file from the given path.
+   * @param filePath - Absolute path to the YAML file
+   * @returns Parsed YAML content as an object
+   * @throws If the file cannot be read or parsed
+   */
+  private static loadYaml(filePath: string): Record<string, any> {
     try {
       const fileContents = fs.readFileSync(filePath, 'utf8');
-      const data = yaml.load(fileContents) as Record<string, any>;
-      Logger.info(`[YamlReader] YAML block '${key}' successfully loaded`);
-
-      const obj = data[key];
-      if (!obj || typeof obj !== 'object') {
-        throw new Error(`Block '${key}' not found or invalid`);
-      }
-
-      return obj;
+      return yaml.load(fileContents) as Record<string, any>;
     } catch (error: any) {
-      Logger.error(`[YamlReader] Failed to retrieve YAML block '${key}': ${error.message}`);
+      Logger.error(`[YamlReader] Failed to load YAML file: ${error.message}`);
       throw error;
     }
   }
 
   /**
    * Reads BrowserStack capabilities from a YAML file based on the selected device.
-   * @param device Device name (e.g., 'desktop', 'mobile', 'tablet')
-   * @returns Object containing the capabilities
+   * @param device - Device name (e.g., 'desktop', 'mobile', 'tablet')
+   * @returns Object containing the capabilities for the specified device
+   * @throws If the file cannot be read or parsed
    */
   static readCapabilities(device: string): Record<string, any> {
     const filePath = path.resolve(__dirname, `../resources/config/capabilities/${device}.yml`);

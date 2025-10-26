@@ -123,14 +123,14 @@ export class AzureTestCaseService {
    * @returns Azure DevOps result code
    */
   private getStatusCode(status: string): number {
-    switch (status) {
-      case 'passed': return 2;
-      case 'failed': return 3;
-      case 'skipped': return 4;
-      case 'timedOut': return 4;
-      case 'interrupted': return 1;
-      default: return 0;
-    }
+    const statusMap: Record<string, number> = {
+      passed: 2,
+      failed: 3,
+      skipped: 4,
+      timedOut: 4,
+      interrupted: 1,
+    };
+    return statusMap[status] ?? 0;
   }
 }
 

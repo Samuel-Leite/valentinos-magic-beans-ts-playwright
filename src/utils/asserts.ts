@@ -8,17 +8,20 @@ import { highlightElement } from '../utils/highlightElement';
  */
 export class CustomAsserts {
   /**
-   * Asserts that the element contains the expected text.
-   * @param locator Target element
-   * @param expected Expected text value
+   * Asserts that a locator contains the expected text.
+   * Logs both expected and actual values for better traceability.
+   *
+   * @param locator - Playwright locator to validate
+   * @param expected - Expected text content
    */
   static async assertText(locator: Locator, expected: string): Promise<void> {
     try {
       await highlightElement(locator);
       await expect(locator).toHaveText(expected);
-      Logger.secure(`[CustomAsserts] Assertion passed: ${locator} contains expected text.`);
+      Logger.secure(`[CustomAsserts] Assertion passed: '${expected}' was found in ${locator}`);
     } catch (error: any) {
-      Logger.secure(`[CustomAsserts] Assertion failed: ${locator} does not contain expected text: ${error.message}`);
+      const actualText = await locator.textContent();
+      Logger.secure(`[CustomAsserts] Assertion failed: Expected '${expected}' but received '${actualText ?? '[element not found]'}'`);
       throw error;
     }
   }
