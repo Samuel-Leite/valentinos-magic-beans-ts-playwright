@@ -5,7 +5,7 @@
 </div>
 
 <p align="center">
-  🧭 <a href="../english/architecture.png">Visualizar Arquitetura da Automação</a><br>
+  🧭 <a href="../english/architecture.jpe">Visualizar Arquitetura da Automação</a><br>
 </p>
 
 <div align="center">
