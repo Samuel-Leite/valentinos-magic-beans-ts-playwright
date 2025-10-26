@@ -49,7 +49,7 @@
 - Grafana
 
 ## 🚀 Purpose
-This project aims to validate critical functionalities of the Valentino's Magic Beans web application through robust, traceable, and scalable automated tests, with a strong focus on development best practices and code quality.
+This project aims to validate critical functionalities of the [**Valentino's Magic Beans**](https://valentinos-magic-beans.click) web application through robust, traceable, and scalable automated tests, with a strong focus on development best practices and code quality.
 
 ## 📄 License
 This project is licensed under the MIT License.
@@ -57,33 +57,27 @@ This project is licensed under the MIT License.
 ---
 
 ## 🚀 About the Project
-This repository contains a robust end-to-end test automation suite built with <a href="https://playwright.dev/">Playwright</a>. Its purpose is to validate critical features of modern web applications through reliable, scalable, and well-structured automated tests — fully integrated with CI/CD pipelines and enhanced by visual reporting via Allure.
+This repository contains a robust end-to-end test automation suite built with the <a href="https://playwright.dev/">Playwright</a> framework. Its purpose is to validate critical features of modern web applications through reliable, well-structured, and scalable tests — fully integrated with CI/CD pipelines, Prometheus and Grafana for real-time metrics, and enhanced by visual reporting via Allure.
 
 ## 📚 Key Features
-- End-to-end testing with Playwright and TypeScript
-- Full guest checkout flow simulation
-- Validation of products, pricing, and order status
-- Modular and scalable test architecture
-- Screenshots captured on every test execution
-- Trace files generated on first retry after failure
-- Performance audits using Lighthouse
-- Prometheus metrics for test duration, failures, retries, and environment
-- Grafana dashboards for real-time test observability
-- Dockerized setup for Prometheus, Grafana, and test runner
-- Visual regression testing with Percy
-- Native integration with Azure DevOps Test Plans
-- Local and remote test execution via BrowserStack
-- Pre-commit hooks with Husky to enforce code quality
-- Conventional commits with Commitizen and message linting
-- Automated versioning and changelog generation with standard-version
-- Semantic release tagging with Git integration
-- CI pipeline configured with GitHub Actions
-- Conditional pipeline execution based on code changes
-- Visual test reporting with Allure, including historical data retention
-- Structured configuration using YAML for environments and credentials
+- End-to-end testing with Playwright and TypeScript  
+- Modular and scalable test architecture  
+- Screenshots captured on every test execution  
+- Trace files generated on the first retry after failure  
+- Performance audits powered by Lighthouse  
+- Metrics exposed via Prometheus with visualization through Grafana dashboards  
+- Visual testing with Percy integrated into the functional flow  
+- Integration with Azure DevOps Test Plans  
+- Local and remote test execution via BrowserStack  
+- Pre-commit hooks with Husky  
+- Automated versioning and changelog generation with standard-version  
+- CI pipeline with GitHub Actions  
+- Conditional pipeline execution based on code changes  
+- Visual test reporting with Allure, with historical data preserved across runs  
+- Structured YAML-based configuration for environments and credentials
 
 ## 🛠️ How to run
-```
+```bash
 # Install dependencies
 npm install
 npx playwright install
@@ -91,7 +85,16 @@ npx playwright install
 # Run all tests
 npm run test
 
-# Run a test with tag
+# Run functional tests
+npm run functional
+
+# Run visual tests (Percy)
+npm run visual
+
+# Run performance audits on pages (Lighthouse)
+npm run lighthouse
+
+# Run tests by tag
 npm run tag -- '@tag_name'
 ```
 
@@ -136,6 +139,12 @@ To learn how to run Playwright tests on real browsers and devices using BrowserS
 
 ---
 
+## 🚦 Performance Auditing with Lighthouse
+
+To learn how to run performance audits on web pages using Lighthouse integrated with Playwright, check out the [Lighthouse Audit Guide](./docs/english/lighthouse.md).
+
+---
+
 ## 📸 Visual Testing with Percy
 
 This project uses [Percy](https://percy.io/) for automated visual testing, helping detect unexpected changes in the application's interface during Playwright test execution.  
@@ -143,7 +152,7 @@ For detailed setup and usage instructions, see the [Percy Execution Guide](./doc
 
 ---
 
-## 📦 Docker + Prometheus Integration
+## 📦 Grafana Prometheus Integration
 
 This project uses [Docker](https://www.docker.com/) to orchestrate a monitoring stack that includes [Prometheus](https://prometheus.io/) for collecting test metrics and [Grafana](https://grafana.com/) for visualizing them in real time.  
 Playwright test executions expose metrics such as duration, retries, and failure rates, which are scraped by Prometheus and displayed in Grafana dashboards.  
