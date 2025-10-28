@@ -156,7 +156,7 @@ For detailed setup and usage instructions, see the [Percy Execution Guide](./doc
 
 This project uses [Docker](https://www.docker.com/) to orchestrate a monitoring stack that includes [Prometheus](https://prometheus.io/) for collecting test metrics and [Grafana](https://grafana.com/) for visualizing them in real time.  
 Playwright test executions expose metrics such as duration, retries, and failure rates, which are scraped by Prometheus and displayed in Grafana dashboards.  
-For detailed setup and usage instructions, see the [Grafana Guide](./docs/english/grafana.md).
+For detailed setup and usage instructions, see the [Grafana Guide](./docs/english/grafana.md) and the [Grafana Metrics Guide](./docs/english/dashboard-metrics.md)
 
 ---
 
