@@ -116,7 +116,6 @@ BUILD_NAME=                # Opcional: nome do build exibido no painel do Browse
 PROJECT_NAME=              # Opcional: nome do projeto exibido no painel do BrowserStack
 
 #### 🔗 Integração com Azure DevOps
-AZURE_HOST=                # URL do host do Azure DevOps
 AZURE_ORGANIZATION=        # Nome da organização do Azure DevOps
 AZURE_PROJECT=             # Nome do projeto no Azure DevOps
 AZURE_TOKEN=               # Token de Acesso Pessoal (PAT) para autenticação na API do Azure

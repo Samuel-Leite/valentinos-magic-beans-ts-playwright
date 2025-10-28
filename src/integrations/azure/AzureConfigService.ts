@@ -14,7 +14,6 @@ export class AzureConfigService {
   private readonly suiteId: string;
 
   constructor() {
-    this.host = process.env.AZURE_HOST!;
     this.organization = process.env.AZURE_ORGANIZATION!;
     this.project = process.env.AZURE_PROJECT!;
     this.token = process.env.AZURE_TOKEN!;
@@ -26,7 +25,7 @@ export class AzureConfigService {
    * Returns the full base URL for Azure DevOps REST API calls.
    */
   getBaseUrl(): string {
-    return `https://${this.host}/${this.organization}/${this.project}/`;
+    return `https://dev.azure.com/${this.organization}/${this.project}/`;
   }
 
   /**

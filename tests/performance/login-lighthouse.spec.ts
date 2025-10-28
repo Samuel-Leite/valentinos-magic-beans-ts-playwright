@@ -12,7 +12,6 @@ test('@PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com li
   const homePage = new HomePage(page);
   const credencials = YamlReader.readYamlObject("valid_user");
 
-  await LighthouseExecutor.runAudit(page, page.url());
   await loginPage.doLogin(credencials.email, credencials.password);
   await homePage.assertLoginSuccess('Login Successful');
   await LighthouseExecutor.runAudit(page, page.url());
