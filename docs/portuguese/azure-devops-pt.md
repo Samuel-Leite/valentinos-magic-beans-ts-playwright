@@ -69,7 +69,6 @@ test('@PLAN_ID=101 @SUITE_ID=202 @[303] Validar login com credenciais válidas',
 
 #### 🔐 Required Environment Variables
 ```env
-AZURE_HOST=dev.azure.com                     # Host do Azure DevOps
 AZURE_ORGANIZATION=nome-da-sua-org           # Nome da organização no Azure
 AZURE_PROJECT=nome-do-seu-projeto            # Nome do projeto no Azure
 AZURE_TOKEN=seu-token-de-acesso-pessoal      # PAT com acesso a Test Management e Work Items

@@ -1,10 +1,9 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import { AzureConfig } from './AzureConfig';
 
 /**
-* Service responsible for managing Azure DevOps configuration parameters.
-* Loads environment variables and provides access to structured configuration and base URLs.
-*/
+ * Service responsible for managing Azure DevOps configuration parameters.
+ * Loads structured configuration from AzureConfig and sensitive values from environment variables.
+ */
 export class AzureConfigService {
   private readonly host: string;
   private readonly organization: string;
@@ -14,9 +13,12 @@ export class AzureConfigService {
   private readonly suiteId: string;
 
   constructor() {
-    this.host = process.env.AZURE_HOST!;
-    this.organization = process.env.AZURE_ORGANIZATION!;
-    this.project = process.env.AZURE_PROJECT!;
+    const azureConfig = new AzureConfig();
+
+    this.host = azureConfig.host;
+    this.organization = azureConfig.organization;
+    this.project = azureConfig.project;
+
     this.token = process.env.AZURE_TOKEN!;
     this.planId = process.env.AZURE_PLAN_ID!;
     this.suiteId = process.env.AZURE_SUITE_ID!;
