@@ -156,7 +156,7 @@ Este projeto utiliza o [Percy](https://percy.io/) para testes visuais automatiza
 
 Este projeto utiliza o [Docker](https://www.docker.com/) para orquestrar uma stack de monitoramento que inclui o [Prometheus](https://prometheus.io/) para coleta de métricas dos testes e o [Grafana](https://grafana.com/) para visualização em tempo real.  
 As execuções dos testes com Playwright expõem métricas como duração, número de tentativas e falhas, que são coletadas pelo Prometheus e exibidas em painéis do Grafana.  
-Para instruções detalhadas de configuração e uso, consulte o [Guia do Grafana](./docs/portuguese/grafana.md).
+Para instruções detalhadas de configuração e uso, consulte o [Guia do Grafana](./grafana-pt.md) e a [Guia das Métricas do Grafana](./dashboard-metrics-pt.md)
 
 ---
 
