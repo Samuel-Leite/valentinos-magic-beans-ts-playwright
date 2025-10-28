@@ -102,7 +102,7 @@ npm run tag -- '@tag_name'
 
 ```env
 #### 🌐 Execution Environment
-RUN_ENV=                   # Target environment for test execution (e.g., qa, prod, staging)
+RUN_ENV=                   # Target environment for test execution (e.g., qa, prod)
 
 #### 🧪 Execution Mode
 RUN_REMOTE=                # Set to true to run tests remotely via BrowserStack; false for local execution

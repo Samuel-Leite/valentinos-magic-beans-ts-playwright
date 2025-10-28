@@ -202,3 +202,4 @@ docker-compose down --volumes --rmi all
 - [`prometheus.yml`](../../infra/monitoring/prometheus.yml)
 - [`startMetrics.ts`](../../infra/monitoring/startMetrics.ts)
 - [`grafana-playwright.json`](../../infra/dashboards/grafana-playwright.json)
+- [Grafana Metrics Guide](../english/dashboard-metrics.md)
