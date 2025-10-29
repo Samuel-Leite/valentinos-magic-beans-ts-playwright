@@ -1,0 +1,2 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Wed Oct 29 23:16:08 GMT 2025","Wed Oct 29 23:16:12 GMT 2025","4325","Local","e2e/login-functional.spec.ts","","","","@PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com sucesso",""
