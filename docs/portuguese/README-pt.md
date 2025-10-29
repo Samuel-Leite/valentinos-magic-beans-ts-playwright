@@ -83,9 +83,6 @@ Este repositório contém uma suíte robusta de automação de testes ponta a po
 npm install
 npx playwright install
 
-# Executar todos os testes
-npm run test
-
 # Executar os testes funcionais
 npm run functional
 

@@ -8,7 +8,6 @@
     "commit": "git cz && node .husky/push.js",
     "dependencies": "",
     "release": "standard-version",
-    "test": "npx playwright test",
     "functional": "npx playwright test tests/e2e",
     "visual": "percy exec -- npx playwright test",
     "lighthouse": "npx playwright test tests/performance/login-lighthouse.spec.ts",

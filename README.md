@@ -82,9 +82,6 @@ This repository contains a robust end-to-end test automation suite built with th
 npm install
 npx playwright install
 
-# Run all tests
-npm run test
-
 # Run functional tests
 npm run functional
 
