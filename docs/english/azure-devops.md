@@ -69,11 +69,7 @@ test('@PLAN_ID=101 @SUITE_ID=202 @[303] Validate login with valid credentials', 
 
 #### 🔐 Required Environment Variables
 ```env
-AZURE_ORGANIZATION=your-org-name            # Azure organization name
-AZURE_PROJECT=your-project-name             # Azure project name
 AZURE_TOKEN=your-personal-access-token      # PAT with Test Management and Work Item access
-AZURE_PLAN_ID=123                           # Default Test Plan ID (optional if using inline metadata)
-AZURE_SUITE_ID=456                          # Default Test Suite ID (optional if using inline metadata)
 ```
 ⚠️ Never commit your real AZURE_TOKEN. Use .env.example for safe sharing.
 
