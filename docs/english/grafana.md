@@ -203,3 +203,4 @@ docker-compose down --volumes --rmi all
 - [`startMetrics.ts`](../../infra/monitoring/startMetrics.ts)
 - [`grafana-playwright.json`](../../infra/dashboards/grafana-playwright.json)
 - [Grafana Metrics Guide](../english/dashboard-metrics.md)
+- [Metrics in Grafana](../../docs/img/grafana.png)
