@@ -115,3 +115,4 @@ await PercyService.capture(this.page, 'Logout flow: post logout state');
 - [`percyService.ts`](../../src/integrations/percy/percyService.ts)  
 - [`LoginPage.ts`](../../src/pages/LoginPage.ts)  
 - [`HomePage.ts`](../../src/pages/HomePage.ts)
+- [Visual Validation with Percy](../../docs/img/percy_visual_testing.png)

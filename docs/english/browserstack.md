@@ -128,3 +128,4 @@ extend(): typeof test
 - [`browserstackStatus.ts`](../../src/integrations/browserstack/browserstackStatus.ts)
 - [`endpointBuilder.ts`](../../src/integrations/browserstack/endpointBuilder.ts)
 - [Evidence on BrowserStack](https://automate.browserstack.com/builds/95dfc675c8ac83f638727f1e389e1b1ddf38bb57/sessions/5d94339d84ccdb4b2b06ab54393348b2cc610d03?auth_token=e274aeae75114ba309f54a812b9976ab0f6d8e82cb597232f0167a4e80c28cb4)
+- [Execution on BrowserStack](../../docs/img/browserstack.png)
