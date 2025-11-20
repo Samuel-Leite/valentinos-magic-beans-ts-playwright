@@ -31,7 +31,7 @@ Ele permite alternar facilmente entre execuções locais e em nuvem com configur
 
 ## ⚙️ Como Funciona
 
-1. Defina `RUN_REMOTE=true` no seu arquivo `.env` para habilitar a execução remota.  
+1. Defina `execution > runRemote:true` no seu arquivo `test-config.yml` para habilitar a execução remota.  
 2. O `RemoteRunner` cria dinamicamente um endpoint WebSocket usando o `EndpointBuilder`.  
 3. O Playwright se conecta ao BrowserStack utilizando o endpoint gerado.  
 4. Após a execução do teste, o `BrowserStackStatus` atualiza o status da sessão (sucesso/falha) com a justificativa.  
@@ -41,8 +41,6 @@ Ele permite alternar facilmente entre execuções locais e em nuvem com configur
 ## 🔐 Variáveis de Ambiente Necessárias
 
 ```env
-RUN_REMOTE=true
-DEVICE=desktop
 BROWSERSTACK_USERNAME=seu_usuario
 BROWSERSTACK_ACCESS_KEY=sua_chave
 BUILD_NAME=Meu Build
@@ -106,7 +104,7 @@ build(deviceName: string, testName: string): string
 Gerencia a criação do contexto do navegador e o ciclo de vida dos testes, tanto local quanto remotamente.
 
 ##### Propósito
-- Detecta o modo de execução através da variável RUN_REMOTE
+- Detecta o modo de execução através da variável test-config.yml
 - Cria e finaliza contextos de navegador conforme o ambiente
 - Estende o objeto de teste do Playwright com uma configuração personalizada
 
@@ -120,12 +118,12 @@ extend(): typeof test
 
 ## 🧯 Solução de Problemas
 
-|         Problema              |               Causa                    |                                         Solução                                             |
-|-------------------------------|----------------------------------------|---------------------------------------------------------------------------------------------|
-| `Capabilities file not found` | Arquivo YAML ausente                   | Verifique se `resources/config/capabilities/desktop.yml` existe                             |
-| `Session status not updated`  | Credenciais ausentes ou teste ignorado | Confirme `BROWSERSTACK_USERNAME`, `BROWSERSTACK_ACCESS_KEY`, e o status do teste            |
-| `WebSocket connection fails`  | Capacidades ou credenciais inválidas   | Valide o arquivo YAML e os valores do `.env`                                                |
-| `RUN_REMOTE` sem efeito       | Variável não carregada                 | Confirme se o `.env` está sendo carregado e se `RUN_REMOTE=true` está definido corretamente |
+|         Problema              |               Causa                    |                                         Solução                                                       |
+|-------------------------------|----------------------------------------|-------------------------------------------------------------------------------------------------------|
+| `Capabilities file not found` | Arquivo YAML ausente                   | Verifique se `resources/config/capabilities/desktop.yml` existe                                       |
+| `Session status not updated`  | Credenciais ausentes ou teste ignorado | Confirme `BROWSERSTACK_USERNAME`, `BROWSERSTACK_ACCESS_KEY`, e o status do teste                      |
+| `WebSocket connection fails`  | Capacidades ou credenciais inválidas   | Valide o arquivo YAML e os valores do `.env`                                                          |
+| `runRemote:true` sem efeito   | Variável não carregada                 | Confirme se o `test-config.yml` está sendo carregado e se `runRemote:true` está definido corretamente |
 
 
 ## 📄 Arquivos Fonte

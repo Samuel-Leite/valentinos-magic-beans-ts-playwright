@@ -2,9 +2,7 @@ import { test as base, BrowserContext, Page, TestInfo } from '@playwright/test';
 import { chromium } from 'playwright';
 import { EndpointBuilder } from '../integrations/browserstack/endpointBuilder';
 import { Logger } from '../utils/logger';
-
-// Determines whether tests should run remotely via BrowserStack or locally
-const isRemote = process.env.RUN_REMOTE === 'true';
+import { YamlReader } from '../utils/yamlReader';
 
 /**
  * RemoteRunner handles browser context creation and lifecycle management
@@ -18,7 +16,7 @@ class RemoteRunner {
   private async createRemoteContext(testInfo: TestInfo): Promise<BrowserContext> {
     Logger.info(`[RemoteRunner] Initializing remote browser context via BrowserStack...`);
     const builder = new EndpointBuilder();
-    const wsEndpoint = builder.build(process.env.DEVICE || 'desktop', testInfo.title);
+    const wsEndpoint = builder.build(YamlReader.getConfigValue('execution.device') || 'desktop', testInfo.title);
     const browser = await chromium.connect({ wsEndpoint });
     const context = await browser.newContext();
     // Store browser instance for cleanup
@@ -32,7 +30,7 @@ class RemoteRunner {
    */
   private async createLocalContext(): Promise<BrowserContext> {
     Logger.info(`[RemoteRunner] Launching local Chromium instance...`);
-    const browser = await chromium.launch({ headless: true });
+    const browser = await chromium.launch({ headless: YamlReader.getConfigValue('execution.headless') });
     const context = await browser.newContext();
     // Store browser instance for cleanup
     (context as any)._browser = browser;
@@ -41,13 +39,13 @@ class RemoteRunner {
   }
 
   /**
-   * Chooses between remote or local context creation based on the RUN_REMOTE flag.
+   * Chooses between remote or local context creation based on the `runRemote:true` flag.
    * Logs the execution mode for traceability.
    * @param testInfo - Metadata about the current test
    * @returns A BrowserContext instance for the current test
    */
   public async createContext(testInfo: TestInfo): Promise<BrowserContext> {
-    const isRemote = process.env.RUN_REMOTE === 'true';
+    const isRemote = YamlReader.getConfigValue('execution.runRemote') === true;
 
     if (isRemote) {
       Logger.info(`[RemoteRunner] Test execution mode: Remote (BrowserStack).`);

@@ -9,6 +9,10 @@ dotenv.config({ quiet: true });
  * Utility class for reading configuration and data from YAML files.
  */
 export class YamlReader {
+
+  private static readonly configPath = path.resolve(__dirname, '../resources/config/test-config.yml');
+  private static configCache: Record<string, any> | null = null;
+
   /**
    * Reads the base URL for a specific environment from a YAML configuration file.
    * @param environment - Name of the environment (e.g., 'qa', 'prod')
@@ -36,7 +40,7 @@ export class YamlReader {
    * @throws If the block is missing or invalid
    */
   static readYamlObject(key: string): Record<string, any> {
-    const env = process.env.RUN_ENV || 'qa';
+    const env = YamlReader.getConfigValue('execution.runEnv') || 'qa';
     const filePath = path.resolve(__dirname, `../resources/data/${env}/credencial.yml`);
 
     const data = this.loadYaml(filePath);
@@ -86,5 +90,33 @@ export class YamlReader {
       Logger.error(`[YamlReader] Failed to load capabilities for device '${device}': ${error.message}`);
       throw error;
     }
+  }
+
+  /**
+   * Retrieves a value from test-config.yml using dot notation (e.g., 'project.name').
+   *
+   * @param keyPath - Dot notation path to the desired key
+   * @returns The value found at the specified path
+   * @throws If the key is not found
+   */
+  static getConfigValue(keyPath: string): any {
+    if (!this.configCache) {
+      const fileContent = fs.readFileSync(this.configPath, 'utf8');
+      this.configCache = yaml.load(fileContent) as Record<string, any>;
+      Logger.info(`[YamlReader] test-config.yml loaded into memory`);
+    }
+
+    const value = keyPath
+      .split('.')
+      .reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : undefined), this.configCache);
+
+    if (value === undefined) {
+      Logger.error(`[YamlReader] Key '${keyPath}' not found in test-config.yml`);
+      throw new Error(`Key '${keyPath}' not found in test-config.yml`);
+    }
+
+    // Remova este log se quiser evitar repetição
+    // Logger.info(`[YamlReader] Key '${keyPath}' successfully retrieved from test-config.yml`);
+    return value;
   }
 }

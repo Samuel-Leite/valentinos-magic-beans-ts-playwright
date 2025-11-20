@@ -99,13 +99,6 @@ npm run tag -- '@nome_da_tag'
 ## 🛠️ Variáveis de Ambiente (.env)
 
 ```env
-#### 🌐 Ambiente de Execução
-RUN_ENV=                   # Ambiente alvo para execução dos testes (ex: qa, prod)
-
-#### 🧪 Modo de Execução
-RUN_REMOTE=                # Defina como true para executar via BrowserStack; false para execução local
-DEVICE=                    # Perfil do dispositivo a ser usado (ex: desktop, mobile, tablet)
-
 #### 🌍 Integração com BrowserStack
 BROWSERSTACK_USERNAME=     # Seu nome de usuário no BrowserStack
 BROWSERSTACK_ACCESS_KEY=   # Sua chave de acesso do BrowserStack

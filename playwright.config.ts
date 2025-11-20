@@ -1,9 +1,10 @@
 import { defineConfig } from '@playwright/test';
+import { YamlReader } from './src/utils/yamlReader';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const isRemote = process.env.RUN_REMOTE === 'true';
+const isRemote = YamlReader.getConfigValue('execution.runRemote') === true;
 
 export default defineConfig({
   testDir: './tests',
@@ -24,7 +25,7 @@ export default defineConfig({
   projects: isRemote
     ? [
       {
-        name: process.env.DEVICE || 'desktop',
+        name: YamlReader.getConfigValue('execution.device') || 'desktop',
         use: {}, // remote runner will be applied to tests via remoteRunner.ts
       },
     ]
@@ -32,7 +33,7 @@ export default defineConfig({
       {
         name: 'Local',
         use: {
-          headless: false,
+          headless: YamlReader.getConfigValue('execution.headless'),
         },
       },
     ],

@@ -1,3 +1,5 @@
+import { YamlReader } from '../../utils/yamlReader';
+
 /**
  * AzureConfig class centralizes Azure DevOps configuration values.
  * These values are loaded from environment variables and used across Azure integration services.
@@ -20,8 +22,8 @@ export class AzureConfig {
   public readonly project: string;
 
   constructor() {
-    this.host = process.env.AZURE_HOST || 'dev.azure.com';
-    this.organization = process.env.AZURE_ORGANIZATION || 'automacoes-qa';
-    this.project = process.env.AZURE_PROJECT || 'automacao';
+    this.host = YamlReader.getConfigValue('azure.host');
+    this.organization = YamlReader.getConfigValue('azure.organization');
+    this.project = YamlReader.getConfigValue('azure.project');
   }
 }
