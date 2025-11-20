@@ -2,7 +2,7 @@ import { test, TestInfo } from '@playwright/test';
 import { YamlReader } from '../utils/yamlReader';
 import { Logger } from '../utils/logger';
 import { BrowserStackStatus } from '../integrations/browserstack/browserstackStatus';
-import { runTestCaseStart, runTestCaseFinished } from '../integrations/azure/AzureTestCaseService';
+import { AzureTestCaseService } from '../integrations/azure/AzureTestCaseService';
 import { TestMetadataParser } from '../integrations/azure/TestMetadataParse';
 import { metrics } from '../../infra/monitoring/metricsInstance';
 import fs from 'fs/promises';
@@ -11,10 +11,10 @@ import dotenv from 'dotenv';
 dotenv.config({ quiet: true });
 
 /**
- * Manages global test lifecycle hooks including environment setup,
- * report cleanup, Azure DevOps integration, metrics collection,
- * and per-test execution tracking.
- */
+* Manages global test lifecycle hooks including environment setup,
+* report cleanup, Azure DevOps integration, metrics collection,
+* and per-test execution tracking.
+*/
 class Hooks {
   /**
    * Deletes previous test report directories to ensure a clean run.
@@ -54,6 +54,7 @@ class Hooks {
    * @param testInfo Playwright test metadata
    */
   async beforeEachTest(page: any, testInfo: TestInfo): Promise<void> {
+    const azureService = new AzureTestCaseService();
     Logger.setExecutionId(); // Unique ID for tracking logs per test
     Logger.info(`[Hooks] Test started: ${testInfo.title}`);
 
@@ -63,7 +64,7 @@ class Hooks {
     // Azure DevOps: Activate test case before execution
     try {
       const { planId, suiteId, testCaseId } = TestMetadataParser.extract(testInfo.title);
-      await runTestCaseStart(planId, suiteId, testCaseId);
+      await azureService.startTestCase(planId, suiteId, testCaseId);
       Logger.info(`[Azure] Test case ${testCaseId} activated in Azure DevOps`);
     } catch (err: any) {
       Logger.warn(`[Azure] Failed to activate test case: ${err.message}`);
@@ -78,22 +79,8 @@ class Hooks {
    * @param testInfo Playwright test metadata
    */
   async afterEachTest(page: any, testInfo: TestInfo): Promise<void> {
+    const azureService = new AzureTestCaseService();
     Logger.info(`[Hooks] Test ended: ${testInfo.title}`);
-
-    // Azure DevOps: Publish test result after execution
-    try {
-      const { planId, suiteId, testCaseId } = TestMetadataParser.extract(testInfo.title);
-
-      const status = ['passed', 'failed', 'skipped', 'timedOut', 'interrupted'].includes(testInfo.status ?? '')
-        ? testInfo.status!
-        : 'failed';
-
-      const error = testInfo.error?.message;
-      await runTestCaseFinished(planId, suiteId, testCaseId, status, error);
-      Logger.info(`[Azure] Test case ${testCaseId} result published to Azure DevOps`);
-    } catch (err: any) {
-      Logger.warn(`[Azure] Failed to publish test result: ${err.message}`);
-    }
 
     // BrowserStack: Update test status
     await BrowserStackStatus.updateFromTestInfo(page, testInfo);
@@ -114,6 +101,25 @@ class Hooks {
     await page.close();
     Logger.info(`[Hooks] Page instance closed.`);
   }
+
+  async afterAllTests(testInfo: TestInfo): Promise<void> {
+    const azureService = new AzureTestCaseService();
+
+    // Azure DevOps: Publish test result after execution
+    try {
+      const { planId, suiteId, testCaseId } = TestMetadataParser.extract(testInfo.title);
+
+      const status = ['passed', 'failed', 'skipped', 'timedOut', 'interrupted'].includes(testInfo.status ?? '')
+        ? testInfo.status!
+        : 'failed';
+
+      const error = testInfo.error?.message;
+      await azureService.finishTestCase(planId, suiteId, testCaseId, status, error);
+      Logger.info(`[Azure] Test case ${testCaseId} result published to Azure DevOps`);
+    } catch (err: any) {
+      Logger.warn(`[Azure] Failed to publish test result: ${err.message}`);
+    }
+  }
 }
 
 // Register hooks globally
@@ -129,6 +135,10 @@ test.beforeEach(async ({ page }, testInfo) => {
 
 test.afterEach(async ({ page }, testInfo) => {
   await hooks.afterEachTest(page, testInfo);
+});
+
+test.afterAll(async ({ page }, testInfo) => {
+  await hooks.afterAllTests(testInfo);
 });
 
 export default Hooks;
