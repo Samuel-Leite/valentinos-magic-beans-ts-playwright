@@ -11,10 +11,10 @@ import dotenv from 'dotenv';
 dotenv.config({ quiet: true });
 
 /**
-* Manages global test lifecycle hooks including environment setup,
-* report cleanup, Azure DevOps integration, metrics collection,
-* and per-test execution tracking.
-*/
+ * Manages global test lifecycle hooks including environment setup,
+ * report cleanup, Azure DevOps integration, metrics collection,
+ * and per-test execution tracking.
+ */
 class Hooks {
   /**
    * Deletes previous test report directories to ensure a clean run.
@@ -36,32 +36,32 @@ class Hooks {
 
   /**
    * Runs once before all tests.
-   * Cleans up previous reports, initializes logging, and starts metrics server.
+   * Cleans up previous reports, initializes logging, and starts the metrics server.
    */
   async beforeAllTests(): Promise<void> {
     await this.cleanReports();
     Logger.clearLogFile();
     Logger.info(`[Hooks] Log file cleared and test environment initialized.`);
 
-    metrics.start(); // Inicia o servidor de métricas
+    metrics.start();
     Logger.info(`[Metrics] Metrics server started.`);
   }
 
   /**
    * Runs before each test.
-   * Sets execution ID, navigates to base URL, and activates the test case in Azure DevOps.
-   * @param page Playwright page instance
-   * @param testInfo Playwright test metadata
+   * Sets a unique execution ID, navigates to the base URL, and activates the test case in Azure DevOps.
+   *
+   * @param page - Playwright page instance
+   * @param testInfo - Metadata about the current test
    */
   async beforeEachTest(page: any, testInfo: TestInfo): Promise<void> {
     const azureService = new AzureTestCaseService();
-    Logger.setExecutionId(); // Unique ID for tracking logs per test
+    Logger.setExecutionId();
     Logger.info(`[Hooks] Test started: ${testInfo.title}`);
 
     const baseUrl = YamlReader.readUrl(process.env.ENV || 'qa');
     await page.goto(baseUrl);
 
-    // Azure DevOps: Activate test case before execution
     try {
       const { planId, suiteId, testCaseId } = TestMetadataParser.extract(testInfo.title);
       await azureService.startTestCase(planId, suiteId, testCaseId);
@@ -73,16 +73,17 @@ class Hooks {
 
   /**
    * Runs after each test.
-   * Publishes test result to Azure DevOps, updates BrowserStack status,
-   * records metrics, and closes the page.
-   * @param page Playwright page instance
-   * @param testInfo Playwright test metadata
+   * Publishes the test result to Azure DevOps, updates BrowserStack status,
+   * records metrics, and closes the browser page.
+   *
+   * @param page - Playwright page instance
+   * @param testInfo - Metadata about the completed test
    */
   async afterEachTest(page: any, testInfo: TestInfo): Promise<void> {
     const azureService = new AzureTestCaseService();
     Logger.info(`[Hooks] Test ended: ${testInfo.title}`);
 
-    // Azure DevOps: Publish test result after execution
+    // Azure DevOps: Publish test result
     try {
       const { planId, suiteId, testCaseId } = TestMetadataParser.extract(testInfo.title);
 
