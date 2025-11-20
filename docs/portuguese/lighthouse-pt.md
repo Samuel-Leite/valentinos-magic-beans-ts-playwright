@@ -33,8 +33,7 @@ A integração permite validar métricas de desempenho e boas práticas da aplic
 1. O `LighthouseExecutor` utiliza o protocolo `browserstack_executor` para disparar auditorias Lighthouse dentro de uma sessão ativa do BrowserStack.  
 2. A auditoria pode ser executada com ou sem URL explícita — por padrão, usa a URL atual da página.  
 3. O método `runAuditWithAssertions` permite definir limites mínimos de performance e falha o teste caso não sejam atingidos.  
-4. Os resultados são registrados via `Logger` para rastreabilidade e análise posterior.  
-5. O cenário `login-lighthouse.spec.ts` executa a auditoria após o login, validando a performance da tela inicial.
+4. O cenário `login-lighthouse.spec.ts` executa a auditoria validando a performance da tela inicial.
 
 ---
 
@@ -88,7 +87,7 @@ runAuditWithAssertions(page: Page, url: string): Promise<void>
 Executa o fluxo de login e dispara a auditoria Lighthouse na tela inicial.
 
 #### 🎯 Propósito
-- Validar a performance da aplicação após login
+- Validar a performance da aplicação
 - Garantir que a tela inicial atenda aos critérios mínimos de qualidade
 
 #### 💻 Exemplo de Uso
