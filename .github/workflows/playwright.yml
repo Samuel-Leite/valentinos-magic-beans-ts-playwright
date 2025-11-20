@@ -63,13 +63,11 @@ jobs:
 
       - name: 🛠️ Build and publish Allure report
         if: always()
-        uses: allure-framework/actions-allure-report@v1
+        uses: allure-actions/allure-report@v1.5.0
         with:
-          results_dir: allure-results
-          report_dir: allure-report
-          history_dir: allure-history
-          gh_pages: gh-pages
-          keep_reports: 20
+          results-dir: allure-results
+          report-dir: allure-report
+          history-dir: allure-history
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
