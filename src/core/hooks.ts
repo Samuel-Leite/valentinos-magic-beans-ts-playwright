@@ -82,6 +82,21 @@ class Hooks {
     const azureService = new AzureTestCaseService();
     Logger.info(`[Hooks] Test ended: ${testInfo.title}`);
 
+    // Azure DevOps: Publish test result after execution
+    try {
+      const { planId, suiteId, testCaseId } = TestMetadataParser.extract(testInfo.title);
+
+      const status = ['passed', 'failed', 'skipped', 'timedOut', 'interrupted'].includes(testInfo.status ?? '')
+        ? testInfo.status!
+        : 'failed';
+
+      const error = testInfo.error?.message;
+      await azureService.finishTestCase(planId, suiteId, testCaseId, status, error);
+      Logger.info(`[Azure] Test case ${testCaseId} result published to Azure DevOps`);
+    } catch (err: any) {
+      Logger.warn(`[Azure] Failed to publish test result: ${err.message}`);
+    }
+
     // BrowserStack: Update test status
     await BrowserStackStatus.updateFromTestInfo(page, testInfo);
     Logger.info(`[BrowserStackStatus] Status updated for test: ${testInfo.title}`);
@@ -101,25 +116,6 @@ class Hooks {
     await page.close();
     Logger.info(`[Hooks] Page instance closed.`);
   }
-
-  async afterAllTests(testInfo: TestInfo): Promise<void> {
-    const azureService = new AzureTestCaseService();
-
-    // Azure DevOps: Publish test result after execution
-    try {
-      const { planId, suiteId, testCaseId } = TestMetadataParser.extract(testInfo.title);
-
-      const status = ['passed', 'failed', 'skipped', 'timedOut', 'interrupted'].includes(testInfo.status ?? '')
-        ? testInfo.status!
-        : 'failed';
-
-      const error = testInfo.error?.message;
-      await azureService.finishTestCase(planId, suiteId, testCaseId, status, error);
-      Logger.info(`[Azure] Test case ${testCaseId} result published to Azure DevOps`);
-    } catch (err: any) {
-      Logger.warn(`[Azure] Failed to publish test result: ${err.message}`);
-    }
-  }
 }
 
 // Register hooks globally
@@ -135,10 +131,6 @@ test.beforeEach(async ({ page }, testInfo) => {
 
 test.afterEach(async ({ page }, testInfo) => {
   await hooks.afterEachTest(page, testInfo);
-});
-
-test.afterAll(async ({ page }, testInfo) => {
-  await hooks.afterAllTests(testInfo);
 });
 
 export default Hooks;
