@@ -1,6 +1,6 @@
 execution:
   runEnv: qa
-  runRemote: true
+  runRemote: false
   device: mobile
   headless: false
 project:
