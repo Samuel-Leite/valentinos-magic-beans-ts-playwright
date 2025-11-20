@@ -61,15 +61,13 @@ jobs:
           mkdir -p allure-results/history
           cp -r gh-pages-history/history/* allure-results/history/ || true
 
-      - name: 🛠️ Build and publish Allure report
+      - name: 🛠️ Build test report
         if: always()
-        uses: allure-actions/allure-report@v1.5.0
+        uses: simple-elf/allure-report-action@v1.7
         with:
-          results-dir: allure-results
-          report-dir: allure-report
-          history-dir: allure-history
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          gh_pages: gh-pages-history
+          allure_results: allure-results
+          allure_history: allure-history
 
       - name: 🚀 Publish test report to GitHub Pages
         if: always()
