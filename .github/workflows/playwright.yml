@@ -63,7 +63,7 @@ jobs:
 
       - name: 🛠️ Build test report
         if: always()
-        uses: allure-actions/allure-report@main
+        uses: simple-elf/allure-report-action@v1.7
         with:
           gh_pages: gh-pages-history
           allure_results: allure-results
