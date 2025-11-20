@@ -3,7 +3,6 @@ osVersion: 18
 realMobile: true
 browserVersion: latest
 resolution: 1179x2556
-buildName: Playwright Mobile Build
 consoleLogs: info
 networkLogs: true
 video: true

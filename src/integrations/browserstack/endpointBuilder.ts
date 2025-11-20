@@ -36,8 +36,8 @@ export class EndpointBuilder {
     const finalCaps = {
       ...caps,
       name: testName,
-      build: process.env.BUILD_NAME,
-      project: process.env.PROJECT_NAME,
+      build: YamlReader.getConfigValue('project.build'),
+      project: YamlReader.getConfigValue('project.name'),
       'browserstack.username': process.env.BROWSERSTACK_USERNAME,
       'browserstack.accessKey': process.env.BROWSERSTACK_ACCESS_KEY,
       'browserstack.performance': 'assert',

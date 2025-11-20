@@ -29,8 +29,7 @@ This project supports remote test execution on **BrowserStack** using Playwright
 ---
 
 ## ⚙️ How It Works
-
-1. Set `RUN_REMOTE=true` in your `.env` file to enable remote execution.
+1. Set `execution > runRemote:true` in your `test-config.yml` file to enable remote execution.
 2. The `RemoteRunner` dynamically builds a WebSocket endpoint using `EndpointBuilder`.
 3. Playwright connects to BrowserStack using the generated endpoint.
 4. After test execution, `BrowserStackStatus` updates the session status (passed/failed) with a reason.
@@ -40,8 +39,6 @@ This project supports remote test execution on **BrowserStack** using Playwright
 ## 🔐 Required Environment Variables
 
 ```env
-RUN_REMOTE=true
-DEVICE=desktop
 BROWSERSTACK_USERNAME=your_username
 BROWSERSTACK_ACCESS_KEY=your_access_key
 BUILD_NAME=My Build
@@ -101,7 +98,7 @@ build(deviceName: string, testName: string): string
 Manages browser context creation and test lifecycle for local and remote execution.
 
 ##### Purpose
-- Detects execution mode via RUN_REMOTE
+- Detects execution mode via runRemote:true
 - Creates and tears down browser contexts accordingly
 - Extends Playwright’s test object with custom setup
 
@@ -115,12 +112,12 @@ extend(): typeof test
 
 ## 🧯 Troubleshooting
 
-| Issue                          | Cause                          | Solution                                                                 |
-|-------------------------------|--------------------------------|--------------------------------------------------------------------------|
-| `Capabilities file not found` | Missing YAML config            | Ensure `resources/config/capabilities/desktop.yml` exists                |
-| `Session status not updated`  | Missing credentials or skipped test | Check `BROWSERSTACK_USERNAME`, `BROWSERSTACK_ACCESS_KEY`, and test status |
-| `WebSocket connection fails`  | Invalid capabilities or credentials | Validate YAML file and `.env` values                                     |
-| `RUN_REMOTE` has no effect    | Variable not loaded            | Confirm `.env` is loaded and `RUN_REMOTE=true` is set correctly          |
+| Issue                             | Cause                               | Solution                                                                  |
+|-----------------------------------|-------------------------------------|---------------------------------------------------------------------------|
+| `Capabilities file not found`     | Missing YAML config                 | Ensure `resources/config/capabilities/desktop.yml` exists                 |
+| `Session status not updated`      | Missing credentials or skipped test | Check `BROWSERSTACK_USERNAME`, `BROWSERSTACK_ACCESS_KEY`, and test status |
+| `WebSocket connection fails`      | Invalid capabilities or credentials | Validate YAML file and `.env` values                                      |
+| `runRemote:true` has no effect    | Variable not loaded                 | Confirm `test-config.yml` is loaded and `runRemote:true` is set correctly |
 
 
 ## 📄 Source Files

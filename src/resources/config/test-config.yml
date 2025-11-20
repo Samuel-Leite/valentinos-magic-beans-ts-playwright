@@ -1,0 +1,12 @@
+execution:
+  runEnv: qa
+  runRemote: false
+  device: mobile
+  headless: false
+project:
+  name: Valentino's Magic Beans
+  build: Harvest of Quality
+azure:
+  host: dev.azure.com
+  organization: automacoes-qa
+  project: automacao

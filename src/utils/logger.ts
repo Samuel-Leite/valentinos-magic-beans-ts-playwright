@@ -2,6 +2,7 @@ import fs from 'fs';
 import crypto from 'crypto';
 import { createLogger, format, transports, Logger as WinstonLogger } from 'winston';
 import dotenv from 'dotenv';
+import { YamlReader } from '../utils/yamlReader';
 dotenv.config({ quiet: true });
 
 /**
@@ -20,7 +21,7 @@ export class Logger {
     format: format.combine(
       format.timestamp(),
       format.printf(({ timestamp, level, message }) => {
-        const env = process.env.RUN_ENV || 'unknown';
+        const env = YamlReader.getConfigValue('execution.runEnv') || 'unknown';
         const id = Logger.executionId || Logger.sessionId;
         const safeMessage = typeof message === 'string' ? Logger.sanitize(message) : String(message);
         return `[ ${env} | ${timestamp} | ${id} ] [${level.toUpperCase()}] ${safeMessage}`;
