@@ -35,7 +35,6 @@ The integration helps detect unexpected changes in the application's interface a
 2. The `PercyService` checks if Percy is enabled and captures the current page state.  
 3. Snapshots are automatically sent to the Percy dashboard.  
 4. Images are compared against previous versions and displayed for visual review.  
-5. Execution is integrated into the GitHub Actions pipeline, ensuring visual tests run on every push or pull request to `main` and `develop` branches.
 
 ---
 

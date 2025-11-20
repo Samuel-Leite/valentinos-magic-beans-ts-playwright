@@ -58,7 +58,7 @@ Este projeto está licenciado sob a **Licença MIT**.
 ---
 
 ## 🚀 Sobre o Projeto
-Este repositório contém uma suíte robusta de automação de testes ponta a ponta desenvolvida com o framework <a href="https://playwright.dev/">Playwright</a>. Seu propósito é validar funcionalidades críticas de aplicações web modernas por meio de testes confiáveis, organizados e escaláveis, integrados a pipelines de CI/CD e Grafana com Prometheus, e relatórios visuais com Allure.
+Este repositório contém uma suíte robusta de automação de testes de ponta a ponta desenvolvida com o framework <a href="https://playwright.dev/">Playwright</a>. Seu propósito é validar funcionalidades críticas de aplicações web modernas por meio de testes confiáveis, organizados e escaláveis, integrados a pipelines de CI/CD e Grafana com Prometheus, e Allure report.
 
 ## 📚 Principais Funcionalidades
 - End-to-end testing com Playwright e TypeScript
@@ -74,7 +74,7 @@ Este repositório contém uma suíte robusta de automação de testes ponta a po
 - Versionamento automático e geração de changelog com standard-version
 - Pipeline CI com GitHub Actions
 - Execução condicional de pipeline com base em alterações de código
-- Relatórios visuais com Allure e histórico preservado entre execuções
+- Relatórios com Allure
 - Configuração estruturada com YAML para ambientes e credenciais
 
 ## 🛠️ Como Executar
@@ -124,19 +124,19 @@ PERCY_TOKEN=               # Token de autenticação do projeto Percy
 
 ## 🔗 Integração com Azure DevOps
 
-Para detalhes completos sobre como vincular testes ao Azure DevOps Test Plans e publicar resultados automaticamente, consulte o [Guia de Integração com Azure DevOps](../portuguese/azure-devops-pt.md).
+Para detalhes completos sobre a integração com o Azure DevOps Test Plans, consulte o [Guia de Integração com Azure DevOps](../portuguese/azure-devops-pt.md).
 
 ---
 
 ## 🌐 Execução de Testes no BrowserStack
 
-Para aprender como executar testes Playwright em navegadores e dispositivos reais usando o BrowserStack, consulte o [Guia de Execução BrowserStack](../portuguese/browserstack-pt.md).
+Para detalhes completos como executar testes Playwright em navegadores e dispositivos reais usando o BrowserStack, consulte o [Guia de Execução BrowserStack](../portuguese/browserstack-pt.md).
 
 ---
 
 ## 🚦 Auditoria de Performance com Lighthouse
 
-Para aprender como executar auditorias de performance em páginas web usando o Lighthouse integrado ao Playwright, consulte o [Guia de Auditoria Lighthouse](../portuguese/lighthouse-pt.md).
+Para detalhes completos como executar auditorias de performance em páginas web usando o Lighthouse integrado ao Playwright, consulte o [Guia de Auditoria Lighthouse](../portuguese/lighthouse-pt.md).
 
 ---
 

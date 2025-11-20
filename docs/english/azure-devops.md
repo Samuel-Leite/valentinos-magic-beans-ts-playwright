@@ -1,6 +1,6 @@
 # 🔗 Azure DevOps Integration
 
-This project supports native integration with **Azure DevOps Test Plans**, enabling full traceability between automated tests and manual test management workflows.
+This project supports integration with **Azure DevOps Test Plans**.
 
 ## 📘 Table of Contents
 
@@ -29,9 +29,7 @@ This project supports native integration with **Azure DevOps Test Plans**, enabl
 ## 🧩 Purpose
 
 - Activates test cases before execution
-- Publishes test results (Passed, Failed, Skipped)
-- Attaches evidence (logs, screenshots) to test results
-- Updates automation status to "Automated" in Azure DevOps
+- Publishes test results
 
 ## ⚙️ How It Works
 
@@ -51,8 +49,6 @@ During execution:
 - Metadata is parsed from the test title
 - The test case is activated via Azure DevOps API
 - The result is published after execution
-- Attachments are uploaded if the test fails
-- The test case is marked as "Automated"
 
 #### 🧪 Example Test
 ```ts
@@ -99,7 +95,7 @@ This document describes the service classes responsible for managing the Azure D
 
 #### `AzureAttachmentService.ts`
 
-Publishes test evidence (e.g., logs, screenshots) to Azure DevOps test results.
+Publishes test evidence to Azure DevOps test results.
 
 ##### Purpose
 - Retrieves all registered attachments
@@ -153,8 +149,6 @@ Manages the full lifecycle of a test case in Azure DevOps.
 ##### Purpose
 - Activates the test case before execution
 - Publishes the result after execution
-- Updates the automation status to "Automated"
-- Attaches evidence if the test fails
 
 ##### Key Method
 ```ts
@@ -164,7 +158,6 @@ finishTestCase(planId, suiteId, testCaseId, status, error?): Promise<void>
 
 ##### Internal Helpers
 - getTestPointId(...): Retrieves the test point ID for a given test case
-- updateAutomationStatus(...): Marks the test case as "Automated"
 - getStatusCode(status: string): Maps Playwright status to Azure DevOps result codes
 
 
@@ -243,7 +236,7 @@ Used by:
 
 ### 🧱 Azure DevOps Models
 
-This document describes the core model classes used to interact with the Azure DevOps Test Plans API. These classes define the structure of the payloads sent during test case activation, result publishing, and evidence attachment.
+This document describes the main model classes used to interact with the Azure DevOps Test Plans API. These classes define the structure of the payloads sent during test case activation and result publishing.
 
 ---
 

@@ -1,6 +1,6 @@
 # 🔗 Integração com Azure DevOps
 
-Este projeto oferece integração nativa com o **Azure DevOps Test Plans**, permitindo rastreabilidade completa entre testes automatizados e fluxos de trabalho de gerenciamento de testes manuais.
+Este projeto oferece integração com o **Azure DevOps Test Plans**.
 
 ## 📘 Índice
 
@@ -29,9 +29,7 @@ Este projeto oferece integração nativa com o **Azure DevOps Test Plans**, perm
 ## 🧩 Propósito
 
 - Ativa casos de teste antes da execução  
-- Publica os resultados dos testes (Aprovado, Falhou, Ignorado)  
-- Anexa evidências (logs, capturas de tela) aos resultados dos testes  
-- Atualiza o status de automação para "Automatizado" no Azure DevOps  
+- Publica os resultados dos testes.
 
 ## ⚙️ Como Funciona
 
@@ -51,8 +49,6 @@ Durante a execução:
 - Os metadados são analisados a partir do título do teste
 - O caso de teste é ativado via API do Azure DevOps
 - O resultado é publicado após a execução
-- As evidências são enviadas se o teste falhar
-- O caso de teste é marcado como “Automatizado”
 
 #### 🧪 Exemplo de Teste
 ```ts
@@ -100,7 +96,7 @@ Este documento descreve as classes de serviço responsáveis por gerenciar a int
 
 #### `AzureAttachmentService.ts`
 
-Publica evidências de teste (por exemplo, logs, capturas de tela) nos resultados do Azure DevOps.
+Publica evidências de teste nos resultados do Azure DevOps.
 
 ##### Propósito
 - Recupera todos os anexos registrados
@@ -119,8 +115,8 @@ publishAttachments(runId: string, resultId: number): Promise<void>
 Gera tokens de autenticação para requisições à API do Azure DevOps usando um Token de Acesso Pessoal (PAT).
 
 ##### Propósito
-- Loads the PAT from environment variables
-- Encodes the token in base64 format for HTTP Basic Auth
+- Carrega o PAT a partir das variáveis de ambiente
+- Codifica o token em formato base64 para autenticação HTTP Basic Auth
 
 ##### Key Method
 ```ts
@@ -154,8 +150,6 @@ Gerencia todo o ciclo de vida de um caso de teste no Azure DevOps.
 ##### Propósito
 - Ativa o caso de teste antes da execução
 - Publica o resultado após a execução
-- Atualiza o status de automação para "Automatizado"
-- Anexa evidências se o teste falhar
 
 ##### Métodos Principais
 ```ts
@@ -165,7 +159,6 @@ finishTestCase(planId, suiteId, testCaseId, status, error?): Promise<void>
 
 ##### Funções Internas
 - getTestPointId(...): Recupera o ID do ponto de teste para um caso específico
-- updateAutomationStatus(...): Marca o caso de teste como "Automatizado"
 - getStatusCode(status: string): Mapeia o status do Playwright para os códigos de resultado do Azure DevOps
 
 ---
@@ -243,7 +236,7 @@ Usado por:
 
 ### 🧱 Modelos do Azure DevOps
 
-Este documento descreve as classes de modelo principais usadas para interagir com a API do Azure DevOps Test Plans. Essas classes definem a estrutura dos payloads enviados durante a ativação de casos de teste, publicação de resultados e anexação de evidências.
+Este documento descreve as classes de modelo principais usadas para interagir com a API do Azure DevOps Test Plans. Essas classes definem a estrutura dos payloads enviados durante a ativação de casos de teste e publicação dos resultados.
 
 ---
 
