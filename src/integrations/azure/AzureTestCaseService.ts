@@ -35,13 +35,20 @@ export class AzureTestCaseService {
     this.attachmentService = new AzureAttachmentService();
   }
 
-  // Ativa o caso de teste (planned) no suite/plan
+  /**
+   * Activates a test case (planned) within a suite/plan in Azure DevOps.
+   *
+   * @param planId - Azure DevOps test plan ID
+   * @param suiteId - Azure DevOps test suite ID
+   * @param testCaseId - Azure DevOps test case ID
+   */
   async startTestCase(planId: string, suiteId: string, testCaseId: string): Promise<void> {
     const token = this.auth.generateToken();
     const testPointId = await this.getTestPointId(planId, suiteId, testCaseId, token);
 
     const url = `${this.config.getBaseUrl()}_apis/testplan/Plans/${planId}/Suites/${suiteId}/TestPoint?api-version=5.1-Preview`;
     const body = [new TestCaseActive(testPointId, true)];
+
     try {
       const response = await axios.patch(url, body, {
         headers: {
@@ -51,11 +58,20 @@ export class AzureTestCaseService {
       });
       await this.updateAutomationStatus(testCaseId, token);
     } catch (err: any) {
-      Logger.error(`[AzureTestCaseService] Falha ao ativar o test case no Azure DevOps, retornou o Status: ${err.response?.status} com StatusText: ${err.response?.statusText}`);
+      Logger.error(`[AzureTestCaseService] Failed to activate test case in Azure DevOps. Status: ${err.response?.status}, StatusText: ${err.response?.statusText}`);
     }
   }
 
-  // Finaliza o caso de teste, cria run/result e publica anexos
+  /**
+   * Finalizes a test case by updating its status, creating a test run and result,
+   * and uploading evidence attachments to Azure DevOps.
+   *
+   * @param planId - Azure DevOps test plan ID
+   * @param suiteId - Azure DevOps test suite ID
+   * @param testCaseId - Azure DevOps test case ID
+   * @param status - Final test status (e.g., passed, failed)
+   * @param error - Optional error message
+   */
   async finishTestCase(
     planId: string,
     suiteId: string,
@@ -65,26 +81,27 @@ export class AzureTestCaseService {
   ): Promise<void> {
     const token = this.auth.generateToken();
 
-    // 1) Atualiza status no TestPoint
+    // 1) Update TestPoint status
     const testPointId = await this.getTestPointId(planId, suiteId, testCaseId, token);
     const tpUrl = `${this.config.getBaseUrl()}_apis/testplan/Plans/${planId}/Suites/${suiteId}/TestPoint?api-version=5.1-Preview`;
     const tpBody = [new ResultTestCase(testPointId, new Results(this.getStatusCode(status)))];
+
     try {
       await axios.patch(tpUrl, tpBody, {
         headers: { Authorization: `Basic ${token}`, 'Content-Type': 'application/json' }
       });
     } catch (err: any) {
-      Logger.error(`[AzureTestCaseService] Falha ao atualizar status do TestPoint com a seguinte mensagem: ` + (err?.response?.data || err));
+      Logger.error(`[AzureTestCaseService] Failed to update TestPoint status: ` + (err?.response?.data || err));
     }
 
     try {
-      // 2) Cria Test Run
+      // 2) Create Test Run
       const runIdApi = await this.createTestRun(planId, token);
 
-      // 3) Cria resultado de teste
+      // 3) Create Test Result
       const resultIdReal = await this.createTestResult(runIdApi, testCaseId, testPointId, status, token);
 
-      // 4) Evidências da pasta playwright-report/data
+      // 4) Attach evidence from playwright-report/data folder
       const evidenceDir = path.resolve(process.cwd(), 'playwright-report', 'data');
 
       if (fs.existsSync(evidenceDir)) {
@@ -93,43 +110,52 @@ export class AzureTestCaseService {
           const filePath = path.join(evidenceDir, file);
           if (fs.statSync(filePath).isDirectory()) continue;
 
-          // lê o arquivo binário
+          // Read binary file
           const fileBuffer = fs.readFileSync(filePath);
-          // converte para Base64
+          // Convert to Base64
           const base64Content = fileBuffer.toString('base64');
-          // garante que o nome preserve a extensão original
-          const fileName = path.basename(file); // ex: Evidence_20251120.png
+          // Preserve original file name and extension
+          const fileName = path.basename(file);
 
-          // envia sempre como GeneralAttachment
+          // Always send as GeneralAttachment
           Attachment.setAttachment(
             new Attachment('GeneralAttachment', base64Content, fileName)
           );
 
-          Logger.info(`[AzureTestCaseService] Evidência anexada: ${fileName}`);
+          Logger.info(`[AzureTestCaseService] Evidence attached: ${fileName}`);
         }
       } else {
-        Logger.warn(`[AzureTestCaseService] Screenshot(s) não localizado`);
-      }
-	  
-	  // 5) Adiciona o log winston.log da raiz do projeto
-      const logPath = path.resolve(process.cwd(), 'winston.log');
-      if (fs.existsSync(logPath)) {
-        const logContent = fs.readFileSync(logPath, 'utf-8'); // lê como texto puro
-        Attachment.setAttachment(new Attachment('log', logContent, 'winston.log'));
-        Logger.info(`[AzureTestCaseService] Arquivo winston.log localizado com sucesso`);
-      } else {
-        Logger.warn(`[AzureTestCaseService] Arquivo winston.log não localizado na raiz do projeto`);
+        Logger.warn(`[AzureTestCaseService] No screenshot(s) found`);
       }
 
-      // 6) Publica anexos
+      // 5) Attach winston.log from the project root
+      const logPath = path.resolve(process.cwd(), 'winston.log');
+      if (fs.existsSync(logPath)) {
+        const logContent = fs.readFileSync(logPath, 'utf-8'); // read as plain text
+        Attachment.setAttachment(new Attachment('log', logContent, 'winston.log'));
+        Logger.info(`[AzureTestCaseService] winston.log file successfully located`);
+      } else {
+        Logger.warn(`[AzureTestCaseService] winston.log file not found in the project root`);
+      }
+
+      // 6) Publish attachments to Azure DevOps
       await this.attachmentService.publishAttachments(runIdApi.toString(), resultIdReal);
 
     } catch (err: any) {
-      Logger.error(`[AzureTestCaseService] Falha ao enviar o resultado e/ou anexos com a mensagem: ` + (err?.response?.data || err));
+      Logger.error(`[AzureTestCaseService] Failed to send the result and/or attachments. Message: ` + (err?.response?.data || err));
     }
   }
 
-  // Busca o TestPointId para o caso de teste dentro do suite/plan
+  /**
+   * Retrieves the TestPointId for a specific test case within a given suite and plan in Azure DevOps.
+   * This ID is required to update the test case status or associate it with a test run.
+   *
+   * @param planId - The ID of the test plan
+   * @param suiteId - The ID of the test suite
+   * @param testCaseId - The ID of the test case
+   * @param token - The authorization token for Azure DevOps API
+   * @returns The TestPointId as a number
+   */
   private async getTestPointId(
     planId: string,
     suiteId: string,
@@ -143,19 +169,28 @@ export class AzureTestCaseService {
       });
 
       const tpId = response.data.value?.[0]?.id;
-      if (!tpId && tpId !== 0) throw new Error('TestPointId não localizado para o caso/suite/plan informados.');
+      if (!tpId && tpId !== 0) {
+        throw new Error('TestPointId not found for the specified case/suite/plan.');
+      }
       return tpId;
     } catch (err: any) {
       if (err.response) {
-        Logger.error(`[AzureTestCaseService] Falha ao obter TestPointId retornando o Status: ${err.response?.status} com o StatusText: ${err.response?.statusText}`);
+        Logger.error(`[AzureTestCaseService] Failed to retrieve TestPointId. Status: ${err.response?.status}, StatusText: ${err.response?.statusText}`);
       } else {
-        Logger.error(`[AzureTestCaseService] Erro inesperado (sem response): ${err?.message} e ` + (err?.stack));
+        Logger.error(`[AzureTestCaseService] Unexpected error (no response): ${err?.message}, ${err?.stack}`);
       }
       throw err;
     }
   }
 
-  // Cria o Test Run
+  /**
+   * Creates a new Test Run in Azure DevOps for the specified test plan.
+   * This run will be used to associate test results and attachments.
+   *
+   * @param planId - The ID of the test plan in Azure DevOps
+   * @param token - The authorization token for the API
+   * @returns The ID of the newly created Test Run
+   */
   private async createTestRun(planId: string, token: string): Promise<number> {
     const url = `${this.config.getBaseUrl()}_apis/test/runs?api-version=5.1-preview`;
     const body = {
@@ -174,15 +209,26 @@ export class AzureTestCaseService {
       return response.data.id;
     } catch (err: any) {
       if (err.response) {
-        Logger.error(`[AzureTestCaseService] Falha ao criar Test Run retornando o Status: ${err.response?.status} com o StatusText: ${err.response?.statusText}`);
+        Logger.error(`[AzureTestCaseService] Failed to create Test Run. Status: ${err.response?.status}, StatusText: ${err.response?.statusText}`);
       } else {
-        Logger.error(`[AzureTestCaseService] Erro inesperado (sem response): ${err?.message} e ` + (err?.stack));
+        Logger.error(`[AzureTestCaseService] Unexpected error (no response): ${err?.message}, ${err?.stack}`);
       }
       throw err;
     }
   }
 
-  // Cria o resultado de teste (planned) com campos obrigatórios
+  /**
+ * Creates a test result (planned) with required fields and associates it with a Test Run.
+ * Note: testCaseRevision and testCaseTitle should reflect the current state of the Work Item.
+ * You can retrieve these values via the Work Items API (WIT). Placeholders are used here.
+ *
+ * @param runId - The ID of the Test Run
+ * @param testCaseId - The ID of the Test Case
+ * @param testPointId - The ID of the Test Point
+ * @param status - The outcome status (e.g., passed, failed)
+ * @param token - The Azure DevOps authorization token
+ * @returns The ID of the created test result
+ */
   private async createTestResult(
     runId: number,
     testCaseId: string,
@@ -192,14 +238,12 @@ export class AzureTestCaseService {
   ): Promise<number> {
     const url = `${this.config.getBaseUrl()}_apis/test/Runs/${runId}/results?api-version=5.1-preview`;
 
-    // OBS: testCaseRevision e testCaseTitle devem refletir o WI atual do Test Case.
-    // Você pode buscar esses dados via API de Work Items (WIT). Aqui usamos placeholders.
     const body = [
       {
         testCase: { id: testCaseId },
         testPoint: { id: testPointId },
-        testCaseRevision: 1, // ajuste conforme o WI revision atual
-        testCaseTitle: `Caso ${testCaseId}`, // ajuste conforme o título real do WI
+        testCaseRevision: 1, // adjust according to the current WI revision
+        testCaseTitle: `Case ${testCaseId}`, // adjust according to the actual WI title
         outcome: status,
         state: 'Completed',
         automatedTestName: `Playwright-${testCaseId}`
@@ -214,23 +258,27 @@ export class AzureTestCaseService {
         }
       });
 
-      // CORREÇÃO: ler de response.data.value[0].id (não response.data[0].id)
       const id = response.data?.value?.[0]?.id;
       if (typeof id !== 'number') {
-        throw new Error(`ResultId inválido ou ausente. Response: ${JSON.stringify(response.data)}`);
+        throw new Error(`Invalid or missing ResultId. Response: ${JSON.stringify(response.data)}`);
       }
       return id;
     } catch (err: any) {
       if (err.response) {
-        Logger.error(`[AzureTestCaseService] Falha ao criar resultado com o Status: ${err.response?.status} e StatusText: ${err.response?.statusText}`);
+        Logger.error(`[AzureTestCaseService] Failed to create test result. Status: ${err.response?.status}, StatusText: ${err.response?.statusText}`);
       } else {
-        Logger.error(`[AzureTestCaseService] Erro inesperado (sem response): ${err?.message} e ` + (err?.stack));
+        Logger.error(`[AzureTestCaseService] Unexpected error (no response): ${err?.message}, ${err?.stack}`);
       }
       throw err;
     }
   }
 
-  // Atualiza o status de automação no Work Item do Test Case
+  /**
+   * Updates the automation status of the Test Case Work Item to "Automated".
+   *
+   * @param testCaseId - The ID of the Test Case Work Item
+   * @param token - The Azure DevOps authorization token
+   */
   private async updateAutomationStatus(testCaseId: string, token: string): Promise<void> {
     const url = `${this.config.getBaseUrl()}_apis/wit/workitems/${testCaseId}?api-version=7.1-preview.3`;
 
@@ -250,25 +298,29 @@ export class AzureTestCaseService {
         }
       });
 
-      // log de sucesso
-      Logger.info(`[AzureTestCaseService] AutomationStatus atualizado com sucesso para o TestCase ${testCaseId}`);
+      Logger.info(`[AzureTestCaseService] AutomationStatus successfully updated for TestCase ${testCaseId}`);
     } catch (err: any) {
       if (err.response) {
-        Logger.error(`[AzureTestCaseService] Falha ao atualizar AutomationStatus, Status: ${err.response?.status}, StatusText: ${err.response?.statusText} e response: ${JSON.stringify(err.response?.data, null, 2)}`);
+        Logger.error(`[AzureTestCaseService] Failed to update AutomationStatus. Status: ${err.response?.status}, StatusText: ${err.response?.statusText}, Response: ${JSON.stringify(err.response?.data, null, 2)}`);
       } else {
-        Logger.error(`[AzureTestCaseService] Erro inesperado (sem response): ${err?.message} e ` + (err?.stack));
+        Logger.error(`[AzureTestCaseService] Unexpected error (no response): ${err?.message}, ${err?.stack}`);
       }
     }
   }
 
-  // Mapeia status text -> código do TestPoint planned
+  /**
+   * Maps a test outcome string to the corresponding Azure DevOps TestPoint status code.
+   *
+   * @param status - The outcome status (e.g., passed, failed)
+   * @returns The numeric status code
+   */
   private getStatusCode(status: string): number {
     const statusMap: Record<string, number> = {
       passed: 2,       // Passed
       failed: 3,       // Failed
-      skipped: 4,      // NotApplicable/None (ajuste conforme seu contrato)
+      skipped: 4,      // NotApplicable/None
       timedOut: 4,
-      interrupted: 1,  // Active
+      interrupted: 1   // Active
     };
     return statusMap[status] ?? 0;
   }
