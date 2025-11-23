@@ -63,7 +63,7 @@ jobs:
 
       - name: 🛠️ Build test report
         if: always()
-        uses: Samuel-Leite/allure-report-action@main
+        uses: Samuel-Leite/allure-report-action@master
         with:
           gh_pages: gh-pages-history
           allure_results: allure-results
