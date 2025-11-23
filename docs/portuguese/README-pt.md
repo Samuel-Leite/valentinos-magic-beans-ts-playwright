@@ -111,7 +111,7 @@ PERCY_TOKEN=               # Token de autenticação do projeto Percy
 ```
 
 ## 🛠️ Environment variables for execution (yml)
-Seguem as variaveis que devem ser definidas para executar os testes que está salvo em '.src/resources/config/test-config.yml'
+Seguem as variaveis que devem ser definidas para executar os testes que está salvo em './src/resources/config/test-config.yml'
 
 ```yml
 execution:
