@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.4](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.3.3...v1.3.4) (2025-11-23)
+
+
+### Bug Fixes
+
+* **all:** 🐛 azure and files ([54a5865](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/54a5865df182358a7cbd3d946989fcc304e30064))
+* **all:** 🐛 code and docs ([dd5dfa3](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/dd5dfa317ce8a83d8c17335246d91b9dc2e52ab8))
+* **all:** 🐛 docker pipe ([0942259](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/09422595af21cf01c9865ddf5dc98bdce5c5c2ce))
+* **all:** 🐛 docker version on pipe ([3e1aae6](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/3e1aae67e199348b29ed58ed4c5cf34f776bd3d3))
+* **all:** 🐛 hook not to duplicate browser ([91e5919](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/91e59194a9f64258b78deca86fbcfc5fc407f130))
+* **all:** 🐛 ipe allure ([40b833a](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/40b833acd19ed78a7ac24c29f0874bff0d6379c6))
+* **all:** 🐛 pipe docker allure ([8328c51](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/8328c51bc83ec4645fc80cfadc678002f6ead695))
+* **all:** 🐛 remove duplicate execution on pipe ([ae5e74f](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/ae5e74fba01ff65bb458b874eeaafb2ac86d9c95))
+* **all:** 🐛 variable to run remote ([f8f50a7](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/f8f50a7a6a3895bc1ea8d7b6b1c7c7622abae20f))
+* **all:** 🐛 version allure docker ([4d14e45](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/4d14e4502839654ecd6806f9a469f26886230281))
+* **all:** 🐛 version docer piepe ([0e2f9fc](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/commit/0e2f9fc1d076d810357c828f04c3f8c76f872ff5))
+
 ### [1.3.3](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.3.2...v1.3.3) (2025-10-25)
 
 ### [1.3.2](https://github.com/Samuel-Leite/valentinos-magic-beans-ts-playwright/compare/v1.3.1...v1.3.2) (2025-10-24)
