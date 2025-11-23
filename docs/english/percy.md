@@ -31,7 +31,7 @@ The integration helps detect unexpected changes in the application's interface a
 
 ## ⚙️ How It Works
 
-1. Set `ENABLE_PERCY=true` in your `.env` file to enable snapshot capture.  
+1. Set `execution.percy=true` in your `test-config.yml` file to enable snapshot capture.  
 2. The `PercyService` checks if Percy is enabled and captures the current page state.  
 3. Snapshots are automatically sent to the Percy dashboard.  
 4. Images are compared against previous versions and displayed for visual review.  
@@ -41,7 +41,6 @@ The integration helps detect unexpected changes in the application's interface a
 ## 🔐 Required Environment Variables
 
 ```env
-ENABLE_PERCY=true
 PERCY_TOKEN=your_token
 ```
 ⚠️ Never commit your real token. Use the `.env.example` file for safe sharing.
@@ -71,7 +70,7 @@ Handles visual snapshot capture with Percy.
 #### 🎯 Purpose
 - Capture interface images during test execution  
 - Log snapshot activity for traceability  
-- Conditionally execute based on the `ENABLE_PERCY` environment variable  
+- Conditionally execute based on the `execution.percy` 
 
 #### 🔑 Main Method
 ```ts
@@ -102,7 +101,7 @@ await PercyService.capture(this.page, 'Logout flow: post logout state');
 
 | Issue                   | Cause                                  | Solution                                                                 |
 |-------------------------|----------------------------------------|--------------------------------------------------------------------------|
-| Snapshot skipped        | `ENABLE_PERCY` not set                 | Make sure the variable is present and set to `true` in `.env`            |
+| Snapshot skipped        | `execution.percy` not set              | Make sure the variable is present and set to `true` in `execution.percy` |
 | Empty Percy dashboard   | No snapshots were captured             | Confirm that `PercyService.capture` is being called in your tests        |
 | Invalid or missing token| `PERCY_TOKEN` not configured           | Add your token to `.env` or configure it via pipeline secrets            |
 | Duplicate snapshots     | Multiple capture points in the flow    | Centralize snapshot capture at key moments to avoid redundancy           |

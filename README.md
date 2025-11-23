@@ -95,21 +95,39 @@ npm run lighthouse
 npm run tag -- '@tag_name'
 ```
 
-## 🛠️ Environment Variables (.env)
+## 🛠️ Environment variables with sensitive data (.env)
 
 ```env
 #### 🌍 BrowserStack Integration
 BROWSERSTACK_USERNAME=     # Your BrowserStack username
 BROWSERSTACK_ACCESS_KEY=   # Your BrowserStack access key
-BUILD_NAME=                # Optional: name of the build shown in BrowserStack dashboard
-PROJECT_NAME=              # Optional: name of the project shown in BrowserStack dashboard
 
 #### 🔗 Azure DevOps Integration
 AZURE_TOKEN=               # Personal Access Token (PAT) for Azure DevOps API
 
 #### 📸 Visual Integration with Percy
-ENABLE_PERCY=true          # Enables automatic visual comparison with Percy
 PERCY_TOKEN=               # Percy project authentication token
+```
+
+## 🛠️ Environment variables for execution (yml)
+Seguem as variaveis que devem ser definidas para executar os testes que está salvo em '.src/resources/config/test-config.yml'
+
+```yml
+execution:
+  runEnv:            # Defines whether tests will run in the QA or PROD environment
+  runRemote:         # Specifies whether tests will run remotely or locally
+  device:            # Defines which device will be simulated in BS
+  headless:          # Specifies whether execution will run in headless mode or not
+  percy:             # Disables integration with Percy, a visual testing tool
+
+project:
+  name:              # Name of the project that will be displayed in BS
+  build:             # Identifier or description of the current build that will be displayed in BS
+
+azure:
+  host:              # Base URL of Azure DevOps used for integration
+  organization:      # Name of the organization within Azure DevOps
+  project:           # Name of the project in Azure DevOps within that organization
 ```
 
 ---
@@ -161,6 +179,7 @@ valentino-magic-beans/
 │   └── _/                              # Internal Husky scripts and hook definitions
 ├── docs/                                # Project documentation
 │   ├── english/                         # English-language documentation and guides
+│   ├── img                              # images referenced in the documentation
 │   └── portuguese/                      # Portuguese-language documentation and guides
 ├── infra/
 │   └── dashboards/                      # Monitoring setup for Playwright test metrics
@@ -174,12 +193,13 @@ valentino-magic-beans/
 │       └── docker-compose.yml          # Defines services: Prometheus, Grafana, and Playwright test runner
 ├── src/                                 # Source code
 │   ├── core/                            # Core test lifecycle and execution logic
-│   │   ├── hooks.ts                    # Global test hooks (beforeAll, beforeEach, etc.)
+│   │   ├── hooks.ts                     # Global test hooks (beforeAll, beforeEach, etc.)
 │   │   └── remoteRunner.ts            # Handles local vs remote (BrowserStack) execution
 │   ├── integrations/                    # External service integrations
 │   │   ├── azure/                      # Azure DevOps integration layer
 │   │   │   ├── AzureAttachmentService.ts   # Publishes test evidence (logs, screenshots) to Azure DevOps
 │   │   │   ├── AzureAuthService.ts         # Generates base64 PAT token for Azure API authentication
+│   │   │   ├── AzureConfig.ts              # It loads and makes available the basic Azure VOps settings
 │   │   │   ├── AzureConfigService.ts       # Loads Azure config from environment variables
 │   │   │   ├── AzureTestCaseService.ts     # Manages test case lifecycle in Azure (activate, finish, update status)
 │   │   │   ├── TestIdExtractor.ts          # Extracts test case ID from test title using @[12345]
@@ -192,14 +212,15 @@ valentino-magic-beans/
 │   │   ├── browserstack/              # BrowserStack integration layer
 │   │   │   ├── browserstackStatus.ts       # Updates test status on BrowserStack
 │   │   │   └── endpointBuilder.ts          # Builds WebSocket endpoint for remote execution
-│   │   │   └── lighthouseExecutor.ts          # Initializes and manages Lighthouse WebSocket server for remote audits
+│   │   │   └── lighthouseExecutor.ts       # Initializes and manages Lighthouse WebSocket server for remote audits
 │   │   └── percy/                     # Percy visual testing integration
-│   │       └── percyService.ts            # Captures visual snapshots during test execution
+│   │       └── percyService.ts          # Captures visual snapshots during test execution
 │   ├── pages/                           # Page Object Model (POM) definitions
 │   │   ├── HomePage.ts                  # Page object for the home page
 │   │   └── LoginPage.ts                 # Page object for the login page
 │   ├── resources/                       # Test data and configuration files
 │   │   ├── config/                     # Environment URLs and capabilities
+│   │   │   ├── test-config.yml          # YAML centralizes test execution configurations and integration data.
 │   │   │   ├── url-prod.yml             # Base URL for production environment
 │   │   │   ├── url-qa.yml               # Base URL for QA environment
 │   │   │   └── capabilities/            # Browser/device capabilities for BrowserStack

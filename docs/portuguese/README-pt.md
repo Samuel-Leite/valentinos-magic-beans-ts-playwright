@@ -96,21 +96,39 @@ npm run lighthouse
 npm run tag -- '@nome_da_tag'
 ```
 
-## 🛠️ Variáveis de Ambiente (.env)
+## 🛠️ Variáveis ​​de ambiente com dados sensíveis (.env)
 
 ```env
 #### 🌍 Integração com BrowserStack
 BROWSERSTACK_USERNAME=     # Seu nome de usuário no BrowserStack
 BROWSERSTACK_ACCESS_KEY=   # Sua chave de acesso do BrowserStack
-BUILD_NAME=                # Opcional: nome do build exibido no painel do BrowserStack
-PROJECT_NAME=              # Opcional: nome do projeto exibido no painel do BrowserStack
 
 #### 🔗 Integração com Azure DevOps
 AZURE_TOKEN=               # Token de Acesso Pessoal (PAT) para autenticação na API do Azure
 
 #### 📸 Integração Visual com Percy
-ENABLE_PERCY=true          # Ativa a comparação visual automática com o Percy
 PERCY_TOKEN=               # Token de autenticação do projeto Percy
+```
+
+## 🛠️ Environment variables for execution (yml)
+Seguem as variaveis que devem ser definidas para executar os testes que está salvo em '.src/resources/config/test-config.yml'
+
+```yml
+execution:
+  runEnv:            # Define se os testes serão executados no ambiente de QA ou PROD
+  runRemote:         # Define se os testes serão ou não executados em ambiente remoto ou local
+  device:            # Define qual dispositivo será simulado no BS
+  headless:          # Especifica se a execução rodará ou não em modo headless
+  percy:             # Desativa a integração com Percy, ferramenta de testes visuais
+
+project:
+  name:              # Nome do projeto que será apresentado no BS
+  build:             # Identificação ou descrição da build atual que será apresentado no BS
+
+azure:
+  host:              # URL base do Azure DevOps usada para integração
+  organization:      # Nome da organização dentro do Azure DevOps
+  project:           # Nome do projeto no Azure DevOps dentro dessa organização
 ```
 
 ---
@@ -160,6 +178,7 @@ valentino-magic-beans/
 │   └── _/                              # Scripts internos e definições de hooks do Husky
 ├── docs/                                # Documentação do projeto
 │   ├── english/                         # Documentação em inglês
+│   ├── img                              # imagens referenciadas na documentação
 │   └── portuguese/                      # Documentação em português
 ├── infra/
 │   └── dashboards/                      # Monitoring setup for Playwright test metrics
@@ -173,12 +192,13 @@ valentino-magic-beans/
 │       └── docker-compose.yml          # Define os serviços: Prometheus, Grafana e executor de testes
 ├── src/                                 # Código-fonte
 │   ├── core/                            # Lógica central de execução e ciclo de vida dos testes
-│   │   ├── hooks.ts                    # Hooks globais de teste (beforeAll, beforeEach, etc.)
+│   │   ├── hooks.ts                     # Hooks globais de teste (beforeAll, beforeEach, etc.)
 │   │   └── remoteRunner.ts            # Gerencia execução local e remota (BrowserStack)
 │   ├── integrations/                    # Integrações com serviços externos
 │   │   ├── azure/                      # Camada de integração com Azure DevOps
 │   │   │   ├── AzureAttachmentService.ts   # Publica evidências de teste (logs, screenshots) no Azure
 │   │   │   ├── AzureAuthService.ts         # Gera token base64 para autenticação na API do Azure
+│   │   │   ├── AzureConfig.ts              # Carrega e disponibiliza as configurações básicas do Azure VoPs.
 │   │   │   ├── AzureConfigService.ts       # Carrega configurações do Azure via variáveis de ambiente
 │   │   │   ├── AzureTestCaseService.ts     # Gerencia ciclo de vida dos casos de teste no Azure
 │   │   │   ├── TestIdExtractor.ts          # Extrai ID do caso de teste do título usando @[12345]
@@ -193,12 +213,13 @@ valentino-magic-beans/
 │   │   │   └── endpointBuilder.ts          # Constrói endpoint WebSocket para execução remota
 │   │   │   └── lighthouseExecutor.ts       # Inicializa e gerencia servidor Lighthouse para auditorias remotas
 │   │   └── percy/                     # Integração com testes visuais via Percy
-│   │       └── percyService.ts            # Captura snapshots visuais durante a execução dos testes
+│   │       └── percyService.ts             # Captura snapshots visuais durante a execução dos testes
 │   ├── pages/                           # Definições do modelo de páginas (Page Object Model)
 │   │   ├── HomePage.ts                  # Objeto de página para a home
 │   │   └── LoginPage.ts                 # Objeto de página para login
 │   ├── resources/                       # Dados de teste e arquivos de configuração
 │   │   ├── config/                     # URLs de ambiente e capacidades
+│   │   │   ├── test-config.yml          # YAML centraliza as configurações de execução de testes e os dados de integração.
 │   │   │   ├── url-prod.yml             # URL base para ambiente de produção
 │   │   │   ├── url-qa.yml               # URL base para ambiente de QA
 │   │   │   └── capabilities/            # Capacidades de navegador/dispositivo para BrowserStack

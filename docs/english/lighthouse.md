@@ -47,6 +47,37 @@ BROWSERSTACK_ACCESS_KEY=your_key
 
 ---
 
+## 📊 Lighthouse Indicators
+
+The indicators below explain how Lighthouse evaluates different aspects of web application quality:
+
+- **Performance** ⚡  
+  Measures the speed and efficiency of page loading.  
+  Includes metrics such as *First Contentful Paint (FCP)*, *Largest Contentful Paint (LCP)*, *Total Blocking Time (TBT)*, and *Cumulative Layout Shift (CLS)*.  
+  In short: shows how fast and stable the site is for the user.
+
+- **Accessibility** ♿  
+  Evaluates whether the site is usable by people with disabilities.  
+  Checks color contrast, button/link names, heading structure, and keyboard navigation.  
+  In short: shows if the site is inclusive and accessible to everyone.
+
+- **Best Practices** ✅  
+  Verifies if the site follows good development and security practices.  
+  Examples: proper use of HTTPS, protection against XSS attacks, avoiding obsolete resources.  
+  In short: ensures the site is built in a modern and secure way.
+
+- **SEO (Search Engine Optimization)** 🔍  
+  Measures whether the site is optimized to appear in search engines like Google.  
+  Checks indexing, meta tags, and basic SEO recommendations.  
+  In short: indicates if the site has good chances of being found in searches.
+
+- **PWA (Progressive Web App)** 📱  
+  Evaluates whether the site can function as an installable application.  
+  Checks manifest.json, service worker, splash screen, and theme configuration.  
+  In short: shows if the site can be used as an app on mobile or desktop.
+  
+---
+
 ## 📂 Project Structure
 
 ```bash
