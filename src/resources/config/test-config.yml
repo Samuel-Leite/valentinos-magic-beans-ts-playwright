@@ -1,8 +1,9 @@
 execution:
   runEnv: qa
   runRemote: false
-  device: mobile
+  device: desktop
   headless: false
+  percy: false
 project:
   name: Valentino's Magic Beans
   build: Harvest of Quality

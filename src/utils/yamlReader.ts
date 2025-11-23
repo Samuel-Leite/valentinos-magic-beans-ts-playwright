@@ -115,7 +115,6 @@ export class YamlReader {
       throw new Error(`Key '${keyPath}' not found in test-config.yml`);
     }
 
-    // Remova este log se quiser evitar repetição
     // Logger.info(`[YamlReader] Key '${keyPath}' successfully retrieved from test-config.yml`);
     return value;
   }

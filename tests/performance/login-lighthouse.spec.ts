@@ -7,7 +7,7 @@ import '../../src/core/hooks';
 
 test.setTimeout(60000);
 
-test('@PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validar a efetuação do login com lighthouse', async ({ page }) => {
+test('@PLAN_ID=xxxx @SUITE_ID=xxxx @[xxxx] Validate login execution with Lighthouse', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const homePage = new HomePage(page);
   const credencials = YamlReader.readYamlObject("valid_user");

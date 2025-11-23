@@ -31,7 +31,7 @@ A integração permite detectar alterações inesperadas na interface da aplica�
 
 ## ⚙️ Como Funciona
 
-1. Defina `ENABLE_PERCY=true` no seu arquivo `.env` para ativar a captura de snapshots.  
+1. Defina `execution.percy=true` no seu arquivo `test-config.yml` para ativar a captura de snapshots.  
 2. O `PercyService` verifica se Percy está habilitado e captura a imagem da página atual.  
 3. Os snapshots são enviados automaticamente para o dashboard do Percy.  
 4. As imagens são comparadas com versões anteriores e exibidas para revisão visual.
@@ -41,7 +41,6 @@ A integração permite detectar alterações inesperadas na interface da aplica�
 ## 🔐 Variáveis de Ambiente Necessárias
 
 ```env
-ENABLE_PERCY=true
 PERCY_TOKEN=seu_token
 ```
 ⚠️ Nunca envie seu token real. Use o arquivo .env.example para compartilhamento seguro.
@@ -69,7 +68,7 @@ Gerencia a captura de snapshots visuais com Percy.
 #### 🎯 Propósito
 - Capturar imagens da interface durante o teste
 - Registrar logs de execução para rastreabilidade
-- Condicionar a execução com base na variável ENABLE_PERCY
+- Condicionar a execução com base na variável execution.percy
 
 #### 🔑 Métodos Principais
 ```ts
@@ -96,12 +95,12 @@ await PercyService.capture(this.page, 'Logout flow: post logout state');
 
 ## 🧯 Solução de Problemas
 
-|         Problema          |               Causa                    |                              Solução                                      |
-|---------------------------|----------------------------------------|---------------------------------------------------------------------------|
-| Snapshot skipped          | ENABLE_PERCY não está definido         | Verifique se a variável está presente e com valor `true` no `.env`        |
-| Percy dashboard vazio     | Nenhum snapshot foi capturado          | Confirme se o método `PercyService.capture` está sendo chamado nos testes |
-| Token inválido ou ausente | PERCY_TOKEN não configurado            | Adicione seu token no `.env` ou configure via secrets no pipeline         |
-| Snapshots duplicados      | Captura em múltiplos pontos do fluxo   | Centralize a captura em momentos-chave para evitar redundância            |
+|         Problema          |               Causa                    |                              Solução                                         |
+|---------------------------|----------------------------------------|------------------------------------------------------------------------------|
+| Snapshot skipped          | execution.percy não está definido      | Verifique se a variável está presente e com valor `true` no `test-config.yml`|
+| Percy dashboard vazio     | Nenhum snapshot foi capturado          | Confirme se o método `PercyService.capture` está sendo chamado nos testes    |
+| Token inválido ou ausente | PERCY_TOKEN não configurado            | Adicione seu token no `.env` ou configure via secrets no pipeline            |
+| Snapshots duplicados      | Captura em múltiplos pontos do fluxo   | Centralize a captura em momentos-chave para evitar redundância               |
 
 --- 
 

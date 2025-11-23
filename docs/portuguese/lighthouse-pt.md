@@ -47,6 +47,37 @@ BROWSERSTACK_ACCESS_KEY=sua_chave
 
 ---
 
+## 📊 Indicadores do Lighthouse
+
+Os indicadores abaixo explicam como o Lighthouse avalia diferentes aspectos de qualidade de uma aplicação web:
+
+- **Performance** ⚡  
+  Mede a velocidade e eficiência de carregamento da página.  
+  Inclui métricas como *First Contentful Paint (FCP)*, *Largest Contentful Paint (LCP)*, *Total Blocking Time (TBT)* e *Cumulative Layout Shift (CLS)*.  
+  Em resumo: indica o quão rápido e estável o site é para o usuário.
+
+- **Accessibility** ♿  
+  Avalia se o site é utilizável por pessoas com deficiência.  
+  Checa contraste de cores, nomes de botões/links, estrutura de títulos e navegação por teclado.  
+  Em resumo: mostra se o site é inclusivo e acessível para todos.
+
+- **Best Practices** ✅  
+  Verifica se o site segue boas práticas de desenvolvimento e segurança.  
+  Exemplos: uso correto de HTTPS, proteção contra ataques XSS, evitar recursos obsoletos.  
+  Em resumo: garante que o site está construído de forma moderna e segura.
+
+- **SEO (Search Engine Optimization)** 🔍  
+  Mede se o site está otimizado para aparecer em buscadores como Google.  
+  Checa indexação, meta tags e recomendações básicas de SEO.  
+  Em resumo: indica se o site tem boas chances de ser encontrado em pesquisas.
+
+- **PWA (Progressive Web App)** 📱  
+  Avalia se o site pode funcionar como um aplicativo instalável.  
+  Checa manifest.json, service worker, splash screen e configuração de tema.  
+  Em resumo: mostra se o site pode ser usado como um app no celular ou desktop.
+
+---
+
 ## 📂 Estrutura do Projeto
 
 ```bash
