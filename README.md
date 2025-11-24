@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="https://playwright.dev/img/playwright-logo.svg" alt="Playwright Logo" width="120" />
   <h1>Valentino's Magic Beans - Playwright Automation</h1>
   <p><strong>Enterprise-grade end-to-end test automation framework</strong><br>Designed to validate mission-critical features of modern web applications with scalability, traceability, and seamless integration into CI/CD pipelines.</p><br>
 
