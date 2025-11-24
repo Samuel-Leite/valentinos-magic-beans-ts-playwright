@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="https://playwright.dev/img/playwright-logo.svg" alt="Playwright Logo" width="120" />
   <h1>Valentino's Magic Beans - Automação com Playwright</h1>
   <p><strong>Framework de automação de testes E2E com arquitetura escalável e integração contínua</strong><br>Projetado para validar funcionalidades críticas de aplicações web modernas, com foco em rastreabilidade, qualidade de código e integração com plataformas corporativas.</p><br>
 </div>
